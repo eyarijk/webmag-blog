@@ -1,0 +1,12 @@
+tags_index:
+  path: /tags
+  controller: App\Controller\Admin\TagsController::index
+tags_create:
+  path: /tags/create
+  controller: App\Controller\Admin\TagsController::create
+tags_edit:
+  path: /tags/edit/{slug}
+  controller: App\Controller\Admin\TagsController::edit
+tags_delete:
+  path: /tags/tags_delete/{slug}
+  controller: App\Controller\Admin\TagsController::delete

@@ -39,7 +39,11 @@
         <div class="content mt-3">
             <div class="animated fadeIn">
                 <div class="row">
-                    {% block content %}{% endblock %}
+                    <div class="col-lg-12">
+                        <div class="card">
+                            {% block content %}{% endblock %}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

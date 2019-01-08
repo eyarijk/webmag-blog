@@ -1,3 +1,6 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+admin:
+  prefix: /admin
+  resource: './routes/admin_routes.yaml'

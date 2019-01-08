@@ -1,0 +1,12 @@
+{% extends 'layouts/admin.html.twig' %}
+
+{% block pageTitle %}Tags{% endblock %}
+
+{% block content %}
+    <div class="card-header">
+        <strong class="card-title">Edit Tag {{ tag }}</strong>
+    </div>
+    <div class="card-body">
+        {% include '/admin/tags/_form.html.twig' with {'form':form} only %}
+    </div>
+{% endblock %}

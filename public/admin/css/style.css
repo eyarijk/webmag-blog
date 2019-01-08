@@ -6829,3 +6829,6 @@ header .form-inline .search-form.close {
         padding: 5px;
     }
 }
+.ml-10 {
+    margin-left: 10px;
+}

@@ -1,0 +1,44 @@
+{% extends 'layouts/admin.html.twig' %}
+
+{% block pageTitle %}Tags{% endblock %}
+
+{% block content %}
+    <div class="pull-left m-2">
+        <a href="{{ path('tags_create') }}" class="btn btn-info">Create new Tag</a>
+    </div>
+    <div class="card-header">
+        <strong class="card-title">Tags</strong>
+    </div>
+    <div class="card-body">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Title</th>
+                <th scope="col">Slug</th>
+                <th scope="col" width="115px">Is Enabled?</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for tag in tags %}
+                <tr>
+                    <th scope="row">{{ tag.getId }}</th>
+                    <td>{{ tag.getTitle }}</td>
+                    <td>{{ tag.getSlug }}</td>
+                    <td>{{ tag.getIsEnabled ? 'Yes' : 'No' }}</td>
+                    <td>
+                        <a href="{{ path('tags_edit',{'slug':tag.getSlug}) }}">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                        <a href="{{ path('tags_delete',{'slug':tag.getSlug}) }}">
+                            <i class="fa fa-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {{ knp_pagination_render(tags) }}
+    </div>
+{% endblock %}
