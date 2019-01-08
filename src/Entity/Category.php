@@ -55,7 +55,7 @@ class Category
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getTitle(): ?string
     {
@@ -93,7 +93,7 @@ class Category
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getSlug(): ?string
     {
