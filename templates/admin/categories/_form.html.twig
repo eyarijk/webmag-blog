@@ -1,0 +1,28 @@
+<div class="tag-form">
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate','class': 'form-group'}}) }}
+
+    <div class="form-group">
+        <label for="cc-payment" id="{{ form.title.vars.id }}" class="control-label mb-1">{{ form.title.vars.label }}</label>
+        {{ form_widget(form.title) }}
+        <span class="help-block">
+                 {% for error in form.title.vars.errors %}
+                     {{ error.getMessage }}
+                 {% endfor %}
+            </span>
+    </div>
+
+    <div class="form-group">
+        <div class="checkbox">
+            <label for="{{ form.isEnabled.vars.id }}" class="form-check-label ">
+                {{ form_widget(form.isEnabled) }} {{ form.isEnabled.vars.label }}
+            </label>
+        </div>
+        <span class="help-block">
+             {% for error in form.isEnabled.vars.errors %}
+                 {{ error.getMessage }}
+             {% endfor %}
+        </span>
+    </div>
+
+    {{ form_end(form) }}
+</div>

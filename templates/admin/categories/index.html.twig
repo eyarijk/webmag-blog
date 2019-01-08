@@ -1,0 +1,44 @@
+{% extends 'layouts/admin.html.twig' %}
+
+{% block pageTitle %}Categories{% endblock %}
+
+{% block content %}
+    <div class="pull-left m-2">
+        <a href="{{ path('categories_create') }}" class="btn btn-info">Create new Category</a>
+    </div>
+    <div class="card-header">
+        <strong class="card-title">Categories</strong>
+    </div>
+    <div class="card-body">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Title</th>
+                <th scope="col">Slug</th>
+                <th scope="col" width="115px">Is Enabled?</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for category in categories %}
+                <tr>
+                    <th scope="row">{{ category.getId }}</th>
+                    <td>{{ category.getTitle }}</td>
+                    <td>{{ category.getSlug }}</td>
+                    <td>{{ category.getIsEnabled ? 'Yes' : 'No' }}</td>
+                    <td>
+                        <a href="{{ path('categories_edit',{'slug':category.getSlug}) }}">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                        <a href="{{ path('categories_delete',{'slug':category.getSlug}) }}">
+                            <i class="fa fa-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {{ knp_pagination_render(categories) }}
+    </div>
+{% endblock %}

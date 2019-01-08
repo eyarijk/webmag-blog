@@ -8,5 +8,17 @@ tags_edit:
   path: /tags/edit/{slug}
   controller: App\Controller\Admin\TagsController::edit
 tags_delete:
-  path: /tags/tags_delete/{slug}
+  path: /tags/delete/{slug}
   controller: App\Controller\Admin\TagsController::delete
+categories_index:
+  path: /categories
+  controller: App\Controller\Admin\CategoriesController::index
+categories_create:
+  path: /categories/create
+  controller: App\Controller\Admin\CategoriesController::create
+categories_edit:
+  path: /categories/edit/{slug}
+  controller: App\Controller\Admin\CategoriesController::edit
+categories_delete:
+  path: /categories/delete/{slug}
+  controller: App\Controller\Admin\CategoriesController::delete

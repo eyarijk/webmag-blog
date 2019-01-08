@@ -2,14 +2,15 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Tag;
+use App\Entity\Category;
+use App\Form\CategoryType;
 use App\Form\TagType;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class TagsController extends AbstractController
+class CategoriesController extends AbstractController
 {
     /**
      * @param PaginatorInterface $paginator
@@ -18,20 +19,20 @@ class TagsController extends AbstractController
      */
     public function index(PaginatorInterface $paginator, Request $request): Response
     {
-        $tags = $this
+        $categories = $this
             ->getDoctrine()
-            ->getRepository(Tag::class)
+            ->getRepository(Category::class)
             ->getTagsSortByIdDescQuery()
         ;
 
-        $tags = $paginator->paginate(
-            $tags,
+        $categories = $paginator->paginate(
+            $categories,
             $request->query->getInt('page', 1),
             10
         );
 
-        return $this->render('admin/tags/index.html.twig', [
-            'tags' => $tags,
+        return $this->render('admin/categories/index.html.twig', [
+            'categories' => $categories,
         ]);
     }
 
@@ -41,9 +42,9 @@ class TagsController extends AbstractController
      */
     public function create(Request $request): Response
     {
-        $tag = new Tag();
+        $category = new Category();
 
-        $form = $this->createForm(TagType::class, $tag, [
+        $form = $this->createForm(CategoryType::class, $category, [
             'labelForSubmit' => 'Create',
         ]);
 
@@ -55,22 +56,22 @@ class TagsController extends AbstractController
             $entityManager->persist($tag);
             $entityManager->flush();
 
-            return $this->redirectToRoute('tags_index');
+            return $this->redirectToRoute('categories_index');
         }
 
-        return $this->render('admin/tags/create.html.twig', [
+        return $this->render('admin/categories/create.html.twig', [
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @param Tag $tag
+     * @param Category $category
      * @param Request $request
      * @return Response
      */
-    public function edit(Tag $tag, Request $request): Response
+    public function edit(Category $category, Request $request): Response
     {
-        $form = $this->createForm(TagType::class, $tag, [
+        $form = $this->createForm(CategoryType::class, $category, [
             'labelForSubmit' => 'Update',
         ]);
 
@@ -82,25 +83,25 @@ class TagsController extends AbstractController
             $entityManager->persist($tag);
             $entityManager->flush();
 
-            return $this->redirectToRoute('tags_index');
+            return $this->redirectToRoute('categories_index');
         }
 
-        return $this->render('admin/tags/edit.html.twig', [
+        return $this->render('admin/categories/edit.html.twig', [
             'form' => $form->createView(),
-            'tag' => $tag,
+            'category' => $category,
         ]);
     }
 
     /**
-     * @param Tag $tag
+     * @param Category $category
      * @return Response
      */
-    public function delete(Tag $tag): Response
+    public function delete(Category $category): Response
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->remove($tag);
+        $entityManager->remove($category);
         $entityManager->flush();
 
-        return $this->redirectToRoute('tags_index');
+        return $this->redirectToRoute('categories_index');
     }
 }

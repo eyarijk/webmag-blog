@@ -4,7 +4,7 @@
 
 {% block content %}
     <div class="card-header">
-        <strong class="card-title">Edit Tag {{ tag }}</strong>
+        <strong class="card-title">Edit Tag {{ tag.getTitle }}</strong>
     </div>
     <div class="card-body">
         {% include '/admin/tags/_form.html.twig' with {'form':form} only %}

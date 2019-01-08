@@ -1,0 +1,12 @@
+{% extends 'layouts/admin.html.twig' %}
+
+{% block pageTitle %}Categories{% endblock %}
+
+{% block content %}
+    <div class="card-header">
+        <strong class="card-title">Edit Category {{ category.getTitle }}</strong>
+    </div>
+    <div class="card-body">
+        {% include '/admin/categories/_form.html.twig' with {'form':form} only %}
+    </div>
+{% endblock %}
