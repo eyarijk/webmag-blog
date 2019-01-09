@@ -4,3 +4,11 @@
 admin:
   prefix: /admin
   resource: './routes/admin_routes.yaml'
+login:
+  path: /login
+  controller: App\Controller\SecurityController::login
+register:
+  path: /register
+  controller: App\Controller\SecurityController::register
+logout:
+  path: /logout

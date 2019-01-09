@@ -2,7 +2,7 @@
     {{ form_start(form, {'attr': {'novalidate': 'novalidate','class': 'form-group'}}) }}
 
     <div class="form-group">
-        <label for="cc-payment" id="{{ form.title.vars.id }}" class="control-label mb-1">{{ form.title.vars.label }}</label>
+        <label for="{{ form.title.vars.id }}" class="control-label mb-1">{{ form.title.vars.label }}</label>
         {{ form_widget(form.title) }}
         <span class="help-block">
              {% for error in form.title.vars.errors %}

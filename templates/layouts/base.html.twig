@@ -6,7 +6,7 @@
     <title>{% block title %}WebMag!{% endblock %}</title>
     {% block stylesheets %}{% endblock %}
 </head>
-<body>
+<body {% block bodyClass %}{% endblock %}>
 {% block aside %}{% endblock %}
 {% block header %}{% endblock %}
 {% block body %}{% endblock %}
