@@ -37,14 +37,16 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface, Cont
         $user = $manager->getRepository(User::class)->findOneBy([]);
 
         $dir = $this->container->getParameter('articles_images_directory') . '/';
-        $mainImageName = md5(time()) . '.jpeg';
 
-        $imageFile = file_get_contents($faker->imageUrl());
-        file_put_contents($dir . $mainImageName, $imageFile);
 
         for ($i = 0; $i < 20; ++$i) {
             shuffle($categories);
             shuffle($tags);
+
+            $mainImageName = md5(time()) . $i . '.jpeg';
+
+            $imageFile = file_get_contents($faker->imageUrl());
+            file_put_contents($dir . $mainImageName, $imageFile);
 
             $article = new Article();
             $article->setIsEnabled($faker->boolean);
