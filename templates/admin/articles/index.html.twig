@@ -30,7 +30,7 @@
                     <th scope="row">{{ article.id }}</th>
                     <td>{{ article.title }}</td>
                     <td>{{ article.slug }}</td>
-                    <td>{{ article.shortDescription }}</td>
+                    <td>{{ article.shortDescription|striptags }}</td>
                     <td>{{ article.createdAt|date('d-m-Y H:i:s') }}</td>
                     <td>{{ article.isEnabled ? article.publishedAt|date('d-m-Y H:i:s') : '-' }}</td>
                     <td>{{ article.isEnabled ? 'Yes' : 'No' }}</td>

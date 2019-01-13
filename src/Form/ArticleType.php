@@ -63,13 +63,13 @@ class ArticleType extends AbstractType
             ->add('description', TextareaType::class, [
                 'label' => 'Description',
                 'attr' => [
-                    'class' => 'form-control',
+                    'class' => 'form-control tinymce',
                 ],
             ])
             ->add('shortDescription', TextareaType::class, [
                 'label' => 'Short Description',
                 'attr' => [
-                    'class' => 'form-control',
+                    'class' => 'form-control tinymce',
                 ],
             ])
             ->add('mainImage', FileType::class, [

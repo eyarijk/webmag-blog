@@ -12,3 +12,6 @@ register:
   controller: App\Controller\SecurityController::register
 logout:
   path: /logout
+home:
+  path: /
+  controller: App\Controller\HomeController::index
