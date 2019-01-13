@@ -18,3 +18,6 @@ home:
 article_page:
   path: /article/{slug}
   controller: App\Controller\ArticleController::index
+category_page:
+  path: /category/{categorySlug}
+  controller: App\Controller\CategoryController::index

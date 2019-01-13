@@ -6,7 +6,7 @@
         <ul>
             {% for categoryWithCount in getEnabledCategoriesWithCountArticles() %}
                 <li>
-                    <a href="#" class="cat-1">{{ categoryWithCount.category.title }}
+                    <a href="{{ path('category_page',{'categorySlug':categoryWithCount.category.slug}) }}" class="cat-1">{{ categoryWithCount.category.title }}
                         <span>{{ categoryWithCount.articleCount }}</span>
                     </a>
                 </li>

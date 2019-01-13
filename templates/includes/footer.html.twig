@@ -37,7 +37,7 @@
                             <ul class="footer-links">
                                 {% for category in getCategoriesForMenu() %}
                                     <li>
-                                        <a href="category.html">{{ category.title }}</a>
+                                        <a href="{{ path('category_page',{'categorySlug':category.slug}) }}">{{ category.title }}</a>
                                     </li>
                                 {% endfor %}
                             </ul>

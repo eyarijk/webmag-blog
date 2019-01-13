@@ -16,7 +16,7 @@
                 </li>
                 {% for index,category in getCategoriesForMenu() %}
                     <li class="cat-{{ index + 1}}">
-                        <a href="{{ category.slug }}">{{ category.title }}</a>
+                        <a href="{{ path('category_page',{'categorySlug':category.slug}) }}">{{ category.title }}</a>
                     </li>
                 {% endfor %}
             </ul>
