@@ -31,24 +31,8 @@
 
                         <div class="clearfix visible-md visible-lg"></div>
 
-                        <div class="mostRead">
-                            {% include 'articles/common/_most_read_block.html.twig' with {'articles':articles} only %}
-                        </div>
+                        {% include 'articles/common/_more_read.html.twig' with {'articles':articles,'countArtilces':articles.getTotalItemCount,'action': path('category_more_read',{categorySlug:category.slug})} only %}
 
-                        {% if articles.getTotalItemCount > 4 %}
-                            <div class="col-md-12 moreBlock">
-                                <div class="section-row">
-                                    <button class="primary-button center-block moreButton"
-                                            type="button"
-                                            data-action="{{ path('category_more_read',{categorySlug:category.slug}) }}"
-                                            data-page="1"
-                                            data-append=".mostRead"
-                                    >Load More
-                                        <span class="countMore">({{ articles.getTotalItemCount - 4 }})</span>
-                                    </button>
-                                </div>
-                            </div>
-                        {% endif %}
                     </div>
                 </div>
 

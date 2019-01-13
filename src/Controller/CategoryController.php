@@ -18,7 +18,7 @@ class CategoryController extends AbstractController
      * @param PaginatorInterface $paginator
      * @return Response
      */
-    public function index(string $categorySlug,PaginatorInterface $paginator): Response
+    public function index(string $categorySlug, PaginatorInterface $paginator): Response
     {
         $category = $this
             ->getDoctrine()
@@ -56,7 +56,7 @@ class CategoryController extends AbstractController
      * @param Request $request
      * @return JsonResponse
      */
-    public function getMoreRead(string $categorySlug,PaginatorInterface $paginator,Request $request): JsonResponse
+    public function getMoreRead(string $categorySlug, PaginatorInterface $paginator, Request $request): JsonResponse
     {
         $category = $this
             ->getDoctrine()
@@ -85,7 +85,7 @@ class CategoryController extends AbstractController
         $count = $paginationData['totalCount'] - $paginationData['lastItemNumber'];
 
         return new JsonResponse([
-            'view' => $this->renderView('articles/common/_most_read_block.html.twig', [
+            'view' => $this->renderView('articles/common/_more_read_block.html.twig', [
                 'articles' => $articles,
             ]),
             'count' => $count,

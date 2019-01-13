@@ -172,6 +172,18 @@ class ArticleRepository extends ServiceEntityRepository
     }
 
     /**
+     * @return Query
+     */
+    public function getNewQuery(): Query
+    {
+        return $this->createQueryBuilder('a')
+            ->where('a.isEnabled = 1')
+            ->orderBy('a.publishedAt', 'DESC')
+            ->getQuery()
+        ;
+    }
+
+    /**
      * @param Category $category
      * @return Query
      */

@@ -4,3 +4,6 @@ home_most_read:
 category_more_read:
   path: /{categorySlug}/more_read
   controller: App\Controller\CategoryController::getMoreRead
+new_more_read:
+  path: /new/most_read
+  controller: App\Controller\NewController::getMoreRead

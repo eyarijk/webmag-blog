@@ -24,3 +24,6 @@ article_page:
 category_page:
   path: /category/{categorySlug}
   controller: App\Controller\CategoryController::index
+new_page:
+  path: /new
+  controller: App\Controller\NewController::index

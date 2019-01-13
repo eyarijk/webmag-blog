@@ -71,24 +71,7 @@
                                 </div>
                             </div>
 
-                            <div class="mostRead">
-                                {% include 'articles/common/_most_read_block.html.twig' with {'articles':mostReadArticles} only %}
-                            </div>
-
-                            {% if countEnabledArticles > 4 %}
-                                <div class="col-md-12 moreBlock">
-                                    <div class="section-row">
-                                        <button class="primary-button center-block moreButton"
-                                                type="button"
-                                                data-action="{{ path('home_most_read') }}"
-                                                data-page="1"
-                                                data-append=".mostRead"
-                                        >Load More
-                                            <span class="countMore">({{ countEnabledArticles - 4 }})</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            {% endif %}
+                            {% include 'articles/common/_more_read.html.twig' with {'articles':mostReadArticles,'countArtilces':countEnabledArticles,'action': path('home_most_read')} only %}
 
                         </div>
                     </div>

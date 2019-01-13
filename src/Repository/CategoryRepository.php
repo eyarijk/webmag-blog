@@ -39,7 +39,7 @@ class CategoryRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('c')
             ->select('c as category', 'COUNT(a.id) as articleCount')
-            ->leftJoin('c.articles', 'a',Expr\Join::WITH, 'a.isEnabled = 1')
+            ->leftJoin('c.articles', 'a', Expr\Join::WITH, 'a.isEnabled = 1')
             ->where('c.isEnabled = 1')
             ->orderBy('articleCount', 'DESC')
             ->groupBy('c.id')
