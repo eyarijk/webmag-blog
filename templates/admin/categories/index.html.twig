@@ -23,15 +23,15 @@
             <tbody>
             {% for category in categories %}
                 <tr>
-                    <th scope="row">{{ category.getId }}</th>
-                    <td>{{ category.getTitle }}</td>
-                    <td>{{ category.getSlug }}</td>
-                    <td>{{ category.getIsEnabled ? 'Yes' : 'No' }}</td>
+                    <th scope="row">{{ category.id }}</th>
+                    <td>{{ category.title }}</td>
+                    <td>{{ category.slug }}</td>
+                    <td>{{ category.isEnabled ? 'Yes' : 'No' }}</td>
                     <td>
-                        <a href="{{ path('categories_edit',{'slug':category.getSlug}) }}">
+                        <a href="{{ path('categories_edit',{'slug':category.slug}) }}">
                             <i class="fa fa-edit"></i>
                         </a>
-                        <a href="{{ path('categories_delete',{'slug':category.getSlug}) }}">
+                        <a href="{{ path('categories_delete',{'slug':category.slug}) }}">
                             <i class="fa fa-trash"></i>
                         </a>
                     </td>

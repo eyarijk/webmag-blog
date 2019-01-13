@@ -1,0 +1,58 @@
+{% extends 'layouts/admin.html.twig' %}
+
+{% block pageTitle %}Articles{% endblock %}
+
+{% block content %}
+    <div class="pull-left m-2">
+        <a href="{{ path('articles_create') }}" class="btn btn-info">Create new Article</a>
+    </div>
+    <div class="card-header">
+        <strong class="card-title">Articles</strong>
+    </div>
+    <div class="card-body">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Title</th>
+                <th scope="col">Slug</th>
+                <th scope="col">Short Description</th>
+                <th style="min-width: 130px;" scope="col">Created At</th>
+                <th style="min-width: 130px;" scope="col">Published At</th>
+                <th scope="col" width="115px">Is Enabled?</th>
+                <th scope="col">Main Image</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for article in articles %}
+                <tr>
+                    <th scope="row">{{ article.id }}</th>
+                    <td>{{ article.title }}</td>
+                    <td>{{ article.slug }}</td>
+                    <td>{{ article.shortDescription }}</td>
+                    <td>{{ article.createdAt|date('d-m-Y H:i:s') }}</td>
+                    <td>{{ article.isEnabled ? article.publishedAt|date('d-m-Y H:i:s') : '-' }}</td>
+                    <td>{{ article.isEnabled ? 'Yes' : 'No' }}</td>
+                    <td>
+                        {% if article.getMainImagePath %}
+                            <img src="{{ article.getMainImagePath }}" class="row-image" alt="{{ article.title }}">
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{{ path('articles_edit',{'slug':article.slug}) }}">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                        <a href="{{ path('articles_delete',{'slug':article.slug}) }}">
+                            <i class="fa fa-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {{ knp_pagination_render(articles) }}
+    </div>
+{% endblock %}

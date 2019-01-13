@@ -23,15 +23,15 @@
             <tbody>
             {% for tag in tags %}
                 <tr>
-                    <th scope="row">{{ tag.getId }}</th>
-                    <td>{{ tag.getTitle }}</td>
-                    <td>{{ tag.getSlug }}</td>
-                    <td>{{ tag.getIsEnabled ? 'Yes' : 'No' }}</td>
+                    <th scope="row">{{ tag.id }}</th>
+                    <td>{{ tag.title }}</td>
+                    <td>{{ tag.slug }}</td>
+                    <td>{{ tag.isEnabled ? 'Yes' : 'No' }}</td>
                     <td>
-                        <a href="{{ path('tags_edit',{'slug':tag.getSlug}) }}">
+                        <a href="{{ path('tags_edit',{'slug':tag.slug}) }}">
                             <i class="fa fa-edit"></i>
                         </a>
-                        <a href="{{ path('tags_delete',{'slug':tag.getSlug}) }}">
+                        <a href="{{ path('tags_delete',{'slug':tag.slug}) }}">
                             <i class="fa fa-trash"></i>
                         </a>
                     </td>

@@ -21,7 +21,7 @@ class CategoriesController extends AbstractController
         $categories = $this
             ->getDoctrine()
             ->getRepository(Category::class)
-            ->getTagsSortByIdDescQuery()
+            ->getSortByIdDescQuery()
         ;
 
         $categories = $paginator->paginate(

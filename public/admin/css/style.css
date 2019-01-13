@@ -5550,9 +5550,11 @@ header .form-inline .search-form.close {
 }
 
 .user-area .user-avatar {
-    float: right;
-    margin-top: 4px;
     width: 32px;
+}
+
+.user-email {
+    vertical-align: middle;
 }
 
 .user-area .user-info .name {
@@ -6831,4 +6833,8 @@ header .form-inline .search-form.close {
 }
 .ml-10 {
     margin-left: 10px;
+}
+.row-image {
+    max-width: 60px;
+    object-fit: cover;
 }

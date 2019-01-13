@@ -23,7 +23,7 @@ class CategoryRepository extends ServiceEntityRepository
     /**
      * @return Query
      */
-    public function getTagsSortByIdDescQuery(): Query
+    public function getSortByIdDescQuery(): Query
     {
         return $this->createQueryBuilder('t')
             ->orderBy('t.id', 'DESC')

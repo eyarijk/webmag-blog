@@ -21,7 +21,7 @@ class TagsController extends AbstractController
         $tags = $this
             ->getDoctrine()
             ->getRepository(Tag::class)
-            ->getTagsSortByIdDescQuery()
+            ->getSortByIdDescQuery()
         ;
 
         $tags = $paginator->paginate(

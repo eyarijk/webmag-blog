@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -48,11 +50,17 @@ class Tag
     private $slug;
 
     /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Article", mappedBy="tags")
+     */
+    private $articles;
+
+    /**
      * Tag constructor.
      */
     public function __construct()
     {
         $this->isEnabled = true;
+        $this->articles = new ArrayCollection();
     }
 
     /**
@@ -116,6 +124,42 @@ class Tag
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * @return Article[]|Collection
+     */
+    public function getArticles(): Collection
+    {
+        return $this->articles;
+    }
+
+    /**
+     * @param Article $article
+     * @return Tag
+     */
+    public function addArticle(Article $article): self
+    {
+        if (!$this->articles->contains($article)) {
+            $this->articles[] = $article;
+            $article->addTag($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param Article $article
+     * @return Tag
+     */
+    public function removeArticle(Article $article): self
+    {
+        if ($this->articles->contains($article)) {
+            $this->articles->removeElement($article);
+            $article->removeTag($this);
+        }
 
         return $this;
     }

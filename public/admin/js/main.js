@@ -16,4 +16,5 @@ $(document).ready(function($) {
 		$('.search-trigger').parent('.header-left').removeClass('open');
 	});
 
+    $('.select2').select2();
 });

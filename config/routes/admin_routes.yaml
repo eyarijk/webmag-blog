@@ -22,3 +22,15 @@ categories_edit:
 categories_delete:
   path: /categories/delete/{slug}
   controller: App\Controller\Admin\CategoriesController::delete
+articles_index:
+  path: /articles
+  controller: App\Controller\Admin\ArticlesController::index
+articles_create:
+  path: /articles/create
+  controller: App\Controller\Admin\ArticlesController::create
+articles_edit:
+  path: /articles/edit/{slug}
+  controller: App\Controller\Admin\ArticlesController::edit
+articles_delete:
+  path: /articles/delete/{slug}
+  controller: App\Controller\Admin\ArticlesController::delete
