@@ -21,6 +21,7 @@ class CategoryFixtures extends Fixture
             $tag->setTitle($faker->jobTitle);
             $tag->setSlug($faker->slug);
             $tag->setIsEnabled($faker->boolean);
+            $tag->setIsShowMenu($tag->getIsEnabled() === true ? $faker->boolean : false);
             $manager->persist($tag);
         }
 

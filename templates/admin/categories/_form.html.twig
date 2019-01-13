@@ -24,5 +24,18 @@
         </span>
     </div>
 
+    <div class="form-group">
+        <div class="checkbox">
+            <label for="{{ form.isShowMenu.vars.id }}" class="form-check-label ">
+                {{ form_widget(form.isShowMenu) }} {{ form.isShowMenu.vars.label }}
+            </label>
+        </div>
+        <span class="help-block">
+             {% for error in form.isShowMenu.vars.errors %}
+                 {{ error.getMessage }}
+             {% endfor %}
+        </span>
+    </div>
+
     {{ form_end(form) }}
 </div>

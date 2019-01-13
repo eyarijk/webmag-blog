@@ -30,4 +30,33 @@ class CategoryRepository extends ServiceEntityRepository
             ->getQuery()
         ;
     }
+
+    /**
+     * @return array
+     */
+    public function getEnabledWithCountArticles(): array
+    {
+        return $this->createQueryBuilder('c')
+            ->select('c as category', 'COUNT(a.id) as articleCount')
+            ->leftJoin('c.articles', 'a')
+            ->where('c.isEnabled = 1')
+            ->groupBy('c.id')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
+     * @return array
+     */
+    public function getForMenu(): array
+    {
+        return $this->createQueryBuilder('c')
+            ->where('c.isEnabled = 1')
+            ->where('c.isShowMenu = 1')
+            ->setMaxResults(4)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

@@ -29,6 +29,9 @@ class CategoryType extends AbstractType
             ->add('isEnabled', CheckboxType::class, [
                 'label' => 'Is Enabled?',
             ])
+            ->add('isShowMenu', CheckboxType::class, [
+                'label' => 'Is Show In Menu?',
+            ])
             ->add('create', SubmitType::class, [
                 'label' => $options['labelForSubmit'],
                 'attr' => [

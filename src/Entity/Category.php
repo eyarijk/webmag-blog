@@ -53,9 +53,18 @@ class Category
      */
     private $articles;
 
+    /**
+     * @Assert\Type(
+     *     type="bool"
+     * )
+     * @ORM\Column(type="boolean")
+     */
+    private $isShowMenu;
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
+        $this->isShowMenu = false;
     }
 
     /**
@@ -157,6 +166,18 @@ class Category
                 $article->setCategory(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getIsShowMenu(): ?bool
+    {
+        return $this->isShowMenu;
+    }
+
+    public function setIsShowMenu(bool $isShowMenu): self
+    {
+        $this->isShowMenu = $isShowMenu;
 
         return $this;
     }
