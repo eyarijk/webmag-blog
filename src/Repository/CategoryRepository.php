@@ -2,10 +2,10 @@
 
 namespace App\Repository;
 
-use App\Entity\Article;
 use App\Entity\Category;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
+use Doctrine\ORM\Query\Expr;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -39,8 +39,9 @@ class CategoryRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('c')
             ->select('c as category', 'COUNT(a.id) as articleCount')
-            ->leftJoin('c.articles', 'a')
+            ->leftJoin('c.articles', 'a',Expr\Join::WITH, 'a.isEnabled = 1')
             ->where('c.isEnabled = 1')
+            ->orderBy('articleCount', 'DESC')
             ->groupBy('c.id')
             ->getQuery()
             ->getResult()
@@ -63,13 +64,13 @@ class CategoryRepository extends ServiceEntityRepository
 
     /**
      * @param string $slug
-     * @return Category
+     * @return Category|null
      */
-    public function findEnableBySlug(string $slug): Category
+    public function findEnableBySlug(string $slug): ?Category
     {
         return $this->findOneBy([
             'slug' => $slug,
-            'isEnabled' => true
+            'isEnabled' => true,
         ]);
     }
 }

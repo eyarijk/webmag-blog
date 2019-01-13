@@ -3,9 +3,11 @@
 namespace App\Repository;
 
 use App\Entity\Article;
+use App\Entity\Category;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
+use Doctrine\ORM\Query\Expr;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -104,19 +106,16 @@ class ArticleRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param int $limit
-     * @return mixed
+     * @return Query
      */
-    public function getMostRead(int $limit = 4)
+    public function getMostReadQuery(): Query
     {
         return $this->createQueryBuilder('a')
             ->leftJoin('a.articleViews', 'av')
             ->where('a.isEnabled = 1')
             ->orderBy('COUNT(av.id)', 'desc')
             ->groupBy('a.id')
-            ->setMaxResults($limit)
             ->getQuery()
-            ->getResult()
         ;
     }
 
@@ -135,5 +134,55 @@ class ArticleRepository extends ServiceEntityRepository
         ;
 
         return $result['articleCount'];
+    }
+
+    /**
+     * @param int $limit
+     * @return array
+     */
+    public function getMain(int $limit = 2): array
+    {
+        return $this->createQueryBuilder('a')
+            ->where('a.isEnabled = 1')
+            ->where('a.isMain = 1')
+            ->orderBy('a.publishedAt', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
+     * @param Category $category
+     * @param int $limit
+     * @return array
+     */
+    public function getMainByCategory(Category $category, int $limit = 2): array
+    {
+        return $this->createQueryBuilder('a')
+            ->innerJoin('a.category', 'c', Expr\Join::WITH, 'c.id = :category')
+            ->where('a.isEnabled = 1')
+            ->where('a.isMain = 1')
+            ->setParameter('category', $category)
+            ->orderBy('a.publishedAt', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
+     * @param Category $category
+     * @return Query
+     */
+    public function getByCategoryQuery(Category $category): Query
+    {
+        return $this->createQueryBuilder('a')
+            ->innerJoin('a.category', 'c', Expr\Join::WITH, 'c.id = :category')
+            ->where('a.isEnabled = 1')
+            ->setParameter('category', $category)
+            ->orderBy('a.publishedAt', 'DESC')
+            ->getQuery()
+        ;
     }
 }

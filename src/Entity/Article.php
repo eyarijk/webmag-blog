@@ -126,6 +126,14 @@ class Article
     private $articleComments;
 
     /**
+     * @Assert\Type(
+     *     type="bool"
+     * )
+     * @ORM\Column(type="boolean")
+     */
+    private $isMain;
+
+    /**
      * Article constructor.
      */
     public function __construct()
@@ -135,6 +143,7 @@ class Article
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
         $this->articleComments = new ArrayCollection();
+        $this->isMain = false;
     }
 
     /**
@@ -442,6 +451,10 @@ class Article
         return $this->articleComments;
     }
 
+    /**
+     * @param ArticleComment $articleComment
+     * @return Article
+     */
     public function addArticleComment(ArticleComment $articleComment): self
     {
         if (!$this->articleComments->contains($articleComment)) {
@@ -452,6 +465,10 @@ class Article
         return $this;
     }
 
+    /**
+     * @param ArticleComment $articleComment
+     * @return Article
+     */
     public function removeArticleComment(ArticleComment $articleComment): self
     {
         if ($this->articleComments->contains($articleComment)) {
@@ -461,6 +478,25 @@ class Article
                 $articleComment->setArticle(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function getIsMain(): ?bool
+    {
+        return $this->isMain;
+    }
+
+    /**
+     * @param bool $isMain
+     * @return Article
+     */
+    public function setIsMain(bool $isMain): self
+    {
+        $this->isMain = $isMain;
 
         return $this;
     }

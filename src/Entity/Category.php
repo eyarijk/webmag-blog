@@ -61,6 +61,13 @@ class Category
      */
     private $isShowMenu;
 
+    /**
+     * @Assert\NotBlank()
+     * @Assert\Regex("/#([a-f0-9]{3}){1,2}\b/i")
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $color;
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
@@ -170,14 +177,40 @@ class Category
         return $this;
     }
 
+    /**
+     * @return bool|null
+     */
     public function getIsShowMenu(): ?bool
     {
         return $this->isShowMenu;
     }
 
+    /**
+     * @param bool $isShowMenu
+     * @return Category
+     */
     public function setIsShowMenu(bool $isShowMenu): self
     {
         $this->isShowMenu = $isShowMenu;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getColor(): ?string
+    {
+        return $this->color;
+    }
+
+    /**
+     * @param string|null $color
+     * @return Category
+     */
+    public function setColor(?string $color): self
+    {
+        $this->color = $color;
 
         return $this;
     }

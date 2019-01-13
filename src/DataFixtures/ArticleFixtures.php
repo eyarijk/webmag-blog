@@ -38,8 +38,7 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface, Cont
 
         $dir = $this->container->getParameter('articles_images_directory') . '/';
 
-
-        for ($i = 0; $i < 20; ++$i) {
+        for ($i = 0; $i < 200; ++$i) {
             shuffle($categories);
             shuffle($tags);
 
@@ -58,6 +57,7 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface, Cont
             $article->setUser($user);
             $article->setUpdatedAt($article->getCreatedAt());
             $article->setPublishedAt($article->getIsEnabled() ? new \DateTime() : null);
+            $article->setIsMain($article->getIsEnabled() ? $faker->boolean : false);
             $article->setMainImage($mainImageName);
             $article->setCategory($categories[0]);
 
