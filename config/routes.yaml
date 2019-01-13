@@ -15,3 +15,6 @@ logout:
 home:
   path: /
   controller: App\Controller\HomeController::index
+article_page:
+  path: /article/{slug}
+  controller: App\Controller\ArticleController::index

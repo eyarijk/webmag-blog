@@ -70,4 +70,70 @@ class ArticleRepository extends ServiceEntityRepository
 
         return $article;
     }
+
+    /**
+     * @param int $limit
+     * @return mixed
+     */
+    public function getRecent(int $limit = 6)
+    {
+        return $this->createQueryBuilder('a')
+            ->where('a.isEnabled = 1')
+            ->orderBy('a.publishedAt', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
+     * @param int $limit
+     * @return mixed
+     */
+    public function getFeatured(int $limit = 3)
+    {
+        return $this->createQueryBuilder('a')
+            ->leftJoin('a.articleComments', 'ac')
+            ->where('a.isEnabled = 1')
+            ->orderBy('COUNT(ac.id)', 'desc')
+            ->groupBy('a.id')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
+     * @param int $limit
+     * @return mixed
+     */
+    public function getMostRead(int $limit = 4)
+    {
+        return $this->createQueryBuilder('a')
+            ->leftJoin('a.articleViews', 'av')
+            ->where('a.isEnabled = 1')
+            ->orderBy('COUNT(av.id)', 'desc')
+            ->groupBy('a.id')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @return int
+     */
+    public function getEnabledCount(): int
+    {
+        $result = $this->createQueryBuilder('a')
+            ->select('COUNT(a.id) as articleCount')
+            ->where('a.isEnabled = 1')
+            ->getQuery()
+            ->getSingleResult()
+        ;
+
+        return $result['articleCount'];
+    }
 }

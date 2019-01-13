@@ -43,6 +43,12 @@ class ArticleComment
     private $user;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Article", inversedBy="articleComments")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $article;
+
+    /**
      * @return int|null
      */
     public function getId(): ?int
@@ -141,6 +147,25 @@ class ArticleComment
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Article|null
+     */
+    public function getArticle(): ?Article
+    {
+        return $this->article;
+    }
+
+    /**
+     * @param Article|null $article
+     * @return ArticleComment
+     */
+    public function setArticle(?Article $article): self
+    {
+        $this->article = $article;
 
         return $this;
     }
