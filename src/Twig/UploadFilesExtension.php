@@ -38,6 +38,6 @@ class UploadFilesExtension extends AbstractExtension
      */
     public function formatUploadFilePath(?string $fileName): string
     {
-        return $fileName !== null ? $this->container->getParameter('images_directoryPublic') . '/' . $fileName : null;
+        return $fileName !== null ? $this->container->getParameter('images_directoryPublic') . $fileName : null;
     }
 }
