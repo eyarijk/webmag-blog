@@ -36,7 +36,7 @@ class UploadFilesExtension extends AbstractExtension
      * @param string|null $fileName
      * @return string
      */
-    public function formatUploadFilePath(?string $fileName): string
+    public function formatUploadFilePath(?string $fileName): ?string
     {
         return $fileName !== null ? $this->container->getParameter('images_directory_public') . $fileName : null;
     }
