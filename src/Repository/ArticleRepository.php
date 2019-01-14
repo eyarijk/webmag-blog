@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Article;
 use App\Entity\Category;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\Expr;
@@ -32,6 +33,20 @@ class ArticleRepository extends ServiceEntityRepository
     public function getSortByIdDescQuery(): Query
     {
         return $this->createQueryBuilder('t')
+            ->orderBy('t.id', 'DESC')
+            ->getQuery()
+        ;
+    }
+
+    /**
+     * @param User $user
+     * @return Query
+     */
+    public function getSortByIdDescByUserQuery(User $user): Query
+    {
+        return $this->createQueryBuilder('t')
+            ->where('t.user = :user')
+            ->setParameter('user', $user)
             ->orderBy('t.id', 'DESC')
             ->getQuery()
         ;

@@ -5,13 +5,16 @@ namespace App\Controller\Admin;
 use App\Entity\Article;
 use App\Form\ArticleType;
 use Knp\Component\Pager\PaginatorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @IsGranted("ROLE_USER")
+ */
 class ArticlesController extends AbstractController
 {
     /**
@@ -21,10 +24,14 @@ class ArticlesController extends AbstractController
      */
     public function index(PaginatorInterface $paginator, Request $request): Response
     {
-        $articles = $this
+        $articlesRepository = $this
             ->getDoctrine()
             ->getRepository(Article::class)
-            ->getSortByIdDescQuery()
+        ;
+
+        $articles = $this->isGranted('ROLE_SUPER_ADMIN')
+            ? $articlesRepository->getSortByIdDescQuery()
+            : $articlesRepository->getSortByIdDescByUserQuery($this->getUser())
         ;
 
         $articles = $paginator->paginate(
@@ -64,6 +71,7 @@ class ArticlesController extends AbstractController
     }
 
     /**
+     * @IsGranted("edit", subject="article")
      * @param Article $article
      * @param Request $request
      * @return Response
@@ -89,6 +97,7 @@ class ArticlesController extends AbstractController
     }
 
     /**
+     * @IsGranted("edit", subject="article")
      * @param Article $article
      * @return Response
      */

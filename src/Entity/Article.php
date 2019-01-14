@@ -432,7 +432,6 @@ class Article
         return $this;
     }
 
-
     /**
      * @return ArticleComment[]|Collection
      */

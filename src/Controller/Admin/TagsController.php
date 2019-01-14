@@ -5,10 +5,14 @@ namespace App\Controller\Admin;
 use App\Entity\Tag;
 use App\Form\TagType;
 use Knp\Component\Pager\PaginatorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @IsGranted("ROLE_SUPER_ADMIN")
+ */
 class TagsController extends AbstractController
 {
     /**
