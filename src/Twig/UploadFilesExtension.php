@@ -33,8 +33,8 @@ class UploadFilesExtension extends AbstractExtension
     }
 
     /**
-     * @param string|null $fileName
-     * @return string
+     * @param null|string $fileName
+     * @return null|string
      */
     public function formatUploadFilePath(?string $fileName): ?string
     {
