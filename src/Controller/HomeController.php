@@ -69,7 +69,7 @@ class HomeController extends AbstractController
         $count = $paginationData['totalCount'] - $paginationData['lastItemNumber'];
 
         return new JsonResponse([
-            'view' => $this->renderView('articles/common/_most_read_block.html.twig', [
+            'view' => $this->renderView('articles/common/_more_read_block.html.twig', [
                 'articles' => $articles,
             ]),
             'count' => $count,
