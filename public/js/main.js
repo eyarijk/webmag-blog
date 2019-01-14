@@ -89,3 +89,28 @@
 	setStickyPos();
 
 })(jQuery);
+
+$('.moreButton').on('click',function () {
+	let $this = $(this),
+		page = $this.data('page'),
+		action = $this.data('action'),
+		append = $this.data('append'),
+        countMore = $this.find('.countMore'),
+		moreBlock = $this.closest('.moreBlock')
+	;
+
+	let requestData = {
+		page: page + 1
+	};
+
+    $.ajax({url: action, data:requestData, success: result => {
+
+		$(append).append(result.view);
+		countMore.text(`(${result.count})`);
+
+		if (result.hideButton === true) {
+            moreBlock.remove();
+		}
+            $this.data('page',page + 1);
+	}});
+});

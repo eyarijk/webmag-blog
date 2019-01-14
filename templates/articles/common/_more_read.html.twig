@@ -1,0 +1,18 @@
+<div class="moreRead">
+    {% include 'articles/common/_more_read_block.html.twig' with {'articles':articles} only %}
+</div>
+
+{% if countArtilces > 4 %}
+    <div class="col-md-12 moreBlock">
+        <div class="section-row">
+            <button class="primary-button center-block moreButton"
+                    type="button"
+                    data-action="{{ action }}"
+                    data-page="1"
+                    data-append=".moreRead"
+            >Load More
+                <span class="countMore">({{ countArtilces - 4 }})</span>
+            </button>
+        </div>
+    </div>
+{% endif %}

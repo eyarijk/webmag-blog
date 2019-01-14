@@ -1,5 +1,91 @@
 {% extends 'layouts/public.html.twig' %}
 
 {% block content %}
-    Hello from home page!
+    {% if  mainArticles|length > 0 or recentArticles|length > 0 %}
+        <div class="section">
+            <div class="container">
+                {% if mainArticles|length > 0 %}
+                    <div class="row">
+                    {% for article in mainArticles %}
+                        <div class="col-md-6">
+                            {% include 'articles/common/_article_item_grid.html.twig' with {'article':article} only %}
+                        </div>
+                    {% endfor %}
+                    </div>
+                {% endif %}
+
+                {% if recentArticles|length > 0 %}
+                    <div class="row">
+                    <div class="col-md-12">
+                        <div class="section-title">
+                            <h2>Recent Posts</h2>
+                        </div>
+                    </div>
+
+                    {% for articleBatch in recentArticles|batch(3, 'No item') %}
+                        {% for article in articleBatch %}
+                            <div class="col-md-4">
+                                {% include 'articles/common/_article_item_grid.html.twig' with {'article':article} only %}
+                            </div>
+                        {% endfor %}
+                        <div class="clearfix visible-md visible-lg"></div>
+                    {% endfor %}
+
+                </div>
+                {% endif %}
+
+            </div>
+        </div>
+    {% endif %}
+
+
+    {% if featuredArticles|length > 0 %}
+        <div class="section section-grey">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="section-title text-center">
+                            <h2>Featured Posts</h2>
+                        </div>
+                    </div>
+
+                    {% for article in featuredArticles %}
+                        <div class="col-md-4">
+                            {% include 'articles/common/_article_item_grid.html.twig' with {'article':article} only %}
+                        </div>
+                    {% endfor %}
+
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+        <div class="section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="section-title">
+                                    <h2>Most Read</h2>
+                                </div>
+                            </div>
+
+                            {% include 'articles/common/_more_read.html.twig' with {'articles':mostReadArticles,'countArtilces':countEnabledArticles,'action': path('home_most_read')} only %}
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+
+                        {% include 'includes/aside_widget_categories.html.twig' %}
+
+                        {% include 'includes/aside_widget_tags.html.twig' %}
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
 {% endblock %}

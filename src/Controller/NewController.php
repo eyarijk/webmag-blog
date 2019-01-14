@@ -9,12 +9,10 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class HomeController extends AbstractController
+class NewController extends AbstractController
 {
     /**
      * @param PaginatorInterface $paginator
-     * @throws \Doctrine\ORM\NoResultException
-     * @throws \Doctrine\ORM\NonUniqueResultException
      * @return Response
      */
     public function index(PaginatorInterface $paginator): Response
@@ -24,24 +22,18 @@ class HomeController extends AbstractController
             ->getRepository(Article::class)
         ;
 
-        $recentArticles = $articleRepository->getRecent();
-        $featuredArticles = $articleRepository->getFeatured();
-        $mostReadArticlesQuery = $articleRepository->getMostReadQuery();
-        $countEnabledArticles = $articleRepository->getEnabledCount();
         $mainArticles = $articleRepository->getMain();
+        $newArticles = $articleRepository->getNewQuery();
 
-        $mostReadArticles = $paginator->paginate(
-            $mostReadArticlesQuery,
+        $newArticles = $paginator->paginate(
+            $newArticles,
             1,
             4
         );
 
-        return $this->render('home.html.twig', [
-            'recentArticles' => $recentArticles,
-            'featuredArticles' => $featuredArticles,
-            'mostReadArticles' => $mostReadArticles,
-            'countEnabledArticles' => $countEnabledArticles,
+        return $this->render('new/index.html.twig', [
             'mainArticles' => $mainArticles,
+            'articles' => $newArticles,
         ]);
     }
 
@@ -50,16 +42,16 @@ class HomeController extends AbstractController
      * @param PaginatorInterface $paginator
      * @return JsonResponse
      */
-    public function getMostRead(Request $request, PaginatorInterface $paginator): JsonResponse
+    public function getMoreRead(Request $request, PaginatorInterface $paginator): JsonResponse
     {
-        $mostReadArticlesQuery = $this
+        $moreReadArticlesQuery = $this
             ->getDoctrine()
             ->getRepository(Article::class)
-            ->getMostReadQuery()
+            ->getNewQuery()
         ;
 
         $articles = $paginator->paginate(
-            $mostReadArticlesQuery,
+            $moreReadArticlesQuery,
             $request->query->getInt('page', 1),
             4
         );

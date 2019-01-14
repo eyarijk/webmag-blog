@@ -1,0 +1,85 @@
+{% extends 'layouts/public.html.twig' %}
+
+{% block header %}
+    <div class="page-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10">
+                    <ul class="page-header-breadcrumb">
+                        <li><a href="{{ path('home') }}">Home</a></li>
+                        <li>{{ category.title }}</li>
+                    </ul>
+                    <h1>{{ category.title }}</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="row">
+
+                        {% for index,article in mainArticles %}
+                            <div class="col-md-{{ index == 0 ? '12' : '6' }}">
+                               {% include 'articles/common/_article_item_grid.html.twig' with {'article':article} only %}
+                            </div>
+                        {% endfor %}
+
+                        <div class="clearfix visible-md visible-lg"></div>
+
+                        {% include 'articles/common/_more_read.html.twig' with {'articles':articles,'countArtilces':articles.getTotalItemCount,'action': path('category_more_read',{categorySlug:category.slug})} only %}
+
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+
+                    {#<!-- post widget -->#}
+                    {#<div class="aside-widget">#}
+                        {#<div class="section-title">#}
+                            {#<h2>Most Read</h2>#}
+                        {#</div>#}
+
+                        {#<div class="post post-widget">#}
+                            {#<a class="post-img" href="blog-post.html"><img src="./img/widget-1.jpg" alt=""></a>#}
+                            {#<div class="post-body">#}
+                                {#<h3 class="post-title"><a href="blog-post.html">Tell-A-Tool: Guide To Web Design And Development Tools</a></h3>#}
+                            {#</div>#}
+                        {#</div>#}
+
+                        {#<div class="post post-widget">#}
+                            {#<a class="post-img" href="blog-post.html"><img src="./img/widget-2.jpg" alt=""></a>#}
+                            {#<div class="post-body">#}
+                                {#<h3 class="post-title"><a href="blog-post.html">Pagedraw UI Builder Turns Your Website Design Mockup Into Code Automatically</a></h3>#}
+                            {#</div>#}
+                        {#</div>#}
+
+                        {#<div class="post post-widget">#}
+                            {#<a class="post-img" href="blog-post.html"><img src="./img/widget-3.jpg" alt=""></a>#}
+                            {#<div class="post-body">#}
+                                {#<h3 class="post-title"><a href="blog-post.html">Why Node.js Is The Coolest Kid On The Backend Development Block!</a></h3>#}
+                            {#</div>#}
+                        {#</div>#}
+
+                        {#<div class="post post-widget">#}
+                            {#<a class="post-img" href="blog-post.html"><img src="./img/widget-4.jpg" alt=""></a>#}
+                            {#<div class="post-body">#}
+                                {#<h3 class="post-title"><a href="blog-post.html">Tell-A-Tool: Guide To Web Design And Development Tools</a></h3>#}
+                            {#</div>#}
+                        {#</div>#}
+                    {#</div>#}
+                    <!-- /post widget -->
+
+                    {% include 'includes/aside_widget_categories.html.twig' %}
+
+                    {% include 'includes/aside_widget_tags.html.twig' %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Category;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
+use Doctrine\ORM\Query\Expr;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -29,5 +30,47 @@ class CategoryRepository extends ServiceEntityRepository
             ->orderBy('t.id', 'DESC')
             ->getQuery()
         ;
+    }
+
+    /**
+     * @return array
+     */
+    public function getEnabledWithCountArticles(): array
+    {
+        return $this->createQueryBuilder('c')
+            ->select('c as category', 'COUNT(a.id) as articleCount')
+            ->leftJoin('c.articles', 'a', Expr\Join::WITH, 'a.isEnabled = 1')
+            ->where('c.isEnabled = 1')
+            ->orderBy('articleCount', 'DESC')
+            ->groupBy('c.id')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
+     * @return array
+     */
+    public function getForMenu(): array
+    {
+        return $this->createQueryBuilder('c')
+            ->where('c.isEnabled = 1')
+            ->where('c.isShowMenu = 1')
+            ->setMaxResults(4)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
+     * @param string $slug
+     * @return Category|null
+     */
+    public function findEnableBySlug(string $slug): ?Category
+    {
+        return $this->findOneBy([
+            'slug' => $slug,
+            'isEnabled' => true,
+        ]);
     }
 }

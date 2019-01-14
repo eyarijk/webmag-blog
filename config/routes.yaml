@@ -4,6 +4,9 @@
 admin:
   prefix: /admin
   resource: './routes/admin_routes.yaml'
+api:
+  prefix: /api
+  resource: './routes/api_routes.yaml'
 login:
   path: /login
   controller: App\Controller\SecurityController::login
@@ -15,3 +18,12 @@ logout:
 home:
   path: /
   controller: App\Controller\HomeController::index
+article_page:
+  path: /article/{slug}
+  controller: App\Controller\ArticleController::index
+category_page:
+  path: /category/{categorySlug}
+  controller: App\Controller\CategoryController::index
+new_page:
+  path: /new
+  controller: App\Controller\NewController::index

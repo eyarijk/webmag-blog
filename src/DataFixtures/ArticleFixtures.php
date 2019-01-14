@@ -37,14 +37,15 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface, Cont
         $user = $manager->getRepository(User::class)->findOneBy([]);
 
         $dir = $this->container->getParameter('articles_images_directory') . '/';
-        $mainImageName = md5(time()) . '.jpeg';
 
-        $imageFile = file_get_contents($faker->imageUrl());
-        file_put_contents($dir . $mainImageName, $imageFile);
-
-        for ($i = 0; $i < 20; ++$i) {
+        for ($i = 0; $i < 200; ++$i) {
             shuffle($categories);
             shuffle($tags);
+
+            $mainImageName = md5(time()) . $i . '.jpeg';
+
+            $imageFile = file_get_contents($faker->imageUrl());
+            file_put_contents($dir . $mainImageName, $imageFile);
 
             $article = new Article();
             $article->setIsEnabled($faker->boolean);
@@ -56,6 +57,7 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface, Cont
             $article->setUser($user);
             $article->setUpdatedAt($article->getCreatedAt());
             $article->setPublishedAt($article->getIsEnabled() ? new \DateTime() : null);
+            $article->setIsMain($article->getIsEnabled() ? $faker->boolean : false);
             $article->setMainImage($mainImageName);
             $article->setCategory($categories[0]);
 

@@ -121,6 +121,19 @@ class Article
     private $articleViews;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ArticleComment", mappedBy="article", orphanRemoval=true)
+     */
+    private $articleComments;
+
+    /**
+     * @Assert\Type(
+     *     type="bool"
+     * )
+     * @ORM\Column(type="boolean")
+     */
+    private $isMain;
+
+    /**
      * Article constructor.
      */
     public function __construct()
@@ -129,6 +142,8 @@ class Article
         $this->articleViews = new ArrayCollection();
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
+        $this->articleComments = new ArrayCollection();
+        $this->isMain = false;
     }
 
     /**
@@ -426,5 +441,63 @@ class Article
     public function getMainImagePath(): ?string
     {
         return $this->mainImage !== null ? '/uploads/articles/' . $this->mainImage : null;
+    }
+
+    /**
+     * @return ArticleComment[]|Collection
+     */
+    public function getArticleComments(): Collection
+    {
+        return $this->articleComments;
+    }
+
+    /**
+     * @param ArticleComment $articleComment
+     * @return Article
+     */
+    public function addArticleComment(ArticleComment $articleComment): self
+    {
+        if (!$this->articleComments->contains($articleComment)) {
+            $this->articleComments[] = $articleComment;
+            $articleComment->setArticle($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param ArticleComment $articleComment
+     * @return Article
+     */
+    public function removeArticleComment(ArticleComment $articleComment): self
+    {
+        if ($this->articleComments->contains($articleComment)) {
+            $this->articleComments->removeElement($articleComment);
+            // set the owning side to null (unless already changed)
+            if ($articleComment->getArticle() === $this) {
+                $articleComment->setArticle(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function getIsMain(): ?bool
+    {
+        return $this->isMain;
+    }
+
+    /**
+     * @param bool $isMain
+     * @return Article
+     */
+    public function setIsMain(bool $isMain): self
+    {
+        $this->isMain = $isMain;
+
+        return $this;
     }
 }

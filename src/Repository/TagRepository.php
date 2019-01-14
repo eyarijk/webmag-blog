@@ -30,4 +30,16 @@ class TagRepository extends ServiceEntityRepository
             ->getQuery()
         ;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getEnabled(): array
+    {
+        return $this->createQueryBuilder('t')
+            ->where('t.isEnabled = 1')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

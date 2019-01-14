@@ -60,6 +60,9 @@ class ArticleType extends AbstractType
             ->add('isEnabled', CheckboxType::class, [
                 'label' => 'Is Enabled?',
             ])
+            ->add('isMain', CheckboxType::class, [
+                'label' => 'Is Main?',
+            ])
             ->add('description', TextareaType::class, [
                 'label' => 'Description',
                 'attr' => [
@@ -69,7 +72,7 @@ class ArticleType extends AbstractType
             ->add('shortDescription', TextareaType::class, [
                 'label' => 'Short Description',
                 'attr' => [
-                    'class' => 'form-control tinymce',
+                    'class' => 'form-control',
                 ],
             ])
             ->add('mainImage', FileType::class, [

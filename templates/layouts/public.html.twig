@@ -7,11 +7,11 @@
     <link rel="stylesheet" href="{{ asset('/css/public.css') }}"/>
 {% endblock %}
 
-{% block header %}
-    {% include 'includes/header.html.twig' %}
-{% endblock %}
-
 {% block body %}
+    <header id="header">
+        {% include 'includes/nav.html.twig' %}
+        {% block header %}{% endblock %}
+    </header>
     {% block content %}{% endblock %}
 {% endblock %}
 

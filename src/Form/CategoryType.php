@@ -26,8 +26,17 @@ class CategoryType extends AbstractType
                     'class' => 'form-control',
                 ],
             ])
+            ->add('color', TextType::class, [
+                'label' => 'Color for background',
+                'attr' => [
+                    'class' => 'form-control jscolor {hash:true}',
+                ],
+            ])
             ->add('isEnabled', CheckboxType::class, [
                 'label' => 'Is Enabled?',
+            ])
+            ->add('isShowMenu', CheckboxType::class, [
+                'label' => 'Is Show In Menu?',
             ])
             ->add('create', SubmitType::class, [
                 'label' => $options['labelForSubmit'],

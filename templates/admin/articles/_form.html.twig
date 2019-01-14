@@ -25,6 +25,19 @@
     </div>
 
     <div class="form-group">
+        <div class="checkbox">
+            <label for="{{ form.isMain.vars.id }}" class="form-check-label ">
+                {{ form_widget(form.isMain) }} {{ form.isMain.vars.label }}
+            </label>
+        </div>
+        <span class="help-block">
+             {% for error in form.isMain.vars.errors %}
+                 {{ error.getMessage }}
+             {% endfor %}
+        </span>
+    </div>
+
+    <div class="form-group">
         <label for="cc-payment" id="{{ form.category.vars.id }}" class="control-label mb-1">{{ form.category.vars.label }}</label>
         {{ form_widget(form.category) }}
         <span class="help-block">

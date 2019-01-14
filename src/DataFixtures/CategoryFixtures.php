@@ -18,9 +18,11 @@ class CategoryFixtures extends Fixture
 
         for ($i = 0; $i < 20; ++$i) {
             $tag = new Category();
-            $tag->setTitle($faker->jobTitle);
+            $tag->setTitle($faker->title);
+            $tag->setColor($faker->hexColor);
             $tag->setSlug($faker->slug);
             $tag->setIsEnabled($faker->boolean);
+            $tag->setIsShowMenu($tag->getIsEnabled() === true ? $faker->boolean : false);
             $manager->persist($tag);
         }
 

@@ -1,0 +1,16 @@
+<div class="aside-widget">
+    <div class="section-title">
+        <h2>Categories</h2>
+    </div>
+    <div class="category-widget">
+        <ul>
+            {% for categoryWithCount in getEnabledCategoriesWithCountArticles() %}
+                <li>
+                    <a href="{{ path('category_page',{'categorySlug':categoryWithCount.category.slug}) }}">{{ categoryWithCount.category.title }}
+                        <span style="background-color: {{ categoryWithCount.category.color }}">{{ categoryWithCount.articleCount }}</span>
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
