@@ -35,8 +35,8 @@
                     <td>{{ article.isEnabled ? article.publishedAt|date('d-m-Y H:i:s') : '-' }}</td>
                     <td>{{ article.isEnabled ? 'Yes' : 'No' }}</td>
                     <td>
-                        {% if article.getMainImagePath %}
-                            <img src="{{ article.getMainImagePath }}" class="row-image" alt="{{ article.title }}">
+                        {% if article.mainImage %}
+                            <img src="{{ article.mainImage|uploadFilePath }}" class="row-image" alt="{{ article.title }}">
                         {% else %}
                             -
                         {% endif %}

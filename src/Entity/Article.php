@@ -432,13 +432,6 @@ class Article
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getMainImagePath(): ?string
-    {
-        return $this->mainImage !== null ? '/uploads/articles/' . $this->mainImage : null;
-    }
 
     /**
      * @return ArticleComment[]|Collection

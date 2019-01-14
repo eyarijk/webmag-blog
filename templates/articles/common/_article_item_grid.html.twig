@@ -1,6 +1,6 @@
 <div class="post post-thumb">
     <a class="post-img" href="{{ path('article_page',{'slug':article.slug}) }}">
-        <img src="{{ article.getMainImagePath }}" alt="{{ article.title }}">
+        <img src="{{ article.mainImage|uploadFilePath }}" alt="{{ article.title }}">
     </a>
     <div class="post-body">
         <div class="post-meta">
