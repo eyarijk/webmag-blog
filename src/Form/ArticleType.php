@@ -15,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Image;
 
 class ArticleType extends AbstractType
 {
@@ -75,11 +76,17 @@ class ArticleType extends AbstractType
                     'class' => 'form-control',
                 ],
             ])
-            ->add('mainImage', FileType::class, [
+            ->add('mainImageFile', FileType::class, [
+                'mapped' => false,
                 'label' => 'Main Image',
                 'data_class' => null,
                 'attr' => [
                     'class' => 'form-control-file',
+                ],
+                'constraints' => [
+                    new Image([
+                        'maxSize' => '5M',
+                    ]),
                 ],
             ])
             ->add('create', SubmitType::class, [

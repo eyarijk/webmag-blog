@@ -1,39 +1,6 @@
 <div id="nav">
 
-    <div id="nav-fixed">
-        <div class="container">
-
-            <div class="nav-logo">
-                <a href="{{ path('home') }}" class="logo">
-                    <img src="{{ asset('logo.png') }}" alt="WebMag">
-                </a>
-            </div>
-
-            <ul class="nav-menu nav navbar-nav">
-                <li>
-                    <a href="{{ path('new_page') }}">News</a>
-                </li>
-                <li>
-                    <a href="category.html">Popular</a>
-                </li>
-                {% for category in getCategoriesForMenu() %}
-                    <li style="border-bottom: 3px solid {{ category.color }}">
-                        <a href="{{ path('category_page',{'categorySlug':category.slug}) }}">{{ category.title }}</a>
-                    </li>
-                {% endfor %}
-            </ul>
-
-            <div class="nav-btns">
-                <button class="aside-btn"><i class="fa fa-bars"></i></button>
-                <button class="search-btn"><i class="fa fa-search"></i></button>
-                <div class="search-form">
-                    <input class="search-input" type="text" name="search" placeholder="Enter Your Search ...">
-                    <button class="search-close"><i class="fa fa-times"></i></button>
-                </div>
-            </div>
-
-        </div>
-    </div>
+    {{ render(controller('App\\Controller\\LayoutController::navMenu')) }}
 
     <div id="nav-aside">
 

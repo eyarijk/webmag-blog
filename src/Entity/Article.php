@@ -108,9 +108,6 @@ class Article
     private $tags;
 
     /**
-     * @Assert\Image(
-     *     maxSize="5M"
-     * )
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $mainImage;

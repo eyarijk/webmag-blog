@@ -78,9 +78,9 @@
 
                     <div class="col-md-4">
 
-                        {% include 'includes/aside_widget_categories.html.twig' %}
+                        {{ render(controller('App\\Controller\\LayoutController::widgetCategories')) }}
 
-                        {% include 'includes/aside_widget_tags.html.twig' %}
+                        {{ render(controller('App\\Controller\\LayoutController::widgetTags')) }}
 
                     </div>
                 </div>

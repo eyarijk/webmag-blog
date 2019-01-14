@@ -32,16 +32,9 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="footer-widget">
-                            <h3 class="footer-title">Categories</h3>
-                            <ul class="footer-links">
-                                {% for category in getCategoriesForMenu() %}
-                                    <li>
-                                        <a href="{{ path('category_page',{'categorySlug':category.slug}) }}">{{ category.title }}</a>
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        </div>
+
+                        {{ render(controller('App\\Controller\\LayoutController::footerCategories')) }}
+
                     </div>
                 </div>
             </div>

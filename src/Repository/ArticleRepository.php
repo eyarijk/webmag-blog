@@ -4,7 +4,6 @@ namespace App\Repository;
 
 use App\Entity\Article;
 use App\Entity\Category;
-use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\Expr;
@@ -36,41 +35,6 @@ class ArticleRepository extends ServiceEntityRepository
             ->orderBy('t.id', 'DESC')
             ->getQuery()
         ;
-    }
-
-    /**
-     * @param Article $article
-     * @param User $user
-     * @param string $imageDir
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
-     * @return Article
-     */
-    public function save(Article $article, User $user, string $imageDir = ''): Article
-    {
-        $publishedAt = $article->getIsEnabled() === true ? new \DateTime() : null;
-        $article->setPublishedAt($publishedAt);
-
-        $mainImage = $article->getMainImage();
-
-        if ($mainImage !== null) {
-            $fileName = md5(uniqid('article_', false)) . '.' . $mainImage->guessExtension();
-
-            $mainImage->move(
-                $imageDir,
-                $fileName
-            );
-
-            $article->setMainImage($fileName);
-        }
-
-        $article->setUser($user);
-
-        $em = $this->getEntityManager();
-        $em->persist($article);
-        $em->flush();
-
-        return $article;
     }
 
     /**

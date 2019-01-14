@@ -4,7 +4,7 @@
     </div>
     <div class="category-widget">
         <ul>
-            {% for categoryWithCount in getEnabledCategoriesWithCountArticles() %}
+            {% for categoryWithCount in enabledCategoriesWithCountArticles %}
                 <li>
                     <a href="{{ path('category_page',{'categorySlug':categoryWithCount.category.slug}) }}">{{ categoryWithCount.category.title }}
                         <span style="background-color: {{ categoryWithCount.category.color }}">{{ categoryWithCount.articleCount }}</span>

@@ -6,6 +6,9 @@ use App\Entity\Article;
 use App\Form\ArticleType;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -37,8 +40,6 @@ class ArticlesController extends AbstractController
 
     /**
      * @param Request $request
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
      * @return Response
      */
     public function create(Request $request): Response
@@ -52,13 +53,7 @@ class ArticlesController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $articlesImagesDir = $this->getParameter('articles_images_directory');
-
-            $this
-                ->getDoctrine()
-                ->getRepository(Article::class)
-                ->save($form->getData(), $this->getUser(), $articlesImagesDir)
-            ;
+            $this->saveArticle($form);
 
             return $this->redirectToRoute('articles_index');
         }
@@ -71,8 +66,6 @@ class ArticlesController extends AbstractController
     /**
      * @param Article $article
      * @param Request $request
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
      * @return Response
      */
     public function edit(Article $article, Request $request): Response
@@ -84,13 +77,7 @@ class ArticlesController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $articlesImagesDir = $this->getParameter('articles_images_directory');
-
-            $this
-                ->getDoctrine()
-                ->getRepository(Article::class)
-                ->save($form->getData(), $this->getUser(), $articlesImagesDir)
-            ;
+            $this->saveArticle($form);
 
             return $this->redirectToRoute('articles_index');
         }
@@ -112,5 +99,40 @@ class ArticlesController extends AbstractController
         $entityManager->flush();
 
         return $this->redirectToRoute('articles_index');
+    }
+
+    /**
+     * @param FormInterface $form
+     * @return Article
+     */
+    private function saveArticle(FormInterface $form): Article
+    {
+        $article = $form->getData();
+
+        $mainImageFile = $form
+            ->get('mainImageFile')
+            ->getData()
+        ;
+
+        if ($mainImageFile instanceof UploadedFile) {
+            $articlesImagesDir = $this->getParameter('images_directory');
+
+            $fileName = md5(uniqid('article_', true)) . '.' . $mainImageFile->guessExtension();
+
+            $mainImageFile->move(
+                $articlesImagesDir,
+                $fileName
+            );
+
+            $article->setMainImage($fileName);
+        }
+
+        $article->setUser($this->getUser());
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($article);
+        $em->flush();
+
+        return $article;
     }
 }
