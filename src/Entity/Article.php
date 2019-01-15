@@ -131,6 +131,11 @@ class Article
     private $isMain;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $headerImage;
+
+    /**
      * Article constructor.
      */
     public function __construct()
@@ -486,6 +491,25 @@ class Article
     public function setIsMain(bool $isMain): self
     {
         $this->isMain = $isMain;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getHeaderImage(): ?string
+    {
+        return $this->headerImage;
+    }
+
+    /**
+     * @param string|null $headerImage
+     * @return Article
+     */
+    public function setHeaderImage(?string $headerImage): self
+    {
+        $this->headerImage = $headerImage;
 
         return $this;
     }

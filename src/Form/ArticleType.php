@@ -26,7 +26,6 @@ class ArticleType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->setMethod('POST')
             ->add('title', TextType::class, [
                 'label' => 'Title',
                 'attr' => [
@@ -79,6 +78,19 @@ class ArticleType extends AbstractType
             ->add('mainImageFile', FileType::class, [
                 'mapped' => false,
                 'label' => 'Main Image',
+                'data_class' => null,
+                'attr' => [
+                    'class' => 'form-control-file',
+                ],
+                'constraints' => [
+                    new Image([
+                        'maxSize' => '5M',
+                    ]),
+                ],
+            ])
+            ->add('headerImageFile', FileType::class, [
+                'mapped' => false,
+                'label' => 'Header Image',
                 'data_class' => null,
                 'attr' => [
                     'class' => 'form-control-file',

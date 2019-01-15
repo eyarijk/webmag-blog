@@ -123,17 +123,21 @@ class ArticlesController extends AbstractController
             ->getData()
         ;
 
+        $headerImageFile = $form
+            ->get('headerImageFile')
+            ->getData()
+        ;
+
         if ($mainImageFile instanceof UploadedFile) {
-            $articlesImagesDir = $this->getParameter('images_directory');
+            $mainImageFileName = $this->uploadFile($mainImageFile);
 
-            $fileName = md5(uniqid('article_', true)) . '.' . $mainImageFile->guessExtension();
+            $article->setMainImage($mainImageFileName);
+        }
 
-            $mainImageFile->move(
-                $articlesImagesDir,
-                $fileName
-            );
+        if ($headerImageFile instanceof UploadedFile) {
+            $headerImageFileName = $this->uploadFile($headerImageFile);
 
-            $article->setMainImage($fileName);
+            $article->setHeaderImage($headerImageFileName);
         }
 
         $article->setUser($this->getUser());
@@ -143,5 +147,24 @@ class ArticlesController extends AbstractController
         $em->flush();
 
         return $article;
+    }
+
+    /**
+     * :TODO Потрібно буде створити сервіс, який буде зберігати файли .
+     * @param UploadedFile $uploadedFile
+     * @return string|null
+     */
+    private function uploadFile(UploadedFile $uploadedFile): ?string
+    {
+        $imagesDirectory = $this->getParameter('images_directory');
+
+        $fileName = md5(uniqid('images', true)) . '.' . $uploadedFile->guessExtension();
+
+        $uploadedFile->move(
+            $imagesDirectory,
+            $fileName
+        );
+
+        return $fileName;
     }
 }

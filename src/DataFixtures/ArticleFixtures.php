@@ -59,6 +59,7 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface, Cont
             $article->setPublishedAt($article->getIsEnabled() ? new \DateTime() : null);
             $article->setIsMain($article->getIsEnabled() ? $faker->boolean : false);
             $article->setMainImage($mainImageName);
+            $article->setHeaderImage($mainImageName);
             $article->setCategory($categories[0]);
 
             for ($j = 0; $j < 5; ++$j) {

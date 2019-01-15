@@ -1,0 +1,49 @@
+{% extends 'layouts/public.html.twig' %}
+
+{% block header %}
+    <div id="post-header" class="page-header">
+        <div class="background-img" style="background-image: url('{{ article.headerImage|uploadFilePath }}');"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="post-meta">
+                        <a class="post-category" style="background-color: {{ article.category.color }}"
+                           href="{{ path('category_page',{'categorySlug':article.category.slug}) }}"
+                        >{{ article.category.title }}</a>
+                        <span class="post-date">{{ article.publishedAt|date('F d, Y') }}</span>
+                    </div>
+                    <h1>{{ article.title }}</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+
+                    <div class="section-row sticky-container">
+                        <div class="main-post">
+                            {{ article.description|raw }}
+                        </div>
+
+                        {% include 'includes/_share_buttons.html.twig' %}
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-4">
+
+                    {{ render(controller('App\\Controller\\LayoutController::widgetCategories')) }}
+
+                    {{ render(controller('App\\Controller\\LayoutController::widgetTags')) }}
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
