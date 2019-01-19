@@ -37,7 +37,8 @@ class TagRepository extends ServiceEntityRepository
     public function getEnabled(): array
     {
         return $this->createQueryBuilder('t')
-            ->where('t.isEnabled = 1')
+            ->where('t.isEnabled = :isEnabled')
+            ->setParameter('isEnabled', true)
             ->getQuery()
             ->getResult()
         ;

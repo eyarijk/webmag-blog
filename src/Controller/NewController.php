@@ -22,7 +22,7 @@ class NewController extends AbstractController
             ->getRepository(Article::class)
         ;
 
-        $mainArticles = $articleRepository->getMain();
+        $mainArticles = $articleRepository->getMain(3);
         $newArticlesQuery = $articleRepository->getNewQuery();
 
         $newArticles = $paginator->paginate(

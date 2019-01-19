@@ -59,7 +59,8 @@ class ArticleRepository extends ServiceEntityRepository
     public function getRecent(int $limit = 6)
     {
         return $this->createQueryBuilder('a')
-            ->where('a.isEnabled = 1')
+            ->where('a.isEnabled = :isEnabled')
+            ->setParameter('isEnabled', true)
             ->orderBy('a.publishedAt', 'DESC')
             ->setMaxResults($limit)
             ->getQuery()
@@ -75,7 +76,8 @@ class ArticleRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('a')
             ->leftJoin('a.articleComments', 'ac')
-            ->where('a.isEnabled = 1')
+            ->where('a.isEnabled = :isEnabled')
+            ->setParameter('isEnabled', true)
             ->orderBy('COUNT(ac.id)', 'desc')
             ->groupBy('a.id')
             ->setMaxResults($limit)
@@ -91,7 +93,8 @@ class ArticleRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('a')
             ->leftJoin('a.articleViews', 'av')
-            ->where('a.isEnabled = 1')
+            ->where('a.isEnabled = :isEnabled')
+            ->setParameter('isEnabled', true)
             ->orderBy('COUNT(av.id)', 'desc')
             ->groupBy('a.id')
             ->getQuery()
@@ -107,7 +110,8 @@ class ArticleRepository extends ServiceEntityRepository
     {
         $result = $this->createQueryBuilder('a')
             ->select('COUNT(a.id) as articleCount')
-            ->where('a.isEnabled = 1')
+            ->where('a.isEnabled = :isEnabled')
+            ->setParameter('isEnabled', true)
             ->getQuery()
             ->getSingleResult()
         ;
@@ -122,8 +126,10 @@ class ArticleRepository extends ServiceEntityRepository
     public function getMain(int $limit = 2): array
     {
         return $this->createQueryBuilder('a')
-            ->where('a.isEnabled = 1')
-            ->where('a.isMain = 1')
+            ->where('a.isEnabled = :isEnabled')
+            ->andWhere('a.isMain = :isMain')
+            ->setParameter('isEnabled', true)
+            ->setParameter('isMain', true)
             ->orderBy('a.publishedAt', 'DESC')
             ->setMaxResults($limit)
             ->getQuery()
@@ -140,8 +146,10 @@ class ArticleRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('a')
             ->innerJoin('a.category', 'c', Expr\Join::WITH, 'c.id = :category')
-            ->where('a.isEnabled = 1')
-            ->where('a.isMain = 1')
+            ->where('a.isEnabled = :isEnabled')
+            ->andWhere('a.isMain = :isMain')
+            ->setParameter('isEnabled', true)
+            ->setParameter('isMain', true)
             ->setParameter('category', $category)
             ->orderBy('a.publishedAt', 'DESC')
             ->setMaxResults($limit)
@@ -156,7 +164,8 @@ class ArticleRepository extends ServiceEntityRepository
     public function getNewQuery(): Query
     {
         return $this->createQueryBuilder('a')
-            ->where('a.isEnabled = 1')
+            ->where('a.isEnabled = :isEnabled')
+            ->setParameter('isEnabled', true)
             ->orderBy('a.publishedAt', 'DESC')
             ->getQuery()
         ;
@@ -170,7 +179,8 @@ class ArticleRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('a')
             ->innerJoin('a.category', 'c', Expr\Join::WITH, 'c.id = :category')
-            ->where('a.isEnabled = 1')
+            ->where('a.isEnabled = :isEnabled')
+            ->setParameter('isEnabled', true)
             ->setParameter('category', $category)
             ->orderBy('a.publishedAt', 'DESC')
             ->getQuery()
@@ -195,8 +205,9 @@ class ArticleRepository extends ServiceEntityRepository
     public function getPopularQuery(): Query
     {
         return $this->createQueryBuilder('a')
-            ->leftJoin('a.articleViews','av')
-            ->where('a.isEnabled = 1')
+            ->leftJoin('a.articleViews', 'av')
+            ->where('a.isEnabled = :isEnabled')
+            ->setParameter('isEnabled', true)
             ->groupBy('a.id')
             ->orderBy('COUNT(av.id)', 'DESC')
             ->getQuery()

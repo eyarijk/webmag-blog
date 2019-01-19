@@ -154,4 +154,5 @@ $('.likes-block .action-btn').on('click',function () {
 		likesBlock.find('.like-count').text(result.likes);
 		likesBlock.find('.dislike-count').text(result.dislikes);
 	}});
+
 });

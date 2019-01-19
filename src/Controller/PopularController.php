@@ -42,7 +42,7 @@ class PopularController extends AbstractController
      * @param PaginatorInterface $paginator
      * @return JsonResponse
      */
-    public function getMoreRead(Request $request,PaginatorInterface $paginator): JsonResponse
+    public function getMoreRead(Request $request, PaginatorInterface $paginator): JsonResponse
     {
         $moreReadArticlesQuery = $this
             ->getDoctrine()
