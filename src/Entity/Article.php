@@ -76,9 +76,7 @@ class Article
     private $createdAt;
 
     /**
-     * @Assert\Type(
-     *     type="datetime"
-     * )
+     * @Gedmo\Timestampable()
      * @ORM\Column(type="datetime")
      */
     private $updatedAt;

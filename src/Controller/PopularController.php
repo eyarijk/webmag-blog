@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class NewController extends AbstractController
+class PopularController extends AbstractController
 {
     /**
      * @param PaginatorInterface $paginator
@@ -23,17 +23,17 @@ class NewController extends AbstractController
         ;
 
         $mainArticles = $articleRepository->getMain();
-        $newArticlesQuery = $articleRepository->getNewQuery();
+        $popularArticlesQuery = $articleRepository->getPopularQuery();
 
-        $newArticles = $paginator->paginate(
-            $newArticlesQuery,
+        $popularArticles = $paginator->paginate(
+            $popularArticlesQuery,
             1,
             4
         );
 
-        return $this->render('new/index.html.twig', [
+        return $this->render('popular/index.html.twig', [
             'mainArticles' => $mainArticles,
-            'articles' => $newArticles,
+            'articles' => $popularArticles,
         ]);
     }
 
@@ -42,12 +42,12 @@ class NewController extends AbstractController
      * @param PaginatorInterface $paginator
      * @return JsonResponse
      */
-    public function getMoreRead(Request $request, PaginatorInterface $paginator): JsonResponse
+    public function getMoreRead(Request $request,PaginatorInterface $paginator): JsonResponse
     {
         $moreReadArticlesQuery = $this
             ->getDoctrine()
             ->getRepository(Article::class)
-            ->getNewQuery()
+            ->getPopularQuery()
         ;
 
         $articles = $paginator->paginate(

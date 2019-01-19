@@ -176,4 +176,30 @@ class ArticleRepository extends ServiceEntityRepository
             ->getQuery()
         ;
     }
+
+    /**
+     * @param string $slug
+     * @return Article|null
+     */
+    public function findEnableBySlug(string $slug): ?Article
+    {
+        return $this->findOneBy([
+            'slug' => $slug,
+            'isEnabled' => true,
+        ]);
+    }
+
+    /**
+     * @return Query
+     */
+    public function getPopularQuery(): Query
+    {
+        return $this->createQueryBuilder('a')
+            ->leftJoin('a.articleViews','av')
+            ->where('a.isEnabled = 1')
+            ->groupBy('a.id')
+            ->orderBy('COUNT(av.id)', 'DESC')
+            ->getQuery()
+        ;
+    }
 }

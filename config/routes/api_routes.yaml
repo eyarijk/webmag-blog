@@ -7,3 +7,9 @@ category_more_read:
 new_more_read:
   path: /new/most_read
   controller: App\Controller\NewController::getMoreRead
+popular_more_read:
+  path: /popular/most_read
+  controller: App\Controller\PopularController::getMoreRead
+article_like:
+  path: /{articleSlug}/like
+  controller: App\Controller\ArticleController::like

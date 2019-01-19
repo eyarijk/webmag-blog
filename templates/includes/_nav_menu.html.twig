@@ -12,7 +12,7 @@
                 <a href="{{ path('new_page') }}">News</a>
             </li>
             <li>
-                <a href="category.html">Popular</a>
+                <a href="{{ path('popular_page') }}">Popular</a>
             </li>
             {% for category in categories %}
                 <li style="border-bottom: 3px solid {{ category.color }}">

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ArticleViewRepository")
@@ -27,6 +28,7 @@ class ArticleView
     private $userAgent;
 
     /**
+     * @Gedmo\Timestampable()
      * @ORM\Column(type="datetime")
      */
     private $date;

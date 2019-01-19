@@ -68,14 +68,14 @@ class CategoryController extends AbstractController
             throw new NotFoundHttpException('Category (slug: ' . $categorySlug . ' ) not found!');
         }
 
-        $articles = $this
+        $articlesQuery = $this
             ->getDoctrine()
             ->getRepository(Article::class)
             ->getByCategoryQuery($category)
         ;
 
         $articles = $paginator->paginate(
-            $articles,
+            $articlesQuery,
             $request->query->getInt('page', 1),
             4
         );

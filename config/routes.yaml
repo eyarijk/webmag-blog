@@ -19,7 +19,7 @@ home:
   path: /
   controller: App\Controller\HomeController::index
 article_page:
-  path: /article/{slug}
+  path: /article/{articleSlug}
   controller: App\Controller\ArticleController::index
 category_page:
   path: /category/{categorySlug}
@@ -27,3 +27,6 @@ category_page:
 new_page:
   path: /new
   controller: App\Controller\NewController::index
+popular_page:
+  path: /popular
+  controller: App\Controller\PopularController::index
