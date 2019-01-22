@@ -2,15 +2,15 @@
 
 namespace App\Form;
 
-use App\Entity\Tag;
+use App\Entity\ArticleComment;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class TagType extends AbstractType
+class ArticleCommentType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -19,19 +19,19 @@ class TagType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('title', TextType::class, [
-                'label' => 'Title',
+            ->add('description', TextareaType::class, [
+                'label' => 'Comment',
                 'attr' => [
-                    'class' => 'form-control',
+                    'placeholder' => 'Message',
                 ],
             ])
-            ->add('isEnabled', CheckboxType::class, [
-                'label' => 'Is Enabled?',
+            ->add('parentCommentId', HiddenType::class, [
+                'mapped' => false,
             ])
             ->add('create', SubmitType::class, [
-                'label' => $options['labelForSubmit'],
+                'label' => 'Submit',
                 'attr' => [
-                    'class' => 'btn btn-secondary btn-sm',
+                    'class' => 'primary-button',
                 ],
             ])
         ;
@@ -43,8 +43,7 @@ class TagType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Tag::class,
-            'labelForSubmit' => 'Create',
+            'data_class' => ArticleComment::class,
         ]);
     }
 }

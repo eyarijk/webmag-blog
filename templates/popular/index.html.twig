@@ -7,9 +7,9 @@
                 <div class="col-md-10">
                     <ul class="page-header-breadcrumb">
                         <li><a href="{{ path('home') }}">Home</a></li>
-                        <li>News</li>
+                        <li>Popular</li>
                     </ul>
-                    <h1>New</h1>
+                    <h1>Popular</h1>
                 </div>
             </div>
         </div>
@@ -31,7 +31,7 @@
 
                         <div class="clearfix visible-md visible-lg"></div>
 
-                        {% include 'articles/common/_more_read.html.twig' with {'articles':articles,'countArtilces':articles.getTotalItemCount,'action':  path('new_more_read')} only %}
+                        {% include 'articles/common/_more_read.html.twig' with {'articles':articles,'countArtilces':articles.getTotalItemCount,'action':  path('popular_more_read')} only %}
 
                     </div>
                 </div>

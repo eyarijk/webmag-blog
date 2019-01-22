@@ -40,7 +40,8 @@ class CategoryRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('c')
             ->select('c as category', 'COUNT(a.id) as articleCount')
             ->leftJoin('c.articles', 'a', Expr\Join::WITH, 'a.isEnabled = 1')
-            ->where('c.isEnabled = 1')
+            ->where('c.isEnabled = :isEnabled')
+            ->setParameter('isEnabled', true)
             ->orderBy('articleCount', 'DESC')
             ->groupBy('c.id')
             ->getQuery()
@@ -54,8 +55,10 @@ class CategoryRepository extends ServiceEntityRepository
     public function getForMenu(): array
     {
         return $this->createQueryBuilder('c')
-            ->where('c.isEnabled = 1')
-            ->where('c.isShowMenu = 1')
+            ->where('c.isEnabled = :isEnabled')
+            ->andWhere('c.isShowMenu = :isShowMenu')
+            ->setParameter('isEnabled', true)
+            ->setParameter('isShowMenu', true)
             ->setMaxResults(4)
             ->getQuery()
             ->getResult()

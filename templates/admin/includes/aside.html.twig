@@ -12,38 +12,40 @@
         <div id="main-menu" class="main-menu collapse navbar-collapse">
             <ul class="nav navbar-nav">
                 <li>
-                    <a href="#"> <i class="menu-icon fa fa-dashboard"></i>Dashboard </a>
+                    <a href="{{ path('admin_dashboard') }}"> <i class="menu-icon fa fa-dashboard"></i>Dashboard </a>
                 </li>
-                <li class="menu-item-has-children dropdown">
-                    <a href="{{ path('tags_index') }}" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="menu-icon fa fa-tags"></i>Tags
-                    </a>
-                    <ul class="sub-menu children dropdown-menu">
-                        <li>
-                            <i class="fa fa-list"></i>
-                            <a href="{{ path('tags_index') }}">Tag list</a>
-                        </li>
-                        <li>
-                            <i class="fa fa-plus-square-o"></i>
-                            <a href="{{ path('tags_create') }}">Create</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="menu-item-has-children dropdown">
-                    <a href="{{ path('tags_index') }}" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="menu-icon fa fa-tags"></i>Categories
-                    </a>
-                    <ul class="sub-menu children dropdown-menu">
-                        <li>
-                            <i class="fa fa-list"></i>
-                            <a href="{{ path('categories_index') }}">Categories list</a>
-                        </li>
-                        <li>
-                            <i class="fa fa-plus-square-o"></i>
-                            <a href="{{ path('categories_create') }}">Create</a>
-                        </li>
-                    </ul>
-                </li>
+                {% if is_granted('ROLE_SUPER_ADMIN') %}
+                    <li class="menu-item-has-children dropdown">
+                        <a href="{{ path('tags_index') }}" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="menu-icon fa fa-tags"></i>Tags
+                        </a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li>
+                                <i class="fa fa-list"></i>
+                                <a href="{{ path('tags_index') }}">Tag list</a>
+                            </li>
+                            <li>
+                                <i class="fa fa-plus-square-o"></i>
+                                <a href="{{ path('tags_create') }}">Create</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="menu-item-has-children dropdown">
+                        <a href="{{ path('tags_index') }}" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="menu-icon fa fa-tags"></i>Categories
+                        </a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li>
+                                <i class="fa fa-list"></i>
+                                <a href="{{ path('categories_index') }}">Categories list</a>
+                            </li>
+                            <li>
+                                <i class="fa fa-plus-square-o"></i>
+                                <a href="{{ path('categories_create') }}">Create</a>
+                            </li>
+                        </ul>
+                    </li>
+                {% endif %}
                 <li class="menu-item-has-children dropdown">
                     <a href="{{ path('articles_index') }}" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="menu-icon fa fa-tags"></i> Articles

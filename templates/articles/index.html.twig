@@ -1,0 +1,93 @@
+{% extends 'layouts/public.html.twig' %}
+
+{% block header %}
+    <div id="post-header" class="page-header">
+        <div class="background-img" style="background-image: url('{{ article.headerImage|uploadFilePath }}');"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="post-meta">
+                        <a class="post-category" style="background-color: {{ article.category.color }}"
+                           href="{{ path('category_page',{'categorySlug':article.category.slug}) }}"
+                        >{{ article.category.title }}</a>
+                        <span class="post-date">{{ article.publishedAt|date('F d, Y') }}</span>
+                    </div>
+                    <h1>{{ article.title }}</h1>
+                    <div class="likes-block" data-action="{{ path('article_like',{'articleSlug':article.slug}) }}">
+                        <span class="action-btn" data-like="1">+</span>
+                        (<span class="like-count">{{ articleLikes }}</span>/<span class="dislike-count">{{ articleDislikes }}</span>)
+                        <span class="action-btn" data-like="0">-</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+
+                    <div class="section-row sticky-container">
+                        <div class="main-post">
+                            {{ article.description|raw }}
+                        </div>
+
+                        {% include 'includes/_share_buttons.html.twig' %}
+
+                    </div>
+
+                    {% if comments[0] is defined %}
+                        <div class="section-row">
+                            <div class="section-title">
+                                <h2>{{ countComments }} Comments</h2>
+                            </div>
+
+                            <div class="post-comments">
+                                {% for comment in comments[0] %}
+                                    {% include 'articles/common/_comment.html.twig' with {'comments':comments,'parentComment':comment} %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+
+                        <div class="section-row">
+                            <div class="section-title">
+                                <h2>Leave a reply</h2>
+
+                                <div class="reply-block hidden">
+                                    <div class="panel panel-success">
+                                        <div class="panel-heading">
+                                            Reply comment (User: "<span class="reply-user"></span>"):
+                                            <span class="close-reply fa-close cursor-pointer"></span>
+                                        </div>
+                                        <div class="panel-body"></div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            {{ form_start(commentForm, {'attr': {'novalidate': 'novalidate','class': 'form-group'}}) }}
+                                {{ form_widget(commentForm) }}
+                            {{ form_end(commentForm) }}
+
+                        </div>
+
+                    {% endif %}
+                </div>
+
+                <div class="col-md-4">
+
+                    {{ render(controller('App\\Controller\\LayoutController::widgetCategories')) }}
+
+                    {{ render(controller('App\\Controller\\LayoutController::widgetTags')) }}
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

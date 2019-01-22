@@ -5,10 +5,16 @@ namespace App\Controller\Admin;
 use App\Entity\Article;
 use App\Form\ArticleType;
 use Knp\Component\Pager\PaginatorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @IsGranted("ROLE_USER")
+ */
 class ArticlesController extends AbstractController
 {
     /**
@@ -18,10 +24,14 @@ class ArticlesController extends AbstractController
      */
     public function index(PaginatorInterface $paginator, Request $request): Response
     {
-        $articles = $this
+        $articlesRepository = $this
             ->getDoctrine()
             ->getRepository(Article::class)
-            ->getSortByIdDescQuery()
+        ;
+
+        $articles = $this->isGranted('ROLE_SUPER_ADMIN')
+            ? $articlesRepository->getSortByIdDescQuery()
+            : $articlesRepository->getSortByIdDescByUserQuery($this->getUser())
         ;
 
         $articles = $paginator->paginate(
@@ -37,8 +47,6 @@ class ArticlesController extends AbstractController
 
     /**
      * @param Request $request
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
      * @return Response
      */
     public function create(Request $request): Response
@@ -52,13 +60,7 @@ class ArticlesController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $articlesImagesDir = $this->getParameter('articles_images_directory');
-
-            $this
-                ->getDoctrine()
-                ->getRepository(Article::class)
-                ->save($form->getData(), $this->getUser(), $articlesImagesDir)
-            ;
+            $this->saveArticle($form);
 
             return $this->redirectToRoute('articles_index');
         }
@@ -69,10 +71,9 @@ class ArticlesController extends AbstractController
     }
 
     /**
+     * @IsGranted("edit", subject="article")
      * @param Article $article
      * @param Request $request
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
      * @return Response
      */
     public function edit(Article $article, Request $request): Response
@@ -84,13 +85,7 @@ class ArticlesController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $articlesImagesDir = $this->getParameter('articles_images_directory');
-
-            $this
-                ->getDoctrine()
-                ->getRepository(Article::class)
-                ->save($form->getData(), $this->getUser(), $articlesImagesDir)
-            ;
+            $this->saveArticle($form);
 
             return $this->redirectToRoute('articles_index');
         }
@@ -102,6 +97,7 @@ class ArticlesController extends AbstractController
     }
 
     /**
+     * @IsGranted("edit", subject="article")
      * @param Article $article
      * @return Response
      */
@@ -112,5 +108,63 @@ class ArticlesController extends AbstractController
         $entityManager->flush();
 
         return $this->redirectToRoute('articles_index');
+    }
+
+    /**
+     * @param FormInterface $form
+     * @return Article
+     */
+    private function saveArticle(FormInterface $form): Article
+    {
+        $article = $form->getData();
+
+        $mainImageFile = $form
+            ->get('mainImageFile')
+            ->getData()
+        ;
+
+        $headerImageFile = $form
+            ->get('headerImageFile')
+            ->getData()
+        ;
+
+        if ($mainImageFile instanceof UploadedFile) {
+            $mainImageFileName = $this->uploadFile($mainImageFile);
+
+            $article->setMainImage($mainImageFileName);
+        }
+
+        if ($headerImageFile instanceof UploadedFile) {
+            $headerImageFileName = $this->uploadFile($headerImageFile);
+
+            $article->setHeaderImage($headerImageFileName);
+        }
+
+        $article->setUser($this->getUser());
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($article);
+        $em->flush();
+
+        return $article;
+    }
+
+    /**
+     * :TODO Потрібно буде створити сервіс, який буде зберігати файли .
+     * @param UploadedFile $uploadedFile
+     * @return string|null
+     */
+    private function uploadFile(UploadedFile $uploadedFile): ?string
+    {
+        $imagesDirectory = $this->getParameter('images_directory');
+
+        $fileName = md5(uniqid('images', true)) . '.' . $uploadedFile->guessExtension();
+
+        $uploadedFile->move(
+            $imagesDirectory,
+            $fileName
+        );
+
+        return $fileName;
     }
 }

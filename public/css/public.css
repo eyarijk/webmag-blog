@@ -977,3 +977,26 @@ RESPONSIVE
          display:none;
     }
 }
+
+.cursor-pointer {
+    cursor: pointer;
+}
+.nav-user-action a {
+    margin-right: 10px;
+}
+.nav-user-action a:hover {
+    text-decoration: none;
+    color: #33b780;
+}
+.nav-user-action {
+    display: inline-block;
+}
+.reply-block {
+    position: relative;
+}
+
+.close-reply {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}

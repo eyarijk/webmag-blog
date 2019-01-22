@@ -76,9 +76,7 @@ class Article
     private $createdAt;
 
     /**
-     * @Assert\Type(
-     *     type="datetime"
-     * )
+     * @Gedmo\Timestampable()
      * @ORM\Column(type="datetime")
      */
     private $updatedAt;
@@ -108,9 +106,6 @@ class Article
     private $tags;
 
     /**
-     * @Assert\Image(
-     *     maxSize="5M"
-     * )
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $mainImage;
@@ -132,6 +127,11 @@ class Article
      * @ORM\Column(type="boolean")
      */
     private $isMain;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $headerImage;
 
     /**
      * Article constructor.
@@ -436,14 +436,6 @@ class Article
     }
 
     /**
-     * @return string|null
-     */
-    public function getMainImagePath(): ?string
-    {
-        return $this->mainImage !== null ? '/uploads/articles/' . $this->mainImage : null;
-    }
-
-    /**
      * @return ArticleComment[]|Collection
      */
     public function getArticleComments(): Collection
@@ -497,6 +489,25 @@ class Article
     public function setIsMain(bool $isMain): self
     {
         $this->isMain = $isMain;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getHeaderImage(): ?string
+    {
+        return $this->headerImage;
+    }
+
+    /**
+     * @param string|null $headerImage
+     * @return Article
+     */
+    public function setHeaderImage(?string $headerImage): self
+    {
+        $this->headerImage = $headerImage;
 
         return $this;
     }

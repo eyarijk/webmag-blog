@@ -39,38 +39,17 @@ class ArticleRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Article $article
      * @param User $user
-     * @param string $imageDir
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
-     * @return Article
+     * @return Query
      */
-    public function save(Article $article, User $user, string $imageDir = ''): Article
+    public function getSortByIdDescByUserQuery(User $user): Query
     {
-        $publishedAt = $article->getIsEnabled() === true ? new \DateTime() : null;
-        $article->setPublishedAt($publishedAt);
-
-        $mainImage = $article->getMainImage();
-
-        if ($mainImage !== null) {
-            $fileName = md5(uniqid('article_', false)) . '.' . $mainImage->guessExtension();
-
-            $mainImage->move(
-                $imageDir,
-                $fileName
-            );
-
-            $article->setMainImage($fileName);
-        }
-
-        $article->setUser($user);
-
-        $em = $this->getEntityManager();
-        $em->persist($article);
-        $em->flush();
-
-        return $article;
+        return $this->createQueryBuilder('t')
+            ->where('t.user = :user')
+            ->setParameter('user', $user)
+            ->orderBy('t.id', 'DESC')
+            ->getQuery()
+        ;
     }
 
     /**
@@ -80,7 +59,8 @@ class ArticleRepository extends ServiceEntityRepository
     public function getRecent(int $limit = 6)
     {
         return $this->createQueryBuilder('a')
-            ->where('a.isEnabled = 1')
+            ->where('a.isEnabled = :isEnabled')
+            ->setParameter('isEnabled', true)
             ->orderBy('a.publishedAt', 'DESC')
             ->setMaxResults($limit)
             ->getQuery()
@@ -96,7 +76,8 @@ class ArticleRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('a')
             ->leftJoin('a.articleComments', 'ac')
-            ->where('a.isEnabled = 1')
+            ->where('a.isEnabled = :isEnabled')
+            ->setParameter('isEnabled', true)
             ->orderBy('COUNT(ac.id)', 'desc')
             ->groupBy('a.id')
             ->setMaxResults($limit)
@@ -112,7 +93,8 @@ class ArticleRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('a')
             ->leftJoin('a.articleViews', 'av')
-            ->where('a.isEnabled = 1')
+            ->where('a.isEnabled = :isEnabled')
+            ->setParameter('isEnabled', true)
             ->orderBy('COUNT(av.id)', 'desc')
             ->groupBy('a.id')
             ->getQuery()
@@ -128,7 +110,8 @@ class ArticleRepository extends ServiceEntityRepository
     {
         $result = $this->createQueryBuilder('a')
             ->select('COUNT(a.id) as articleCount')
-            ->where('a.isEnabled = 1')
+            ->where('a.isEnabled = :isEnabled')
+            ->setParameter('isEnabled', true)
             ->getQuery()
             ->getSingleResult()
         ;
@@ -143,8 +126,10 @@ class ArticleRepository extends ServiceEntityRepository
     public function getMain(int $limit = 2): array
     {
         return $this->createQueryBuilder('a')
-            ->where('a.isEnabled = 1')
-            ->where('a.isMain = 1')
+            ->where('a.isEnabled = :isEnabled')
+            ->andWhere('a.isMain = :isMain')
+            ->setParameter('isEnabled', true)
+            ->setParameter('isMain', true)
             ->orderBy('a.publishedAt', 'DESC')
             ->setMaxResults($limit)
             ->getQuery()
@@ -161,8 +146,10 @@ class ArticleRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('a')
             ->innerJoin('a.category', 'c', Expr\Join::WITH, 'c.id = :category')
-            ->where('a.isEnabled = 1')
-            ->where('a.isMain = 1')
+            ->where('a.isEnabled = :isEnabled')
+            ->andWhere('a.isMain = :isMain')
+            ->setParameter('isEnabled', true)
+            ->setParameter('isMain', true)
             ->setParameter('category', $category)
             ->orderBy('a.publishedAt', 'DESC')
             ->setMaxResults($limit)
@@ -177,7 +164,8 @@ class ArticleRepository extends ServiceEntityRepository
     public function getNewQuery(): Query
     {
         return $this->createQueryBuilder('a')
-            ->where('a.isEnabled = 1')
+            ->where('a.isEnabled = :isEnabled')
+            ->setParameter('isEnabled', true)
             ->orderBy('a.publishedAt', 'DESC')
             ->getQuery()
         ;
@@ -191,9 +179,37 @@ class ArticleRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('a')
             ->innerJoin('a.category', 'c', Expr\Join::WITH, 'c.id = :category')
-            ->where('a.isEnabled = 1')
+            ->where('a.isEnabled = :isEnabled')
+            ->setParameter('isEnabled', true)
             ->setParameter('category', $category)
             ->orderBy('a.publishedAt', 'DESC')
+            ->getQuery()
+        ;
+    }
+
+    /**
+     * @param string $slug
+     * @return Article|null
+     */
+    public function findEnableBySlug(string $slug): ?Article
+    {
+        return $this->findOneBy([
+            'slug' => $slug,
+            'isEnabled' => true,
+        ]);
+    }
+
+    /**
+     * @return Query
+     */
+    public function getPopularQuery(): Query
+    {
+        return $this->createQueryBuilder('a')
+            ->leftJoin('a.articleViews', 'av')
+            ->where('a.isEnabled = :isEnabled')
+            ->setParameter('isEnabled', true)
+            ->groupBy('a.id')
+            ->orderBy('COUNT(av.id)', 'DESC')
             ->getQuery()
         ;
     }

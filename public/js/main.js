@@ -111,6 +111,48 @@ $('.moreButton').on('click',function () {
 		if (result.hideButton === true) {
             moreBlock.remove();
 		}
-            $this.data('page',page + 1);
+		$this.data('page',page + 1);
 	}});
+});
+
+$('.comment-reply').on('click',function () {
+	let $this = $(this),
+		parentId = $this.data('id'),
+        mediaBody = $this.closest('.media-body'),
+		commentText = mediaBody.find('.comment-text').text(),
+		replyBlock = $('.reply-block'),
+		userName = mediaBody.find('.comment-user').text()
+	;
+
+	replyBlock.find('.panel-body').text(commentText);
+	replyBlock.find('.reply-user').text(userName);
+	replyBlock.removeClass('hidden');
+    $('#article_comment_parentCommentId').val(parentId);
+
+    $('html,body').animate({
+		scrollTop: replyBlock.offset().top,
+	},1000);
+});
+
+$('.close-reply').on('click',function () {
+	let replyBlock = $('.reply-block');
+
+    replyBlock.addClass('hidden');
+    replyBlock.find('.panel-body').text('');
+    replyBlock.find('.reply-user').text('');
+    $('#article_comment_parentCommentId').val(null);
+});
+
+$('.likes-block .action-btn').on('click',function () {
+	let $this = $(this),
+		likesBlock = $this.closest('.likes-block'),
+		isLike = Number($this.data('like')),
+		action = likesBlock.data('action')
+	;
+
+    $.ajax({url: action, data: {isLike: isLike}, success: result => {
+		likesBlock.find('.like-count').text(result.likes);
+		likesBlock.find('.dislike-count').text(result.dislikes);
+	}});
+
 });

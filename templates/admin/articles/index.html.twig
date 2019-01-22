@@ -20,6 +20,7 @@
                 <th style="min-width: 130px;" scope="col">Created At</th>
                 <th style="min-width: 130px;" scope="col">Published At</th>
                 <th scope="col" width="115px">Is Enabled?</th>
+                <th scope="col">Link</th>
                 <th scope="col">Main Image</th>
                 <th scope="col"></th>
             </tr>
@@ -34,9 +35,10 @@
                     <td>{{ article.createdAt|date('d-m-Y H:i:s') }}</td>
                     <td>{{ article.isEnabled ? article.publishedAt|date('d-m-Y H:i:s') : '-' }}</td>
                     <td>{{ article.isEnabled ? 'Yes' : 'No' }}</td>
+                    <td><a class="btn-link" href="{{ path('article_page',{'articleSlug': article.slug }) }}" target="_blank">Open</a></td>
                     <td>
-                        {% if article.getMainImagePath %}
-                            <img src="{{ article.getMainImagePath }}" class="row-image" alt="{{ article.title }}">
+                        {% if article.mainImage %}
+                            <img src="{{ article.mainImage|uploadFilePath }}" class="row-image" alt="{{ article.title }}">
                         {% else %}
                             -
                         {% endif %}

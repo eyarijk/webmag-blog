@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ArticleCommentRepository")
@@ -17,24 +19,19 @@ class ArticleComment
     private $id;
 
     /**
+     * @Assert\NotBlank()
+     * @Assert\Type(
+     *     type="string"
+     * )
      * @ORM\Column(type="string", length=1000)
      */
     private $description;
 
     /**
+     * @Gedmo\Timestampable()
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $ip;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $userAgent;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User")
@@ -47,6 +44,11 @@ class ArticleComment
      * @ORM\JoinColumn(nullable=false)
      */
     private $article;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\ArticleComment")
+     */
+    private $parentComment;
 
     /**
      * @return int|null
@@ -95,44 +97,6 @@ class ArticleComment
     }
 
     /**
-     * @return string|null
-     */
-    public function getIp(): ?string
-    {
-        return $this->ip;
-    }
-
-    /**
-     * @param string $ip
-     * @return ArticleComment
-     */
-    public function setIp(string $ip): self
-    {
-        $this->ip = $ip;
-
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getUserAgent(): ?string
-    {
-        return $this->userAgent;
-    }
-
-    /**
-     * @param string $userAgent
-     * @return ArticleComment
-     */
-    public function setUserAgent(string $userAgent): self
-    {
-        $this->userAgent = $userAgent;
-
-        return $this;
-    }
-
-    /**
      * @return User|null
      */
     public function getUser(): ?User
@@ -166,6 +130,25 @@ class ArticleComment
     public function setArticle(?Article $article): self
     {
         $this->article = $article;
+
+        return $this;
+    }
+
+    /**
+     * @return ArticleComment|null
+     */
+    public function getParentComment(): ?self
+    {
+        return $this->parentComment;
+    }
+
+    /**
+     * @param self|null $parentComment
+     * @return ArticleComment
+     */
+    public function setParentComment(?self $parentComment): self
+    {
+        $this->parentComment = $parentComment;
 
         return $this;
     }
