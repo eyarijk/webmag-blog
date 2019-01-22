@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Category;
 use App\Entity\Subscriber;
 use App\Entity\Tag;
+use App\Form\SubscriberType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,38 +19,36 @@ class LayoutController extends AbstractController
      */
     public function subscribeUser(Request $request): JsonResponse
     {
-        $email = $request->get('email');
+        $subscriberForm = $this->createForm(SubscriberType::class,new Subscriber());
+        $subscriberForm->handleRequest($request);
 
-        $subscriber = $this
-            ->getDoctrine()
-            ->getRepository(Subscriber::class)
-            ->findByEmail($email)
-        ;
+        if ($subscriberForm->isValid() && $subscriberForm->isSubmitted()) {
+            /**
+             * @var Subscriber $subscriber
+             */
+            $subscriber = $subscriberForm->getData();
 
-        if ($subscriber !== null) {
+            $token = md5(uniqid('subscriber', true));
+
+            $subscriber->setToken($token);
+
+            $em = $this
+                ->getDoctrine()
+                ->getManager()
+            ;
+
+            $em->persist($subscriber);
+            $em->flush();
+
             return new JsonResponse([
-                'status' => 'error',
-                'message' => 'This email is already signed!',
+                'status' => 'success',
+                'message' => 'You have successfully subscribed!',
             ]);
         }
 
-        $token = md5($email . '-' . time());
-
-        $subscriber = new Subscriber();
-        $subscriber->setEmail($email);
-        $subscriber->setToken($token);
-
-        $em = $this
-            ->getDoctrine()
-            ->getManager()
-        ;
-
-        $em->persist($subscriber);
-        $em->flush();
-
         return new JsonResponse([
-            'status' => 'success',
-            'message' => 'You have successfully subscribed!',
+            'status' => 'error',
+            'message' => 'Form is not valid!',
         ]);
     }
 
@@ -112,8 +111,11 @@ class LayoutController extends AbstractController
             ->getForMenu()
         ;
 
+        $subscriberForm = $this->createForm(SubscriberType::class);
+
         return $this->render('includes/_footer.html.twig', [
             'categories' => $categories,
+            'subscriberForm' => $subscriberForm->createView(),
         ]);
     }
 }

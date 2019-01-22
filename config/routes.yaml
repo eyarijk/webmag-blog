@@ -19,14 +19,18 @@ home:
   path: /
   controller: App\Controller\HomeController::index
 article_page:
-  path: /article/{articleSlug}
-  controller: App\Controller\ArticleController::index
+  path: /article/{slug}
+  controller: App\Controller\Article\ArticleController::index
 category_page:
-  path: /category/{categorySlug}
+  path: /category/{slug}
   controller: App\Controller\CategoryController::index
 new_page:
   path: /new
-  controller: App\Controller\NewController::index
+  controller: App\Controller\Article\NewController::index
 popular_page:
   path: /popular
-  controller: App\Controller\PopularController::index
+  controller: App\Controller\Article\PopularController::index
+subscriber_form:
+  path: /subscriber/form
+  methods: [POST]
+  controller:  App\Controller\LayoutController::subscribeUser

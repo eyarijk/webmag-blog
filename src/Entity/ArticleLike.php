@@ -9,6 +9,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class ArticleLike
 {
+    public const TYPE_LIKE = true;
+    public const TYPE_DISLIKE = false;
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -19,7 +22,7 @@ class ArticleLike
     /**
      * @ORM\Column(type="boolean")
      */
-    private $isLike;
+    private $type;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -48,18 +51,18 @@ class ArticleLike
     /**
      * @return bool|null
      */
-    public function getIsLike(): ?bool
+    public function getType(): ?bool
     {
-        return $this->isLike;
+        return $this->type;
     }
 
     /**
-     * @param bool $isLike
+     * @param bool $type
      * @return ArticleLike
      */
-    public function setIsLike(bool $isLike): self
+    public function setType(bool $type): self
     {
-        $this->isLike = $isLike;
+        $this->type = $type;
 
         return $this;
     }

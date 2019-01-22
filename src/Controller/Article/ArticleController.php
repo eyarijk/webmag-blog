@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Article;
 
 use App\Entity\Article;
 use App\Entity\ArticleComment;
@@ -12,99 +12,74 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ArticleController extends AbstractController
 {
     /**
-     * @param string $articleSlug
+     * @param Article $article
      * @param Request $request
-     * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      * @return Response
      */
-    public function index(string $articleSlug, Request $request): Response
+    public function index(Article $article, Request $request): Response
     {
-        $article = $this
-            ->getDoctrine()
-            ->getRepository(Article::class)
-            ->findEnableBySlug($articleSlug)
-        ;
-
-        if ($article === null) {
-            throw new NotFoundHttpException('Article ( slug: "' . $articleSlug . '") Not Found');
-        }
-
         $commentForm = $this->createForm(ArticleCommentType::class);
         $commentForm->handleRequest($request);
 
         if ($commentForm->isSubmitted() && $commentForm->isValid()) {
-            $this->saveComment($article, $commentForm);
+            $this->persistComment($article, $commentForm);
 
             return $this->redirectToRoute('article_page', [
-                'articleSlug' => $article->getSlug(),
+                'slug' => $article->getSlug(),
             ]);
         }
 
-        $this->checkView($article, $request->getClientIp(), $request->headers->get('user-agent'));
+        $this->incrementView($article, $request->getClientIp(), $request->headers->get('user-agent'));
 
-        $articleLikes = $this
+        $countLikes = $this
             ->getDoctrine()
             ->getRepository(ArticleLike::class)
-            ->getLikeByArticle($article)
+            ->getLikesCountByArticle($article, ArticleLike::TYPE_LIKE)
         ;
 
-        $articleDislikes = $this
+        $countDislikes = $this
             ->getDoctrine()
             ->getRepository(ArticleLike::class)
-            ->getLikeByArticle($article, false)
+            ->getLikesCountByArticle($article, ArticleLike::TYPE_DISLIKE)
         ;
 
-        $articleComments = $this
+        $comments = $this->getDoctrine()
+            ->getRepository(ArticleComment::class)
+            ->findRootByArticleOrderByCreatedDesc($article)
+        ;
+
+        $countComments = $this
             ->getDoctrine()
             ->getRepository(ArticleComment::class)
-            ->getByArticleAndSortByCreatedAtDesc($article)
+            ->getCountCommentsByArticle($article)
         ;
-
-        $sortedComments = [];
-
-        foreach ($articleComments as $comment) {
-            $groupKey = $comment->getParentComment() !== null ? $comment->getParentComment()->getId() : 0;
-            $sortedComments[$groupKey][] = $comment;
-        }
 
         return $this->render('articles/index.html.twig', [
             'article' => $article,
+            'comments' => $comments,
             'commentForm' => $commentForm->createView(),
-            'comments' => $sortedComments,
-            'countComments' => \count($articleComments),
-            'articleDislikes' => $articleDislikes,
-            'articleLikes' => $articleLikes,
+            'countDislikes' => $countDislikes,
+            'countLikes' => $countLikes,
+            'countComments' => $countComments
         ]);
     }
 
     /**
-     * @param string $articleSlug
+     * @param Article $article
      * @param Request $request
-     * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      * @return JsonResponse
      */
-    public function like(string $articleSlug, Request $request): JsonResponse
+    public function like(Article $article, Request $request): JsonResponse
     {
-        $article = $this
-            ->getDoctrine()
-            ->getRepository(Article::class)
-            ->findEnableBySlug($articleSlug)
-        ;
-
-        if ($article === null) {
-            throw new NotFoundHttpException('Article ( slug: "' . $articleSlug . '") Not Found');
-        }
-
-        $this->checkLike(
+        $this->addLikeIfNotAlreadyLiked(
             $article,
-            (bool) $request->query->getInt('isLike'),
+            (bool) $request->query->getInt('type'),
             $request->getClientIp(),
             $request->headers->get('user-agent')
         );
@@ -112,13 +87,13 @@ class ArticleController extends AbstractController
         $articleLikes = $this
             ->getDoctrine()
             ->getRepository(ArticleLike::class)
-            ->getLikeByArticle($article)
+            ->getLikesCountByArticle($article, ArticleLike::TYPE_LIKE)
         ;
 
         $articleDislikes = $this
             ->getDoctrine()
             ->getRepository(ArticleLike::class)
-            ->getLikeByArticle($article, false)
+            ->getLikesCountByArticle($article, ArticleLike::TYPE_DISLIKE)
         ;
 
         return new JsonResponse([
@@ -133,7 +108,7 @@ class ArticleController extends AbstractController
      * @param string $userAgent
      * @return ArticleView
      */
-    private function checkView(Article $article, string $ip, string $userAgent): ArticleView
+    private function incrementView(Article $article, string $ip, string $userAgent): ArticleView
     {
         $articleView = $this
             ->getDoctrine()
@@ -164,17 +139,22 @@ class ArticleController extends AbstractController
 
     /**
      * @param Article $article
-     * @param bool $isLike
+     * @param bool $type
      * @param string $ip
      * @param string $userAgent
      * @return ArticleLike
      */
-    private function checkLike(Article $article, bool $isLike, string $ip, string $userAgent): ArticleLike
+    private function addLikeIfNotAlreadyLiked(Article $article, bool $type, string $ip, string $userAgent): ArticleLike
     {
         $articleLike = $this
             ->getDoctrine()
             ->getRepository(ArticleLike::class)
             ->findByIpAndUserAgentAndArticle($article, $ip, $userAgent)
+        ;
+
+        $em = $this
+            ->getDoctrine()
+            ->getManager()
         ;
 
         if ($articleLike === null) {
@@ -185,16 +165,12 @@ class ArticleController extends AbstractController
                 ->setIp($ip)
                 ->setUserAgent($userAgent)
             ;
+
+            $em->persist($articleLike);
         }
 
-        $articleLike->setIsLike($isLike);
+        $articleLike->setType($type);
 
-        $em = $this
-            ->getDoctrine()
-            ->getManager()
-        ;
-
-        $em->persist($articleLike);
         $em->flush();
 
         return $articleLike;
@@ -205,29 +181,29 @@ class ArticleController extends AbstractController
      * @param FormInterface $form
      * @return ArticleComment
      */
-    private function saveComment(Article $article, FormInterface $form): ArticleComment
+    private function persistComment(Article $article, FormInterface $form): ArticleComment
     {
         /**
-         * @var ArticleComment
+         * @var ArticleComment $comment
          */
         $comment = $form->getData();
+
+        $comment->setArticle($article);
 
         $parentCommentId = $form
             ->get('parentCommentId')
             ->getData()
         ;
 
-        $parentComment = $this
-            ->getDoctrine()
-            ->getRepository(ArticleComment::class)
-            ->findByIdAndArticle($parentCommentId, $article)
-        ;
+        if ($parentCommentId !== null) {
+            $parentComment = $this
+                ->getDoctrine()
+                ->getRepository(ArticleComment::class)
+                ->find($parentCommentId)
+            ;
 
-        $comment
-            ->setUser($this->getUser())
-            ->setArticle($article)
-            ->setParentComment($parentComment)
-        ;
+            $comment->setParent($parentComment);
+        }
 
         $em = $this
             ->getDoctrine()

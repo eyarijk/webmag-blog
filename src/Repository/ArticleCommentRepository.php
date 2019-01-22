@@ -21,34 +21,34 @@ class ArticleCommentRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param int|null $id
      * @param Article $article
-     * @return ArticleComment|null
+     * @return array
      */
-    public function findByIdAndArticle(?int $id, Article $article): ?ArticleComment
+    public function findRootByArticleOrderByCreatedDesc(Article $article): array
     {
-        if ($id === null) {
-            return null;
-        }
-
-        return $this->findOneBy([
-            'id' => $id,
-            'article' => $article,
-        ]);
+        return $this->createQueryBuilder('ac')
+            ->where('ac.article = :article')
+            ->andWhere('ac.parent is NULL')
+            ->setParameter('article',$article)
+            ->orderBy('ac.createdAt','DESC')
+            ->getQuery()
+            ->getResult()
+        ;
     }
 
     /**
      * @param Article $article
-     * @return ArticleComment[]
+     * @return int
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function getByArticleAndSortByCreatedAtDesc(Article $article): array
+    public function getCountCommentsByArticle(Article $article): int
     {
         return $this->createQueryBuilder('ac')
+            ->select('COUNT(ac.id)')
             ->where('ac.article = :article')
-            ->orderBy('ac.createdAt', 'DESC')
             ->setParameter('article', $article)
             ->getQuery()
-            ->getResult()
+            ->getSingleScalarResult()
         ;
     }
 }

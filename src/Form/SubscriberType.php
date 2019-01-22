@@ -5,7 +5,6 @@ namespace App\Form;
 use App\Entity\Subscriber;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -31,11 +30,11 @@ class SubscriberType extends AbstractType
     {
         $builder
             ->add('email', TextType::class, [
+                'label' => false,
                 'attr' => [
                     'placeholder' => 'Enter your email',
                 ],
             ])
-            ->add('submit', SubmitType::class)
         ;
     }
 
@@ -49,7 +48,7 @@ class SubscriberType extends AbstractType
             'action' => $this
                 ->container
                 ->get('router')
-                ->generate('home'),
+                ->generate('subscriber_form'),
         ]);
     }
 }
