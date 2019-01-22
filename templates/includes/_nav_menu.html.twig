@@ -16,7 +16,7 @@
             </li>
             {% for category in categories %}
                 <li style="border-bottom: 3px solid {{ category.color }}">
-                    <a href="{{ path('category_page',{'categorySlug':category.slug}) }}">{{ category.title }}</a>
+                    <a href="{{ path('category_page',{'slug':category.slug}) }}">{{ category.title }}</a>
                 </li>
             {% endfor %}
         </ul>

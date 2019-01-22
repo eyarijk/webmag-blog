@@ -1,20 +1,26 @@
 <div class="media">
     <div class="media-left">
-        {#<img class="media-object" src="{{ parentComment.user }}" alt="">#}
+
     </div>
     <div class="media-body">
         <div class="media-heading">
-            <h4 class="comment-user">{{ parentComment.user.email }}</h4>
+            <h4 class="comment-user">
+                {{ parentComment.name }}({{ parentComment.email }})
+                {% if parentComment.website %}
+                    <span>
+                        {{ parentComment.website }}
+                    </span>
+                {% endif %}
+            </h4>
             <span class="time">{{ parentComment.createdAt|date('F d, Y') }}</span>
             <span data-id="{{ parentComment.id }}" class="comment-reply reply cursor-pointer">Reply</span>
         </div>
+
         <p class="comment-text">{{ parentComment.description }}</p>
 
-        {% if comments[parentComment.id] is defined %}
-            {% for comment in comments[parentComment.id] %}
-                {% include 'articles/common/_comment.html.twig' with {'comments':comments,'parentComment':comment} %}
-            {% endfor %}
-        {% endif %}
+        {% for comment in parentComment.children %}
+            {% include 'articles/common/_comment.html.twig' with {'parentComment':comment} %}
+        {% endfor %}
 
     </div>
 </div>

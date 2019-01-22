@@ -912,7 +912,7 @@ RESPONSIVE
 }
  .footer-newsletter form > .newsletter-btn {
      position: absolute;
-     top: 0;
+     top: -3px;
      right: 0;
      height: 40px;
      line-height: 40px;

@@ -14,22 +14,12 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class CategoryController extends AbstractController
 {
     /**
-     * @param string $categorySlug
+     * @param Category $category
      * @param PaginatorInterface $paginator
      * @return Response
      */
-    public function index(string $categorySlug, PaginatorInterface $paginator): Response
+    public function index(Category $category, PaginatorInterface $paginator): Response
     {
-        $category = $this
-            ->getDoctrine()
-            ->getRepository(Category::class)
-            ->findEnableBySlug($categorySlug)
-        ;
-
-        if ($category === null) {
-            throw new NotFoundHttpException('Category (slug: ' . $categorySlug . ' ) not found!');
-        }
-
         $articleRepository = $this
             ->getDoctrine()
             ->getRepository(Article::class)
@@ -51,23 +41,13 @@ class CategoryController extends AbstractController
     }
 
     /**
-     * @param string $categorySlug
+     * @param Category $category
      * @param PaginatorInterface $paginator
      * @param Request $request
      * @return JsonResponse
      */
-    public function getMoreRead(string $categorySlug, PaginatorInterface $paginator, Request $request): JsonResponse
+    public function getMoreRead(Category $category, PaginatorInterface $paginator, Request $request): JsonResponse
     {
-        $category = $this
-            ->getDoctrine()
-            ->getRepository(Category::class)
-            ->findEnableBySlug($categorySlug)
-        ;
-
-        if ($category === null) {
-            throw new NotFoundHttpException('Category (slug: ' . $categorySlug . ' ) not found!');
-        }
-
         $articlesQuery = $this
             ->getDoctrine()
             ->getRepository(Article::class)

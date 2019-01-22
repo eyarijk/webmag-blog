@@ -22,24 +22,21 @@ class ArticleLikeRepository extends ServiceEntityRepository
 
     /**
      * @param Article $article
-     * @param bool $isLike
-     * @throws \Doctrine\ORM\NoResultException
+     * @param bool $type
      * @throws \Doctrine\ORM\NonUniqueResultException
-     * @return int
+     * @return mixed
      */
-    public function getLikeByArticle(Article $article, bool $isLike = true): int
+    public function getLikesCountByArticle(Article $article, bool $type)
     {
-        $result = $this->createQueryBuilder('al')
-            ->select('COUNT(al.id) as count')
+        return $this->createQueryBuilder('al')
+            ->select('COUNT(al.id)')
             ->where('al.article = :article')
-            ->andWhere('al.isLike = :isLike')
-            ->setParameter('isLike', $isLike)
+            ->andWhere('al.type = :type')
+            ->setParameter('type', $type)
             ->setParameter('article', $article)
             ->getQuery()
-            ->getSingleResult()
+            ->getSingleScalarResult()
         ;
-
-        return $result['count'];
     }
 
     /**

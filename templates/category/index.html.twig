@@ -31,7 +31,7 @@
 
                         <div class="clearfix visible-md visible-lg"></div>
 
-                        {% include 'articles/common/_more_read.html.twig' with {'articles':articles,'countArtilces':articles.getTotalItemCount,'action': path('category_more_read',{categorySlug:category.slug})} only %}
+                        {% include 'articles/common/_more_read.html.twig' with {'articles':articles,'countArtilces':articles.getTotalItemCount,'action': path('category_more_read',{slug:category.slug})} only %}
 
                     </div>
                 </div>

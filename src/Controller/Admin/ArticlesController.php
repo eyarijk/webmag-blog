@@ -60,7 +60,7 @@ class ArticlesController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->saveArticle($form);
+            $this->persistUpdateArticle($form);
 
             return $this->redirectToRoute('articles_index');
         }
@@ -85,7 +85,7 @@ class ArticlesController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->saveArticle($form);
+            $this->persistUpdateArticle($form);
 
             return $this->redirectToRoute('articles_index');
         }
@@ -114,7 +114,7 @@ class ArticlesController extends AbstractController
      * @param FormInterface $form
      * @return Article
      */
-    private function saveArticle(FormInterface $form): Article
+    private function persistUpdateArticle(FormInterface $form): Article
     {
         $article = $form->getData();
 
