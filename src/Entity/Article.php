@@ -96,6 +96,7 @@ class Article
     private $user;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="articles")
      */
     private $category;
@@ -326,18 +327,18 @@ class Article
     }
 
     /**
-     * @return Category|null
+     * @return Category
      */
-    public function getCategory(): ?Category
+    public function getCategory(): Category
     {
         return $this->category;
     }
 
     /**
-     * @param Category|null $category
+     * @param Category $category
      * @return Article
      */
-    public function setCategory(?Category $category): self
+    public function setCategory(Category $category): self
     {
         $this->category = $category;
 

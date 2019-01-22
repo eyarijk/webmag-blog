@@ -8,14 +8,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use WhiteOctober\BreadcrumbsBundle\Model\Breadcrumbs;
 
 class NewController extends AbstractController
 {
     /**
      * @param PaginatorInterface $paginator
+     * @param Breadcrumbs $breadcrumbs
      * @return Response
      */
-    public function index(PaginatorInterface $paginator): Response
+    public function index(PaginatorInterface $paginator,Breadcrumbs $breadcrumbs): Response
     {
         $articleRepository = $this
             ->getDoctrine()
@@ -30,6 +32,11 @@ class NewController extends AbstractController
             1,
             4
         );
+
+        $breadcrumbs
+            ->addRouteItem('Home','home')
+            ->addItem('News')
+        ;
 
         return $this->render('new/index.html.twig', [
             'mainArticles' => $mainArticles,
