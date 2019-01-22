@@ -5,10 +5,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-10">
-                    <ul class="page-header-breadcrumb">
-                        <li><a href="{{ path('home') }}">Home</a></li>
-                        <li>Popular</li>
-                    </ul>
+                    {{ wo_render_breadcrumbs({'listClass':'page-header-breadcrumb'}) }}
                     <h1>Popular</h1>
                 </div>
             </div>

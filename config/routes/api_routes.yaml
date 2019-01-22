@@ -6,10 +6,10 @@ category_more_read:
   controller: App\Controller\CategoryController::getMoreRead
 new_more_read:
   path: /new/most_read
-  controller: App\Controller\NewController::getMoreRead
+  controller: App\Controller\Article\NewController::getMoreRead
 popular_more_read:
   path: /popular/most_read
-  controller: App\Controller\PopularController::getMoreRead
+  controller: App\Controller\Article\PopularController::getMoreRead
 article_like:
   path: /article/like/{slug}
-  controller: App\Controller\ArticleController::like
+  controller: App\Controller\Article\ArticleController::like

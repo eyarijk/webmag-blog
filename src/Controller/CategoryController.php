@@ -10,15 +10,17 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use WhiteOctober\BreadcrumbsBundle\Model\Breadcrumbs;
 
 class CategoryController extends AbstractController
 {
     /**
      * @param Category $category
      * @param PaginatorInterface $paginator
+     * @param Breadcrumbs $breadcrumbs
      * @return Response
      */
-    public function index(Category $category, PaginatorInterface $paginator): Response
+    public function index(Category $category, PaginatorInterface $paginator,Breadcrumbs $breadcrumbs): Response
     {
         $articleRepository = $this
             ->getDoctrine()
@@ -32,6 +34,11 @@ class CategoryController extends AbstractController
             1,
             4
         );
+
+        $breadcrumbs
+            ->addRouteItem('Home','home')
+            ->addItem($category->getTitle())
+        ;
 
         return $this->render('category/index.html.twig', [
             'category' => $category,

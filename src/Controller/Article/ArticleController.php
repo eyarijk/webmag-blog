@@ -8,20 +8,23 @@ use App\Entity\ArticleLike;
 use App\Entity\ArticleView;
 use App\Form\ArticleCommentType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use WhiteOctober\BreadcrumbsBundle\Model\Breadcrumbs;
 
 class ArticleController extends AbstractController
 {
     /**
      * @param Article $article
      * @param Request $request
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @param Breadcrumbs $breadcrumbs
      * @return Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function index(Article $article, Request $request): Response
+    public function index(Article $article, Request $request,Breadcrumbs $breadcrumbs): Response
     {
         $commentForm = $this->createForm(ArticleCommentType::class);
         $commentForm->handleRequest($request);
@@ -59,13 +62,21 @@ class ArticleController extends AbstractController
             ->getCountCommentsByArticle($article)
         ;
 
+        $category = $article->getCategory();
+
+        $breadcrumbs
+            ->addRouteItem('Home','home')
+            ->addRouteItem($category->getTitle(),'category_page',['slug' => $category->getSlug()])
+            ->addItem($article->getTitle())
+        ;
+
         return $this->render('articles/index.html.twig', [
             'article' => $article,
             'comments' => $comments,
             'commentForm' => $commentForm->createView(),
             'countDislikes' => $countDislikes,
             'countLikes' => $countLikes,
-            'countComments' => $countComments
+            'countComments' => $countComments,
         ]);
     }
 
