@@ -7,6 +7,9 @@ parameters:
     locale: 'en'
     images_directory: '%kernel.project_dir%/public/uploads'
     images_public_path: '/uploads'
+    gravatar:
+        defaultImage: 'http://zex.com.ua/wp-content/uploads/2014/10/default-person.png'
+        size: 160
 
 services:
     # default configuration for services in *this* file
@@ -28,3 +31,4 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
