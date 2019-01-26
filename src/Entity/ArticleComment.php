@@ -79,7 +79,7 @@ class ArticleComment
      * @Assert\Type(
      *     type="string"
      * )
-     * @Gedmo\TreePathSource
+     * @Gedmo\TreePathSource()
      * @ORM\Column(type="string", length=255)
      */
     private $name;
@@ -209,7 +209,7 @@ class ArticleComment
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getEmail(): ?string
     {
@@ -228,7 +228,7 @@ class ArticleComment
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getName(): ?string
     {
@@ -247,7 +247,7 @@ class ArticleComment
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getWebsite(): ?string
     {
@@ -255,7 +255,7 @@ class ArticleComment
     }
 
     /**
-     * @param null|string $website
+     * @param string|null $website
      * @return ArticleComment
      */
     public function setWebsite(?string $website): self

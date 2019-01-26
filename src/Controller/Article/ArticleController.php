@@ -8,11 +8,11 @@ use App\Entity\ArticleLike;
 use App\Entity\ArticleView;
 use App\Form\ArticleCommentType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use WhiteOctober\BreadcrumbsBundle\Model\Breadcrumbs;
 
 class ArticleController extends AbstractController
@@ -21,10 +21,11 @@ class ArticleController extends AbstractController
      * @param Article $article
      * @param Request $request
      * @param Breadcrumbs $breadcrumbs
-     * @return Response
+     * @param TranslatorInterface $translator
      * @throws \Doctrine\ORM\NonUniqueResultException
+     * @return Response
      */
-    public function index(Article $article, Request $request,Breadcrumbs $breadcrumbs): Response
+    public function index(Article $article, Request $request, Breadcrumbs $breadcrumbs, TranslatorInterface $translator): Response
     {
         $commentForm = $this->createForm(ArticleCommentType::class);
         $commentForm->handleRequest($request);
@@ -65,8 +66,8 @@ class ArticleController extends AbstractController
         $category = $article->getCategory();
 
         $breadcrumbs
-            ->addRouteItem('Home','home')
-            ->addRouteItem($category->getTitle(),'category_page',['slug' => $category->getSlug()])
+            ->addRouteItem('breadcrumbs.home', 'home')
+            ->addRouteItem($category->getTitle(), 'category_page', ['slug' => $category->getSlug()])
             ->addItem($article->getTitle())
         ;
 
@@ -195,7 +196,7 @@ class ArticleController extends AbstractController
     private function persistComment(Article $article, FormInterface $form): ArticleComment
     {
         /**
-         * @var ArticleComment $comment
+         * @var ArticleComment
          */
         $comment = $form->getData();
 

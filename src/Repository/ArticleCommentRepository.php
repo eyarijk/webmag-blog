@@ -29,8 +29,8 @@ class ArticleCommentRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('ac')
             ->where('ac.article = :article')
             ->andWhere('ac.parent is NULL')
-            ->setParameter('article',$article)
-            ->orderBy('ac.createdAt','DESC')
+            ->setParameter('article', $article)
+            ->orderBy('ac.createdAt', 'DESC')
             ->getQuery()
             ->getResult()
         ;
@@ -38,8 +38,8 @@ class ArticleCommentRepository extends ServiceEntityRepository
 
     /**
      * @param Article $article
-     * @return int
      * @throws \Doctrine\ORM\NonUniqueResultException
+     * @return int
      */
     public function getCountCommentsByArticle(Article $article): int
     {

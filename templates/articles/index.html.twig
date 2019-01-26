@@ -45,7 +45,11 @@
                     {% if comments|length > 0 %}
                         <div class="section-row">
                             <div class="section-title">
-                                <h2>{{ countComments }} Comments</h2>
+                                <h2>
+                                    {% trans with {"%count%": countComments} %}
+                                        {1} comment|]1,Inf[ %count% comments
+                                    {% endtrans %}
+                                </h2>
                             </div>
 
                             <div class="post-comments">
@@ -58,12 +62,12 @@
 
                     <div class="section-row">
                         <div class="section-title">
-                            <h2>Leave a reply</h2>
+                            <h2>{{ 'article.reply.leave'|trans }}</h2>
 
                             <div class="reply-block hidden">
                                 <div class="panel panel-success">
                                     <div class="panel-heading">
-                                        Reply comment (User: "<span class="reply-user"></span>"):
+                                        {{ 'article.reply.comment'|trans }} ({{ 'article.reply.user'|trans }}: "<span class="reply-user"></span>"):
                                         <span class="close-reply fa-close cursor-pointer"></span>
                                     </div>
                                     <div class="panel-body"></div>

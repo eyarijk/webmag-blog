@@ -7,13 +7,12 @@
                         <a href="{{ path('home') }}" class="logo"><img src="./img/logo.png" alt=""></a>
                     </div>
                     <ul class="footer-nav">
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Advertisement</a></li>
+                        <li><a href="#">{{ 'footer.privacy_policy'|trans }}</a></li>
+                        <li><a href="#">{{ 'footer.advertisement'|trans }}</a></li>
                     </ul>
                     <div class="footer-copyright">
-                        <span>&copy;Copyright &copy;<script>document.write(new Date().getFullYear());</script>
-                            All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i>
-                            by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                        <span>&copy;{{ 'footer.copyright'|trans }} &copy;<script>document.write(new Date().getFullYear());</script>
+                           {{ 'footer.all_rights_reserved'|trans }}
                         </span>
                     </div>
                 </div>
@@ -23,17 +22,17 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="footer-widget">
-                            <h3 class="footer-title">About Us</h3>
+                            <h3 class="footer-title">{{ 'footer.menu.about_us'|trans }}</h3>
                             <ul class="footer-links">
-                                <li><a href="about.html">About Us</a></li>
-                                <li><a href="#">Join Us</a></li>
-                                <li><a href="contact.html">Contacts</a></li>
+                                <li><a href="about.html">{{ 'footer.menu.about_us'|trans }}</a></li>
+                                <li><a href="#">{{ 'footer.menu.join_us'|trans }}</a></li>
+                                <li><a href="contact.html">{{ 'footer.menu.contacts'|trans }}</a></li>
                             </ul>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="footer-widget">
-                            <h3 class="footer-title">Categories</h3>
+                            <h3 class="footer-title">{{ 'footer.categories'|trans }}</h3>
                             <ul class="footer-links">
                                 {% for category in categories %}
                                     <li>
@@ -48,7 +47,7 @@
 
             <div class="col-md-3">
                 <div class="footer-widget">
-                    <h3 class="footer-title">Join our Newsletter</h3>
+                    <h3 class="footer-title">{{ 'footer.join_our_newsletter'|trans }}</h3>
                     <div class="footer-newsletter">
                         {{ form_start(subscriberForm, {'attr': {'id':'subscriberForm'}}) }}
                             {{ form_widget(subscriberForm) }}

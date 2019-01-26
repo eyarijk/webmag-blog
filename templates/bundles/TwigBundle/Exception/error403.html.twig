@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>HTTP 403 Forbidden</title>
+    <link rel="stylesheet" href="{{ asset('exception/css/403.css') }}">
+</head>
+<body>
+<h1>403</h1>
+<div>
+    <p>> <span>{{ 'exception.403.error.code'|trans }}</span>: "<i>HTTP 403 Forbidden</i>"</p>
+    <p>> <span>{{ 'exception.403.error.description_label'|trans }}</span>: "<i>{{ 'exception.403.error.description'|trans }}</i>"</p>
+    <p>> <span>{{ 'exception.403.possibly_label'|trans }}</span>: [<b>{{ 'exception.403.possibly_text'|trans }}</b>...]</p>
+    <p>> <span>{{ 'exception.403.access_pages_text'|trans }}</span>:
+        [<a href="{{ path('home') }}">{{ 'exception.403.access_pages.home'|trans }}</a>,
+        <a href="{{ path('popular_page') }}">{{ 'exception.403.access_pages.popular'|trans }}</a>,
+        <a href="{{ path('new_page') }}">{{ 'exception.403.access_pages.new'|trans }}</a>,
+        ...]
+    </p>
+    <p>> <span>{{ 'exception.403.nice_day'|trans }} :-)</span></p>
+</div>
+<script src="{{ asset('exception/js/403.js') }}"></script>
+</body>
+</html>
