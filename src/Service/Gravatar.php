@@ -9,12 +9,12 @@ class Gravatar
     private const GRAVATAR_URL = 'https://www.gravatar.com/avatar/';
 
     /**
-     * Photo size
+     * Photo size.
      */
     private const CONFIG_SIZE = 's';
 
     /**
-     * Default image
+     * Default image.
      */
     private const CONFIG_DEFAULT_IMAGE = 'd';
 

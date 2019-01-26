@@ -4,22 +4,22 @@
     {{ form_start(registrationForm) }}
 
         <div class="form-group">
-            <label>Email address</label>
+            <label>{{ 'register.email_address'|trans }}</label>
             {{ form_widget(registrationForm.email) }}
         </div>
         <div class="form-group">
-            <label>Password</label>
+            <label>{{ 'register.password'|trans }}</label>
             {{ form_widget(registrationForm.plainPassword) }}
         </div>
         <div class="checkbox">
             <label>
-                {{ form_widget(registrationForm.isAgree) }} Agree the terms and policy
+                {{ form_widget(registrationForm.isAgree) }} {{ 'register.agree'|trans }}
             </label>
         </div>
 
-        <button type="submit" class="btn btn-primary btn-flat m-b-30 m-t-30">Register</button>
+        <button type="submit" class="btn btn-primary btn-flat m-b-30 m-t-30">{{ 'register.submit_button'|trans }}</button>
         <div class="register-link m-t-15 text-center">
-            <p>Already have account ? <a href="{{ path('login') }}"> Sign in</a></p>
+            <p>{{ 'register.have_account'|trans }} <a href="{{ path('login') }}"> {{ 'register.sign_in'|trans }}</a></p>
         </div>
 
     {{ form_end(registrationForm) }}

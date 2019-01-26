@@ -13,7 +13,7 @@
                 {% endif %}
             </h4>
             <span class="time">{{ parentComment.createdAt|date('F d, Y') }}</span>
-            <span data-id="{{ parentComment.id }}" class="comment-reply reply cursor-pointer">Reply</span>
+            <span data-id="{{ parentComment.id }}" class="comment-reply reply cursor-pointer">{{ 'article.reply.to_comment'|trans }}</span>
         </div>
 
         <p class="comment-text">{{ parentComment.description }}</p>

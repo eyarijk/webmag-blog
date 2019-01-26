@@ -19,12 +19,12 @@ class LayoutController extends AbstractController
      */
     public function subscribeUser(Request $request): JsonResponse
     {
-        $subscriberForm = $this->createForm(SubscriberType::class,new Subscriber());
+        $subscriberForm = $this->createForm(SubscriberType::class, new Subscriber());
         $subscriberForm->handleRequest($request);
 
         if ($subscriberForm->isValid() && $subscriberForm->isSubmitted()) {
             /**
-             * @var Subscriber $subscriber
+             * @var Subscriber
              */
             $subscriber = $subscriberForm->getData();
 

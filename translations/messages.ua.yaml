@@ -1,0 +1,94 @@
+subscription:
+  success: You have successfully subscribed!
+
+home:
+  recent_posts: Recent Posts
+  featured_posts: Featured Posts
+  most_read: Most Read
+
+article:
+  load_more: Load More
+  reply:
+    leave: Leave a reply
+    comment: Reply comment
+    user: User
+    to_comment: Reply
+  '{1} comment|]1,Inf[ %count% comments': '{1} Comment|]1,Inf[ %count% Comments'
+
+new_page:
+  title: New
+
+popular_page:
+  title: New
+
+widgets:
+  categories: Categories
+
+footer:
+  privacy_policy: Privacy Policy
+  advertisement: Advertisement
+  copyright: Copyright
+  all_rights_reserved:  All rights reserved
+  categories: Categories
+  join_our_newsletter: Join Our Newsletter
+  menu:
+    about_us: About Us
+    join_us: Join Us
+    contacts: Contacts
+
+nav:
+  home: Home
+  about_us: About Us
+  join_us: Join Us
+  advertisement: Advertisement
+  contacts: Contacts
+  menu:
+    news: News
+    popular: Popular
+    search_placeholder: Enter Your Search ...
+
+login:
+  sign_in_title: Please sign in
+  email_address: Email address
+  password: Password
+  remember_me: Remember Me
+  sign_in: Sign in
+
+register:
+  email_address: Email address
+  password: Password
+  have_account: Already have account ?
+  agree: Agree the terms and policy
+  submit_button: Register
+  sign_in: Sign in
+
+exception:
+  404:
+    content: Sorry, that page never returned
+    go_home: Go home
+
+  403:
+    error:
+      code: ERROR CODE
+      description_label: ERROR DESCRIPTION
+      description: Access Denied. You Do Not Have The Permission To Access This Page On This Server
+    possibly_label: ERROR POSSIBLY CAUSED BY
+    possibly_text: execute access forbidden, read access forbidden, write access
+      forbidden, ssl required, ssl 128 required, ip address rejected, client certificate required, site access
+      denied, too many users, invalid configuration, password change, mapper denied access, client certificate
+      revoked, directory listing denied, client access licenses exceeded, client certificate is untrusted or
+      invalid, client certificate has expired or is not yet valid, passport logon failed, source access denied,
+      infinite depth is denied, too many requests from the same client ip
+    access_pages_text: SOME PAGES ON THIS SERVER THAT YOU DO HAVE PERMISSION TO ACCESS
+    access_pages:
+      home: Home
+      popular: Popular
+      new: News
+    nice_day: HAVE A NICE DAY
+
+  500:
+    sorry: Sorry, it's me, not you.
+    go_home: Go home
+
+breadcrumbs:
+  home: Home

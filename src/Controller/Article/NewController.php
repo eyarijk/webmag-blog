@@ -17,7 +17,7 @@ class NewController extends AbstractController
      * @param Breadcrumbs $breadcrumbs
      * @return Response
      */
-    public function index(PaginatorInterface $paginator,Breadcrumbs $breadcrumbs): Response
+    public function index(PaginatorInterface $paginator, Breadcrumbs $breadcrumbs): Response
     {
         $articleRepository = $this
             ->getDoctrine()
@@ -34,7 +34,7 @@ class NewController extends AbstractController
         );
 
         $breadcrumbs
-            ->addRouteItem('Home','home')
+            ->addRouteItem('breadcrumbs.home', 'home')
             ->addItem('News')
         ;
 

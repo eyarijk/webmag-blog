@@ -9,10 +9,10 @@
 
         <ul class="nav-menu nav navbar-nav">
             <li>
-                <a href="{{ path('new_page') }}">News</a>
+                <a href="{{ path('new_page') }}">{{ 'nav.menu.news'|trans }}</a>
             </li>
             <li>
-                <a href="{{ path('popular_page') }}">Popular</a>
+                <a href="{{ path('popular_page') }}">{{ 'nav.menu.popular'|trans }}</a>
             </li>
             {% for category in categories %}
                 <li style="border-bottom: 3px solid {{ category.color }}">
@@ -48,7 +48,7 @@
             </div>
 
             <div class="search-form">
-                <input class="search-input" type="text" name="search" placeholder="Enter Your Search ...">
+                <input class="search-input" type="text" name="search" placeholder="{{ 'nav.menu.search_placeholder'|trans }}">
                 <button class="search-close"><i class="fa fa-times"></i></button>
             </div>
         </div>

@@ -9,7 +9,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use WhiteOctober\BreadcrumbsBundle\Model\Breadcrumbs;
 
 class CategoryController extends AbstractController
@@ -20,7 +19,7 @@ class CategoryController extends AbstractController
      * @param Breadcrumbs $breadcrumbs
      * @return Response
      */
-    public function index(Category $category, PaginatorInterface $paginator,Breadcrumbs $breadcrumbs): Response
+    public function index(Category $category, PaginatorInterface $paginator, Breadcrumbs $breadcrumbs): Response
     {
         $articleRepository = $this
             ->getDoctrine()
@@ -36,7 +35,7 @@ class CategoryController extends AbstractController
         );
 
         $breadcrumbs
-            ->addRouteItem('Home','home')
+            ->addRouteItem('breadcrumbs.home', 'home')
             ->addItem($category->getTitle())
         ;
 

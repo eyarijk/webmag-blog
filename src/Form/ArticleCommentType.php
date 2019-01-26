@@ -20,19 +20,19 @@ class ArticleCommentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('email',TextType::class, [
+            ->add('email', TextType::class, [
                 'label' => 'Email',
                 'attr' => [
                     'placeholder' => 'Email',
                 ],
             ])
-            ->add('name',TextType::class, [
+            ->add('name', TextType::class, [
                 'label' => 'Name',
                 'attr' => [
                     'placeholder' => 'Name',
                 ],
             ])
-            ->add('website',TextType::class, [
+            ->add('website', TextType::class, [
                 'label' => 'Website',
                 'attr' => [
                     'placeholder' => 'Website',

@@ -1,0 +1,27 @@
+login:
+  path: /login
+  controller: App\Controller\SecurityController::login
+
+register:
+  path: /register
+  controller: App\Controller\SecurityController::register
+
+home:
+  path: /
+  controller: App\Controller\HomeController::index
+
+article_page:
+  path: /article/{slug}
+  controller: App\Controller\Article\ArticleController::index
+
+category_page:
+  path: /category/{slug}
+  controller: App\Controller\CategoryController::index
+
+new_page:
+  path: /new
+  controller: App\Controller\Article\NewController::index
+
+popular_page:
+  path: /popular
+  controller: App\Controller\Article\PopularController::index

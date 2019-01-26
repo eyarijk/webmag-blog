@@ -4,32 +4,20 @@
 admin:
   prefix: /admin
   resource: './routes/admin_routes.yaml'
+
 api:
   prefix: /api
   resource: './routes/api_routes.yaml'
-login:
-  path: /login
-  controller: App\Controller\SecurityController::login
-register:
-  path: /register
-  controller: App\Controller\SecurityController::register
+
+pages:
+  prefix: /{_locale}
+  resource: './routes/with_locale_prefix.yaml'
+  requirements:
+    _locale:  en|ua
+
 logout:
   path: /logout
-home:
-  path: /
-  controller: App\Controller\HomeController::index
-article_page:
-  path: /article/{slug}
-  controller: App\Controller\Article\ArticleController::index
-category_page:
-  path: /category/{slug}
-  controller: App\Controller\CategoryController::index
-new_page:
-  path: /new
-  controller: App\Controller\Article\NewController::index
-popular_page:
-  path: /popular
-  controller: App\Controller\Article\PopularController::index
+
 subscriber_form:
   path: /subscriber/form
   methods: [POST]
