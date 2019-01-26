@@ -12,7 +12,6 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Contracts\Translation\TranslatorInterface;
 use WhiteOctober\BreadcrumbsBundle\Model\Breadcrumbs;
 
 class ArticleController extends AbstractController
@@ -21,11 +20,10 @@ class ArticleController extends AbstractController
      * @param Article $article
      * @param Request $request
      * @param Breadcrumbs $breadcrumbs
-     * @param TranslatorInterface $translator
      * @throws \Doctrine\ORM\NonUniqueResultException
      * @return Response
      */
-    public function index(Article $article, Request $request, Breadcrumbs $breadcrumbs, TranslatorInterface $translator): Response
+    public function index(Article $article, Request $request, Breadcrumbs $breadcrumbs): Response
     {
         $commentForm = $this->createForm(ArticleCommentType::class);
         $commentForm->handleRequest($request);

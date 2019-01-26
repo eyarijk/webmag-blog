@@ -9,7 +9,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Contracts\Translation\TranslatorInterface;
 use WhiteOctober\BreadcrumbsBundle\Model\Breadcrumbs;
 
 class CategoryController extends AbstractController
@@ -18,10 +17,9 @@ class CategoryController extends AbstractController
      * @param Category $category
      * @param PaginatorInterface $paginator
      * @param Breadcrumbs $breadcrumbs
-     * @param TranslatorInterface $translator
      * @return Response
      */
-    public function index(Category $category, PaginatorInterface $paginator, Breadcrumbs $breadcrumbs, TranslatorInterface $translator): Response
+    public function index(Category $category, PaginatorInterface $paginator, Breadcrumbs $breadcrumbs): Response
     {
         $articleRepository = $this
             ->getDoctrine()
