@@ -35,13 +35,12 @@ services:
         arguments:
             - '%images_directory%'
 
-    gravatar:
+    App\Service\Gravatar:
         class: App\Service\Gravatar
+        tags: ['gravatar']
         arguments:
             $size: 160
             $defaultImage: 'http://zex.com.ua/wp-content/uploads/2014/10/default-person.png'
-
-    App\Service\Gravatar: '@gravatar'
 
     admin.article:
         class: App\Admin\ArticleAdmin
