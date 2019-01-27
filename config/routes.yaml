@@ -2,14 +2,14 @@
 #    path: /
 #    controller: App\Controller\DefaultController::index
 admin:
-  prefix: /admin
+  prefix: /old-admin
   resource: './routes/admin_routes.yaml'
 
 api:
   prefix: /api
   resource: './routes/api_routes.yaml'
 
-pages:
+with_locale_prefix:
   prefix: /{_locale}
   resource: './routes/with_locale_prefix.yaml'
   requirements:
@@ -17,8 +17,3 @@ pages:
 
 logout:
   path: /logout
-
-subscriber_form:
-  path: /subscriber/form
-  methods: [POST]
-  controller:  App\Controller\LayoutController::subscribeUser

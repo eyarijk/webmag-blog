@@ -92,3 +92,7 @@ exception:
 
 breadcrumbs:
     home: Home
+
+subscriber:
+    success: You have successfully subscribed!
+    error: Form is not valid!

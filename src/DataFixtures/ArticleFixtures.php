@@ -36,7 +36,7 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface, Cont
         $tags = $manager->getRepository(Tag::class)->findAll();
         $user = $manager->getRepository(User::class)->findOneBy([]);
 
-        $dir = $this->container->getParameter('images_directory');
+        $dir = rtrim($this->container->getParameter('images_directory'), '/') . '/';
 
         for ($i = 0; $i < 200; ++$i) {
             shuffle($categories);

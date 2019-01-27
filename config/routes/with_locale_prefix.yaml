@@ -25,3 +25,8 @@ new_page:
 popular_page:
   path: /popular
   controller: App\Controller\Article\PopularController::index
+
+subscriber_form:
+  path: /subscriber/form
+  methods: [POST]
+  controller:  App\Controller\LayoutController::subscribeUser

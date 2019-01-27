@@ -1,15 +1,19 @@
 home_most_read:
   path: /most_read
   controller: App\Controller\HomeController::getMostRead
+
 category_more_read:
   path: /more_read/{slug}
   controller: App\Controller\CategoryController::getMoreRead
+
 new_more_read:
   path: /new/most_read
   controller: App\Controller\Article\NewController::getMoreRead
+
 popular_more_read:
   path: /popular/most_read
   controller: App\Controller\Article\PopularController::getMoreRead
+
 article_like:
   path: /article/like/{slug}
   controller: App\Controller\Article\ArticleController::like

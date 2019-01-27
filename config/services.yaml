@@ -7,9 +7,6 @@ parameters:
     locale: 'en'
     images_directory: '%kernel.project_dir%/public/uploads'
     images_public_path: '/uploads'
-    gravatar:
-        defaultImage: 'http://zex.com.ua/wp-content/uploads/2014/10/default-person.png'
-        size: 160
 
 services:
     # default configuration for services in *this* file
@@ -32,3 +29,53 @@ services:
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
+    image.upload:
+        class: App\Service\ImageUpload
+        public: true
+        arguments:
+            - '%images_directory%'
+
+    App\Service\Gravatar:
+        class: App\Service\Gravatar
+        tags: ['gravatar']
+        arguments:
+            $size: 160
+            $defaultImage: 'http://zex.com.ua/wp-content/uploads/2014/10/default-person.png'
+
+    admin.article:
+        class: App\Admin\ArticleAdmin
+        arguments: [~, App\Entity\Article, ~]
+        tags:
+        - { name: sonata.admin, manager_type: orm, label: Article, group: Blog }
+
+    admin.category:
+        class: App\Admin\CategoryAdmin
+        arguments: [~, App\Entity\Category, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Category, group: Blog }
+        calls:
+            - [ setTemplate, [edit, sonata/edit.html.twig]]
+
+    admin.tag:
+        class: App\Admin\TagAdmin
+        arguments: [~, App\Entity\Tag, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Tag, group: Blog }
+
+    admin.articlecomment:
+        class: App\Admin\ArticleCommentAdmin
+        arguments: [~, App\Entity\ArticleComment, ~]
+        tags:
+        - { name: sonata.admin, manager_type: orm, label: Comments, group: Blog }
+
+    admin.user:
+        class: App\Admin\UserAdmin
+        arguments: [~, App\Entity\User, ~]
+        tags:
+        - { name: sonata.admin, manager_type: orm, label: User, group: User }
+
+    admin.subscriber:
+        class: App\Admin\SubscriberAdmin
+        arguments: [~, App\Entity\Subscriber, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Subscriber, group: Site }
