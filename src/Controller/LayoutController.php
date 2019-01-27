@@ -10,14 +10,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class LayoutController extends AbstractController
 {
     /**
      * @param Request $request
+     * @param TranslatorInterface $translator
      * @return JsonResponse
      */
-    public function subscribeUser(Request $request): JsonResponse
+    public function subscribeUser(Request $request, TranslatorInterface $translator): JsonResponse
     {
         $subscriberForm = $this->createForm(SubscriberType::class, new Subscriber());
         $subscriberForm->handleRequest($request);
@@ -42,13 +44,13 @@ class LayoutController extends AbstractController
 
             return new JsonResponse([
                 'status' => 'success',
-                'message' => 'You have successfully subscribed!',
+                'message' => $translator->trans('subscriber.success'),
             ]);
         }
 
         return new JsonResponse([
             'status' => 'error',
-            'message' => 'Form is not valid!',
+            'message' => $translator->trans('subscriber.error'),
         ]);
     }
 

@@ -1,0 +1,6 @@
+{% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
+{% block field%}
+    <span style="background-color: {{ object.color }};padding: 5px 10px;">
+        {{ object.color }}
+    </span>
+{% endblock %}

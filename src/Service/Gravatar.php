@@ -2,8 +2,6 @@
 
 namespace App\Service;
 
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-
 class Gravatar
 {
     private const GRAVATAR_URL = 'https://www.gravatar.com/avatar/';
@@ -25,15 +23,14 @@ class Gravatar
 
     /**
      * Gravatar constructor.
-     * @param ParameterBagInterface $parameterBag
+     * @param string $size
+     * @param string $defaultImage
      */
-    public function __construct(ParameterBagInterface $parameterBag)
+    public function __construct(string $size, string $defaultImage)
     {
-        $gravatarConfiguration = $parameterBag->get('gravatar');
-
         $params = [
-            self::CONFIG_SIZE => $gravatarConfiguration['size'],
-            self::CONFIG_DEFAULT_IMAGE => $gravatarConfiguration['defaultImage'],
+            self::CONFIG_SIZE => $size,
+            self::CONFIG_DEFAULT_IMAGE => $defaultImage,
         ];
 
         $this->paramsQueryString = '?' . http_build_query($params);

@@ -1,0 +1,24 @@
+sonata_admin:
+    title: 'Web-mag Admin'
+    dashboard:
+        blocks:
+            - { type: sonata.admin.block.admin_list, position: left }
+        groups:
+            User:
+                label: User
+                items:
+                    - admin.user
+                roles: [ ROLE_SUPER_ADMIN ]
+
+            Blog:
+                label: Blog
+                roles: [ ROLE_ADMIN ]
+
+            Site:
+                label: Site
+                roles: [ ROLE_ADMIN ]
+
+sonata_block:
+    blocks:
+        sonata.admin.block.admin_list:
+            contexts: [admin]
