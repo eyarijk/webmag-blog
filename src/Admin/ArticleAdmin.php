@@ -66,14 +66,12 @@ final class ArticleAdmin extends AbstractAdmin
             ],
         ];
 
-        if ($article !== null) {
-            if ($article->getHeaderImage() !== null) {
-                $headerImageFieldOptions['help'] = $this->helpImage($article->getHeaderImage());
-            }
+        if ($article->getHeaderImage() !== null) {
+            $headerImageFieldOptions['help'] = $this->helpImage($article->getHeaderImage());
+        }
 
-            if ($article->getMainImage() !== null) {
-                $mainImageFileFieldOptions['help'] = $this->helpImage($article->getMainImage());
-            }
+        if ($article->getMainImage() !== null) {
+            $mainImageFileFieldOptions['help'] = $this->helpImage($article->getMainImage());
         }
 
         $formMapper
