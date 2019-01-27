@@ -36,7 +36,6 @@ services:
             - '%images_directory%'
 
     App\Service\Gravatar:
-        class: App\Service\Gravatar
         tags: ['gravatar']
         arguments:
             $size: 160
