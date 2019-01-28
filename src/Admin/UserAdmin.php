@@ -10,9 +10,15 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 final class UserAdmin extends AbstractAdmin
 {
+    /**
+     * @var UserPasswordEncoderInterface
+     */
+    private $passwordEncoder;
+
     /**
      * @var array
      */
@@ -20,6 +26,20 @@ final class UserAdmin extends AbstractAdmin
         'ROLE SUPER ADMIN' => 'ROLE_SUPER_ADMIN',
         'ROLE ADMIN' => 'ROLE_ADMIN',
     ];
+
+    /**
+     * UserAdmin constructor.
+     * @param string $code
+     * @param string $class
+     * @param string $baseControllerName
+     * @param UserPasswordEncoderInterface $passwordEncoder
+     */
+    public function __construct(string $code, string $class, string $baseControllerName, UserPasswordEncoderInterface $passwordEncoder)
+    {
+        parent::__construct($code, $class, $baseControllerName);
+
+        $this->passwordEncoder = $passwordEncoder;
+    }
 
     /**
      * @param $object
@@ -109,12 +129,7 @@ final class UserAdmin extends AbstractAdmin
         ;
 
         if ($plainPassword !== null) {
-            $passwordEncoder = $this->configurationPool
-                ->getContainer()
-                ->get('security.password_encoder')
-            ;
-
-            $user->setPassword($passwordEncoder->encodePassword($user, $plainPassword));
+            $user->setPassword($this->passwordEncoder->encodePassword($user, $plainPassword));
         }
     }
 }
