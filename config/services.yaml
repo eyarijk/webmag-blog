@@ -29,15 +29,11 @@ services:
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
-    image.upload:
-        class: App\Service\ImageUpload
-        public: true
+    App\Service\ImageUpload:
         arguments:
-            - '%images_directory%'
+            $imagesDirectory: '%images_directory%'
 
     App\Service\Gravatar:
-        class: App\Service\Gravatar
-        tags: ['gravatar']
         arguments:
             $size: 160
             $defaultImage: 'http://zex.com.ua/wp-content/uploads/2014/10/default-person.png'

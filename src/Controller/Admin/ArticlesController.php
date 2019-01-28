@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Article;
 use App\Form\ArticleType;
+use App\Service\ImageUpload;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,6 +18,20 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class ArticlesController extends AbstractController
 {
+    /**
+     * @var ImageUpload
+     */
+    private $imageUpload;
+
+    /**
+     * ArticlesController constructor.
+     * @param ImageUpload $imageUpload
+     */
+    public function __construct(ImageUpload $imageUpload)
+    {
+        $this->imageUpload = $imageUpload;
+    }
+
     /**
      * @param PaginatorInterface $paginator
      * @param Request $request
@@ -128,16 +143,14 @@ class ArticlesController extends AbstractController
             ->getData()
         ;
 
-        $imageUpload = $this->container->get('image.upload');
-
         if ($mainImageFile instanceof UploadedFile) {
-            $mainImageFileName = $imageUpload->upload($mainImageFile);
+            $mainImageFileName = $this->imageUpload->upload($mainImageFile);
 
             $article->setMainImage($mainImageFileName);
         }
 
         if ($headerImageFile instanceof UploadedFile) {
-            $headerImageFileName = $imageUpload->upload($headerImageFile);
+            $headerImageFileName = $this->imageUpload->upload($headerImageFile);
 
             $article->setHeaderImage($headerImageFileName);
         }
