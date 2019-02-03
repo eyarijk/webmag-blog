@@ -92,7 +92,15 @@ exception:
 
 breadcrumbs:
     home: Home
+    search: Search
+    news: News
+    popular: Popular
 
 subscriber:
     success: You have successfully subscribed!
     error: Form is not valid!
+    placeholder: Enter your email
+
+search_page:
+    your_query: Your Query
+    found_articles_count: '{0} Article not found|{1} Article found|]1,Inf[ %count% Articles found'

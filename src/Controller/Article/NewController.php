@@ -35,7 +35,7 @@ class NewController extends AbstractController
 
         $breadcrumbs
             ->addRouteItem('breadcrumbs.home', 'home')
-            ->addItem('News')
+            ->addItem('breadcrumbs.news')
         ;
 
         return $this->render('new/index.html.twig', [
