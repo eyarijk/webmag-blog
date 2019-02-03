@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Category;
 use App\Entity\Subscriber;
 use App\Entity\Tag;
+use App\Form\SearchType;
 use App\Form\SubscriberType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -21,7 +22,7 @@ class LayoutController extends AbstractController
      */
     public function subscribeUser(Request $request, TranslatorInterface $translator): JsonResponse
     {
-        $subscriberForm = $this->createForm(SubscriberType::class, new Subscriber());
+        $subscriberForm = $this->createForm(SubscriberType::class);
         $subscriberForm->handleRequest($request);
 
         if ($subscriberForm->isValid() && $subscriberForm->isSubmitted()) {
@@ -97,8 +98,11 @@ class LayoutController extends AbstractController
             ->getForMenu()
         ;
 
+        $searchForm = $this->createForm(SearchType::class);
+
         return $this->render('includes/_nav_menu.html.twig', [
             'categories' => $categories,
+            'searchForm' => $searchForm->createView(),
         ]);
     }
 

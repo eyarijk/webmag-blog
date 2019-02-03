@@ -2,15 +2,15 @@
 
 namespace App\Form;
 
-use App\Entity\Subscriber;
+use App\DTO\SearchDTO;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\SearchType as SymfonySearchType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class SubscriberType extends AbstractType
+class SearchType extends AbstractType
 {
     /**
      * @var RouterInterface
@@ -40,10 +40,10 @@ class SubscriberType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('email', TextType::class, [
+            ->add('query', SymfonySearchType::class, [
                 'label' => false,
                 'attr' => [
-                    'placeholder' => $this->translator->trans('subscriber.placeholder'),
+                    'placeholder' => $this->translator->trans('nav.menu.search_placeholder'),
                 ],
             ])
         ;
@@ -55,10 +55,20 @@ class SubscriberType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Subscriber::class,
+            'data_class' => SearchDTO::class,
+            'method' => 'GET',
+            'csrf_protection' => false,
             'action' => $this
                 ->router
-                ->generate('subscriber_form'),
+                ->generate('search'),
         ]);
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getBlockPrefix(): ?string
+    {
+        return null;
     }
 }

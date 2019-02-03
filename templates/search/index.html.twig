@@ -1,0 +1,45 @@
+{% extends 'layouts/public.html.twig' %}
+
+{% block header %}
+    <div class="page-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10">
+                    {{ wo_render_breadcrumbs({'listClass':'page-header-breadcrumb'}) }}
+                    <h1>{{ 'search_page.your_query'|trans }}: "{{ query }}"</h1>
+                    <h2>
+                        {% trans with {"%count%": articles|length} %}
+                            search_page.found_articles_count
+                        {% endtrans %}
+                    </h2>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="row">
+
+                        {% for article in articles %}
+                            {% include 'articles/common/_article_item_row.html.twig' with {'article':article} only %}
+                        {% endfor %}
+
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+
+                    {{ render(controller('App\\Controller\\LayoutController::widgetCategories')) }}
+
+                    {{ render(controller('App\\Controller\\LayoutController::widgetTags')) }}
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

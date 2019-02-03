@@ -327,9 +327,9 @@ class Article
     }
 
     /**
-     * @return Category|null
+     * @return Category
      */
-    public function getCategory(): ?Category
+    public function getCategory(): Category
     {
         return $this->category;
     }

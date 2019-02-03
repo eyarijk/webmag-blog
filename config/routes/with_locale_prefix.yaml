@@ -30,3 +30,7 @@ subscriber_form:
   path: /subscriber/form
   methods: [POST]
   controller:  App\Controller\LayoutController::subscribeUser
+
+search:
+  path: /search
+  controller: App\Controller\SearchController::index

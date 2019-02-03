@@ -35,7 +35,7 @@ class PopularController extends AbstractController
 
         $breadcrumbs
             ->addRouteItem('breadcrumbs.home', 'home')
-            ->addItem('Popular')
+            ->addItem('breadcrumbs.popular')
         ;
 
         return $this->render('popular/index.html.twig', [
