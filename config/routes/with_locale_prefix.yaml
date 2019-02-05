@@ -29,8 +29,12 @@ popular_page:
 subscriber_form:
   path: /subscriber/form
   methods: [POST]
-  controller:  App\Controller\LayoutController::subscribeUser
+  controller:  App\Controller\SubscriberController::subscribe
 
 search:
   path: /search
   controller: App\Controller\SearchController::index
+
+unsubscribe:
+  path: /unsubscribe/{token}
+  controller:  App\Controller\SubscriberController::unsubscribe

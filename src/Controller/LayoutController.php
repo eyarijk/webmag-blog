@@ -3,58 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Category;
-use App\Entity\Subscriber;
 use App\Entity\Tag;
 use App\Form\SearchType;
 use App\Form\SubscriberType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 class LayoutController extends AbstractController
 {
-    /**
-     * @param Request $request
-     * @param TranslatorInterface $translator
-     * @return JsonResponse
-     */
-    public function subscribeUser(Request $request, TranslatorInterface $translator): JsonResponse
-    {
-        $subscriberForm = $this->createForm(SubscriberType::class);
-        $subscriberForm->handleRequest($request);
-
-        if ($subscriberForm->isValid() && $subscriberForm->isSubmitted()) {
-            /**
-             * @var Subscriber
-             */
-            $subscriber = $subscriberForm->getData();
-
-            $token = md5(uniqid('subscriber', true));
-
-            $subscriber->setToken($token);
-
-            $em = $this
-                ->getDoctrine()
-                ->getManager()
-            ;
-
-            $em->persist($subscriber);
-            $em->flush();
-
-            return new JsonResponse([
-                'status' => 'success',
-                'message' => $translator->trans('subscriber.success'),
-            ]);
-        }
-
-        return new JsonResponse([
-            'status' => 'error',
-            'message' => $translator->trans('subscriber.error'),
-        ]);
-    }
-
     /**
      * @return Response
      */

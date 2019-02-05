@@ -213,4 +213,29 @@ class ArticleRepository extends ServiceEntityRepository
             ->getQuery()
         ;
     }
+
+    /**
+     * @param \DateTimeInterface $date
+     * @param int $limit
+     * @return iterable
+     */
+    public function getPopularByDate(\DateTimeInterface $date, int $limit = 6): iterable
+    {
+        $to = new \DateTime($date->format('Y-m-d') . ' 23:59:59');
+        $from = new \DateTime($date->format('Y-m-d') . ' 00:00:00');
+
+        return $this->createQueryBuilder('a')
+            ->leftJoin('a.articleViews', 'av')
+            ->where('a.isEnabled = :isEnabled')
+            ->andWhere('av.date BETWEEN :from AND :to')
+            ->setParameter('to', $to)
+            ->setParameter('from', $from)
+            ->setParameter('isEnabled', true)
+            ->groupBy('a.id')
+            ->orderBy('COUNT(av.id)', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

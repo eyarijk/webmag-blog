@@ -41,4 +41,16 @@ class SubscriberRepository extends ServiceEntityRepository
             ->getQuery()
         ;
     }
+
+    /**
+     * @return Query
+     */
+    public function getActiveSubscribersQuery(): Query
+    {
+        return $this->createQueryBuilder('s')
+            ->where('s.isActive = :isActive')
+            ->setParameter('isActive', true)
+            ->getQuery()
+        ;
+    }
 }
