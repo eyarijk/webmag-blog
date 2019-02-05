@@ -68,7 +68,7 @@ class SendTodayPopularArticlesEmailNotificationCommand extends Command
         }
 
         /**
-         * @var Subscriber[][]
+         * @var Subscriber[][] $iterableActiveSubscribers
          */
         $iterableActiveSubscribers = $this
             ->em

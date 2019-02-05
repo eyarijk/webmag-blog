@@ -27,7 +27,7 @@ class EmailNotificatorForArticles
     private $templating;
 
     /**
-     * @var TranslatorInterface|Translator
+     * @var Translator|TranslatorInterface
      */
     private $translator;
 
