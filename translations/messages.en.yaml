@@ -100,7 +100,16 @@ subscriber:
     success: You have successfully subscribed!
     error: Form is not valid!
     placeholder: Enter your email
+    unsubscribe_successfully: You have successfully unsubscribed
+    go_home: Go home
 
 search_page:
     your_query: Your Query
     found_articles_count: '{0} Article not found|{1} Article found|]1,Inf[ %count% Articles found'
+
+email:
+    today_popular_articles:
+        subject: Popular Articles For Today
+        title: Popular today
+        view: View More
+        unsubscribe: Unsubscribe

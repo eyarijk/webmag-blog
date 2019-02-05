@@ -1,0 +1,6 @@
+{% extends 'layouts/security.html.twig' %}
+
+{% block content %}
+    <h3 class="h3 mb-3 font-weight-normal">{{ 'subscriber.unsubscribe_successfully'|trans }}</h3>
+    <a href="{{ path('home') }}">{{ 'subscriber.go_home'|trans }}</a>
+{% endblock %}

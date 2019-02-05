@@ -1,0 +1,509 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#f1f1f1">
+    <tbody>
+    <tr>
+        <td class="content-spacing" style="font-size:0; line-height:0; text-align:left" width="1"></td>
+        <td align="center" valign="top">
+            <table width="650" border="0" cellspacing="0" cellpadding="0" class="mobile-shell">
+                <tbody>
+                <tr>
+                    <td class="td"
+                        style="width:650px; min-width:650px; font-size:0; line-height:0; padding:0; margin:0; font-weight:normal;">
+
+                        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer"
+                               style="font-size:0; line-height:0; text-align:center; width:100%; min-width:100%">
+                            <tbody>
+                            <tr>
+                                <td height="20" class="spacer"
+                                    style="font-size:0; line-height:0; text-align:center; width:100%; min-width:100%">
+                                    &nbsp;
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- Top Bar -->
+                        <table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#ff5e56">
+                            <tbody>
+                            <tr>
+                                <!-- Column -->
+                                <th class="column-top"
+                                    style="font-size:0; line-height:0; padding:0; margin:0; font-weight:normal; vertical-align:top;"
+                                    width="440">
+                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                        <tbody>
+                                        <tr>
+                                            <td class="content-spacing"
+                                                style="font-size:0; line-height:0; text-align:left" width="30"></td>
+                                            <td>
+                                                <table width="100%" border="0" cellspacing="0" cellpadding="0"
+                                                       class="spacer"
+                                                       style="font-size:0; line-height:0; text-align:center; width:100%; min-width:100%">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td height="14" class="spacer"
+                                                            style="font-size:0; line-height:0; text-align:center; width:100%; min-width:100%">
+                                                            &nbsp;
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+
+                                                <table class="center" border="0" cellspacing="0" cellpadding="0">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td class="text-top-white"
+                                                            style="color:#ffffff; font-family:Arial,sans-serif; font-size:11px; line-height:16px; text-align:left; text-transform:uppercase">
+                                                            <multiline>
+                                                                <a href="{{ absolute_url(path('home', {'_locale': subscriber.locale})) }}" style="color:#ffffff; text-decoration:underline">
+                                                                    WebMag Blog
+                                                                </a>
+                                                            </multiline>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                                <table width="100%" border="0" cellspacing="0" cellpadding="0"
+                                                       class="spacer"
+                                                       style="font-size:0; line-height:0; text-align:center; width:100%; min-width:100%">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td height="14" class="spacer"
+                                                            style="font-size:0; line-height:0; text-align:center; width:100%; min-width:100%">
+                                                            &nbsp;
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+
+                                            </td>
+                                            <td class="content-spacing"
+                                                style="font-size:0; line-height:0; text-align:left" width="30"></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </th>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer"
+                               style="font-size:0; line-height:0; text-align:center; width:100%; min-width:100%">
+                            <tbody>
+                            <tr>
+                                <td height="20" class="spacer"
+                                    style="font-size:0; line-height:0; text-align:center; width:100%; min-width:100%">
+                                    &nbsp;
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+
+                        <repeater>
+
+
+                            <layout label="Section 7">
+                                <table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#ffffff">
+                                    <tbody>
+                                    <tr>
+                                        <td class="content-spacing"
+                                            style="font-size:0; line-height:0; text-align:left" width="30"></td>
+                                        <td>
+                                            <table width="100%" border="0" cellspacing="0" cellpadding="0"
+                                                   class="spacer"
+                                                   style="font-size:0; line-height:0; text-align:center; width:100%; min-width:100%">
+                                                <tbody>
+                                                <tr>
+                                                    <td height="30" class="spacer"
+                                                        style="font-size:0; line-height:0; text-align:center; width:100%; min-width:100%">
+                                                        &nbsp;
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+
+                                            <!-- Head -->
+                                            <table border="0" cellspacing="0" cellpadding="0">
+                                                <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <div class="section-title"
+                                                             style="color:#2c2c2c; font-family:Arial,sans-serif; font-size:18px; line-height:24px; text-align:left; text-transform:uppercase">
+                                                            <multiline>{{ 'email.today_popular_articles.title'|trans }}&nbsp;</multiline>
+                                                        </div>
+                                                        <table width="100%" border="0" cellspacing="0" cellpadding="0"
+                                                               class="spacer"
+                                                               style="font-size:0; line-height:0; text-align:center; width:100%; min-width:100%">
+                                                            <tbody>
+                                                            <tr>
+                                                                <td height="10" class="spacer"
+                                                                    style="font-size:0; line-height:0; text-align:center; width:100%; min-width:100%">
+                                                                    &nbsp;
+                                                                </td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+
+                                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                            <tbody>
+                                                            <tr>
+                                                                <td class="img"
+                                                                    style="font-size:0; line-height:0; text-align:left"
+                                                                    bgcolor="#ff5e56" height="3">&nbsp;
+                                                                </td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        <table width="100%" border="0" cellspacing="0" cellpadding="0"
+                                                               class="spacer"
+                                                               style="font-size:0; line-height:0; text-align:center; width:100%; min-width:100%">
+                                                            <tbody>
+                                                            <tr>
+                                                                <td height="25" class="spacer"
+                                                                    style="font-size:0; line-height:0; text-align:center; width:100%; min-width:100%">
+                                                                    &nbsp;
+                                                                </td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+
+                                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                <tbody>
+
+                                                    {% for articlesBatch in articles|batch(3) %}
+                                                        <tr>
+                                                            {% for article in articlesBatch %}
+                                                                <th class="column-top"
+                                                                    style="font-size:0; line-height:0; padding:0; margin:0; font-weight:normal; vertical-align:top; Margin:0"
+                                                                    width="180">
+                                                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                                        <tbody>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <table width="100%" border="0" cellspacing="0"
+                                                                                       cellpadding="0">
+                                                                                    <tbody>
+                                                                                    <tr>
+                                                                                        <td class="img"
+                                                                                            style="font-size:0; line-height:0; text-align:left"
+                                                                                            width="10" bgcolor="{{ article.category.color }}">&nbsp;
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            <div class="img"
+                                                                                                 style="font-size:0; line-height:0; text-align:left">
+                                                                                                <img src="{{ absolute_url(article.mainImage|uploadImagePath) }}"
+                                                                                                     border="0"
+                                                                                                     width="170" height="140"
+                                                                                                     alt="{{ article.title }}"></div>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                                <table width="100%" border="0" cellspacing="0"
+                                                                                       cellpadding="0" class="spacer"
+                                                                                       style="font-size:0; line-height:0; text-align:center; width:100%; min-width:100%">
+                                                                                    <tbody>
+                                                                                    <tr>
+                                                                                        <td height="14" class="spacer"
+                                                                                            style="font-size:0; line-height:0; text-align:center; width:100%; min-width:100%">
+                                                                                            &nbsp;
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    </tbody>
+                                                                                </table>
+
+                                                                                <div class="h5-3"
+                                                                                     style="height: 40px;color:#2c2c2c; font-family:Arial,sans-serif; font-size:14px; line-height:20px; text-align:left; text-transform:uppercase">
+                                                                                    <multiline>{{ article.title }}</multiline>
+                                                                                </div>
+                                                                                <table width="100%" border="0" cellspacing="0"
+                                                                                       cellpadding="0" class="spacer"
+                                                                                       style="font-size:0; line-height:0; text-align:center; width:100%; min-width:100%">
+                                                                                    <tbody>
+                                                                                    <tr>
+                                                                                        <td height="15" class="spacer"
+                                                                                            style="font-size:0; line-height:0; text-align:center; width:100%; min-width:100%">
+                                                                                            &nbsp;
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    </tbody>
+                                                                                </table>
+
+
+                                                                                <div class="text2"
+                                                                                     style="color:#777777; font-family:Arial,sans-serif; font-size:12px; line-height:20px; text-align:left">
+                                                                                    <multiline>{{ article.shortDescription| truncate(20, true) }}</multiline>
+                                                                                </div>
+
+                                                                                <table width="100%" border="0" cellspacing="0"
+                                                                                       cellpadding="0" class="spacer"
+                                                                                       style="font-size:0; line-height:0; text-align:center; width:100%; min-width:100%">
+                                                                                    <tbody>
+                                                                                    <tr>
+                                                                                        <td height="14" class="spacer"
+                                                                                            style="font-size:0; line-height:0; text-align:center; width:100%; min-width:100%">
+                                                                                            &nbsp;
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    </tbody>
+                                                                                </table>
+
+                                                                                <!-- Button -->
+                                                                                <table border="0" cellspacing="0" cellpadding="0"
+                                                                                       bgcolor="{{ article.category.color }}" class="mobile-shell">
+                                                                                    <tbody>
+                                                                                    <tr>
+                                                                                        <td class="img"
+                                                                                            style="font-size:0; line-height:0; text-align:left"
+                                                                                            width="20"></td>
+                                                                                        <td>
+                                                                                            <table width="100%" border="0"
+                                                                                                   cellspacing="0" cellpadding="0"
+                                                                                                   class="spacer"
+                                                                                                   style="font-size:0; line-height:0; text-align:center; width:100%; min-width:100%">
+                                                                                                <tbody>
+                                                                                                <tr>
+                                                                                                    <td height="12" class="spacer"
+                                                                                                        style="font-size:0; line-height:0; text-align:center; width:100%; min-width:100%">
+                                                                                                        &nbsp;
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                </tbody>
+                                                                                            </table>
+
+                                                                                            <div class="text-button"
+                                                                                                 style="color:#ffffff; font-family:Arial,sans-serif; font-size:12px; line-height:16px; text-align:center; text-transform:uppercase">
+                                                                                                <multiline>
+                                                                                                    <a href="{{ absolute_url(path('article_page',{'_locale': subscriber.locale, 'slug': article.slug})) }}" target="_blank"
+                                                                                                       class="link-white"
+                                                                                                       style="color:#ffffff; text-decoration:none"><span
+                                                                                                                class="link-white"
+                                                                                                                style="color:#ffffff; text-decoration:none">{{ 'email.today_popular_articles.view'|trans }}</span></a>
+                                                                                                </multiline>
+                                                                                            </div>
+                                                                                            <table width="100%" border="0"
+                                                                                                   cellspacing="0" cellpadding="0"
+                                                                                                   class="spacer"
+                                                                                                   style="font-size:0; line-height:0; text-align:center; width:100%; min-width:100%">
+                                                                                                <tbody>
+                                                                                                <tr>
+                                                                                                    <td height="12" class="spacer"
+                                                                                                        style="font-size:0; line-height:0; text-align:center; width:100%; min-width:100%">
+                                                                                                        &nbsp;
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                </tbody>
+                                                                                            </table>
+
+                                                                                        </td>
+                                                                                        <td class="img"
+                                                                                            style="font-size:0; line-height:0; text-align:left"
+                                                                                            width="20"></td>
+                                                                                    </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                                <!-- END Button -->
+                                                                                <table width="100%" border="0" cellspacing="0"
+                                                                                       cellpadding="0" class="spacer"
+                                                                                       style="font-size:0; line-height:0; text-align:center; width:100%; min-width:100%">
+                                                                                    <tbody>
+                                                                                    <tr>
+                                                                                        <td height="20" class="spacer"
+                                                                                            style="font-size:0; line-height:0; text-align:center; width:100%; min-width:100%">
+                                                                                            &nbsp;
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    </tbody>
+                                                                                </table>
+
+                                                                            </td>
+                                                                        </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </th>
+
+                                                                {% if loop.index % 2 == 0 %}
+                                                                    <th class="column"
+                                                                        style="font-size:0; line-height:0; padding:0; margin:0; font-weight:normal; Margin:0"
+                                                                        width="25">
+                                                                        <div style="font-size:0; line-height:0;"
+                                                                             class="mobile-br-10"></div>
+
+                                                                        <div style="font-size:0; line-height:0;"
+                                                                             class="mobile-br-15"></div>
+                                                                    </th>
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        </tr>
+                                                    {% endfor %}
+
+                                                </tbody>
+                                            </table>
+
+
+                                            <table width="100%" border="0" cellspacing="0" cellpadding="0"
+                                                   class="spacer"
+                                                   style="font-size:0; line-height:0; text-align:center; width:100%; min-width:100%">
+                                                <tbody>
+                                                <tr>
+                                                    <td height="30" class="spacer"
+                                                        style="font-size:0; line-height:0; text-align:center; width:100%; min-width:100%">
+                                                        &nbsp;
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+
+                                        </td>
+                                        <td class="content-spacing"
+                                            style="font-size:0; line-height:0; text-align:left" width="30"></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer"
+                                       style="font-size:0; line-height:0; text-align:center; width:100%; min-width:100%">
+                                    <tbody>
+                                    <tr>
+                                        <td height="20" class="spacer"
+                                            style="font-size:0; line-height:0; text-align:center; width:100%; min-width:100%">
+                                            &nbsp;
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+
+                            </layout>
+
+
+                        </repeater>
+
+
+                        <table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#ff5e56">
+                            <tbody>
+                            <tr>
+                                <td class="content-spacing" style="font-size:0; line-height:0; text-align:left"
+                                    width="30"></td>
+                                <td>
+                                    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer"
+                                           style="font-size:0; line-height:0; text-align:center; width:100%; min-width:100%">
+                                        <tbody>
+                                        <tr>
+                                            <td height="30" class="spacer"
+                                                style="font-size:0; line-height:0; text-align:center; width:100%; min-width:100%">
+                                                &nbsp;
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                        <tbody>
+                                        <tr>
+                                            <!-- Column -->
+                                            <th class="column-top"
+                                                style="font-size:0; line-height:0; padding:0; margin:0; font-weight:normal; vertical-align:top; Margin:0">
+                                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="h2-white-m-center"
+                                                                 style="color:#ffffff; font-family:Arial,sans-serif; font-size:22px; line-height:26px; text-align:left; font-weight:bold; text-transform:uppercase">
+                                                                <multiline>WebMag blog</multiline>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </th>
+                                            <th class="column-top"
+                                                style="font-size:0; line-height:0; padding:0; margin:0; font-weight:normal; vertical-align:top; Margin:0">
+                                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td>
+                                                            <table width="100%" border="0" cellspacing="0"
+                                                                   cellpadding="0">
+                                                                <tbody>
+                                                                <tr>
+                                                                    <td align="right">
+                                                                        <table class="center" border="0" cellspacing="0"
+                                                                               cellpadding="0">
+                                                                            <tbody>
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <div class="text-white-r-m-center"
+                                                                                         style="color:#ffffff; font-family:Arial,sans-serif; font-size:12px; line-height:20px; text-align:right">
+                                                                                        <a href="{{ absolute_url(path('unsubscribe',{'_locale': subscriber.locale, 'token': subscriber.token})) }}" style="color:#ffffff;">
+                                                                                            {{ 'email.today_popular_articles.unsubscribe'|trans }}
+                                                                                        </a>
+                                                                                    </div>
+                                                                                </td>
+                                                                            </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </td>
+                                                                </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </th>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer"
+                                           style="font-size:0; line-height:0; text-align:center; width:100%; min-width:100%">
+                                        <tbody>
+                                        <tr>
+                                            <td height="26" class="spacer"
+                                                style="font-size:0; line-height:0; text-align:center; width:100%; min-width:100%">
+                                                &nbsp;
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer"
+                                           style="font-size:0; line-height:0; text-align:center; width:100%; min-width:100%">
+                                        <tbody>
+                                        <tr>
+                                            <td height="30" class="spacer"
+                                                style="font-size:0; line-height:0; text-align:center; width:100%; min-width:100%">
+                                                &nbsp;
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+
+                                </td>
+                                <td class="content-spacing" style="font-size:0; line-height:0; text-align:left"
+                                    width="30"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer"
+                               style="font-size:0; line-height:0; text-align:center; width:100%; min-width:100%">
+                            <tbody>
+                            <tr>
+                                <td height="20" class="spacer"
+                                    style="font-size:0; line-height:0; text-align:center; width:100%; min-width:100%">
+                                    &nbsp;
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+
+    </tr>
+    </tbody>
+</table>

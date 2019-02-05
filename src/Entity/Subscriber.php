@@ -44,6 +44,12 @@ class Subscriber
     private $token;
 
     /**
+     * @var string
+     * @ORM\Column(type="string", length=255)
+     */
+    private $locale;
+
+    /**
      * Subscriber constructor.
      */
     public function __construct()
@@ -131,6 +137,25 @@ class Subscriber
     public function setToken(string $token): self
     {
         $this->token = $token;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getLocale(): ?string
+    {
+        return $this->locale;
+    }
+
+    /**
+     * @param string $locale
+     * @return Subscriber
+     */
+    public function setLocale(string $locale): self
+    {
+        $this->locale = $locale;
 
         return $this;
     }

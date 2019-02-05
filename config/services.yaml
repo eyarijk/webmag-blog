@@ -8,6 +8,10 @@ parameters:
     images_directory: '%kernel.project_dir%/public/uploads'
     images_public_path: '/uploads'
 
+    router.request_context.host: 'webmag-blog.test'
+    router.request_context.scheme: 'http'
+    router.request_context.base_url: ''
+
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -37,6 +41,10 @@ services:
         arguments:
             $size: 160
             $defaultImage: 'http://zex.com.ua/wp-content/uploads/2014/10/default-person.png'
+
+    App\Service\EmailNotificatorForArticles:
+        arguments:
+            $fromEmail: 'web-mag@blog.com'
 
     admin.article:
         class: App\Admin\ArticleAdmin
