@@ -1,0 +1,14 @@
+{
+  "name": "webmag-blog",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/eyarijk/webmag-blog.git",
+  "author": "Yarik <eyarij@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@symfony/webpack-encore": "^0.23.0",
+    "vue": "^2.6.2",
+    "vue-loader": "^15.0.11",
+    "vue-template-compiler": "^2.6.2"
+  }
+}
