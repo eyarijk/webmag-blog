@@ -38,3 +38,7 @@ search:
 unsubscribe:
   path: /unsubscribe/{token}
   controller:  App\Controller\SubscriberController::unsubscribe
+
+user_articles_index:
+  path: /user/articles
+  controller:  App\Controller\User\ArticleController::index

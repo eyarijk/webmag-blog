@@ -12,7 +12,9 @@
         {% include 'includes/nav.html.twig' %}
         {% block header %}{% endblock %}
     </header>
-    {% block content %}{% endblock %}
+    <div id="app">
+        {% block content %}{% endblock %}
+    </div>
 {% endblock %}
 
 {% block footer %}
@@ -23,4 +25,5 @@
     <script src="{{ asset('/js/jquery.min.js') }}"></script>
     <script src="{{ asset('/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('/js/main.js') }}"></script>
+    <script src="{{ asset('/build/app.js') }}"></script>
 {% endblock %}
