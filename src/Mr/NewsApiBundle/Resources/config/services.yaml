@@ -1,0 +1,5 @@
+services:
+  news_api_client:
+    class: App\Mr\NewsApiBundle\NewsClient
+    arguments:
+      $apiKey: '%news_api.api_key%'

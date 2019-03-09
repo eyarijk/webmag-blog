@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Mr\NewsApiBundle\NewsClient;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -17,8 +18,9 @@ class HomeController extends AbstractController
      * @throws \Doctrine\ORM\NonUniqueResultException
      * @return Response
      */
-    public function index(PaginatorInterface $paginator): Response
+    public function index(PaginatorInterface $paginator,NewsClient $client): Response
     {
+        dd($client);
         $articleRepository = $this
             ->getDoctrine()
             ->getRepository(Article::class)
