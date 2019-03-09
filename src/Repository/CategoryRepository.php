@@ -76,4 +76,17 @@ class CategoryRepository extends ServiceEntityRepository
             'isEnabled' => true,
         ]);
     }
+
+    /**
+     * @return iterable
+     */
+    public function findEnabled(): iterable
+    {
+        return $this->createQueryBuilder('c')
+            ->where('c.isEnabled = :isEnabled')
+            ->setParameter('isEnabled', true)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

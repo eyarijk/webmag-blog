@@ -1,39 +1,51 @@
 admin_dashboard:
   path: /
   controller: App\Controller\Admin\DashboardController::index
+
 tags_index:
   path: /tags
   controller: App\Controller\Admin\TagsController::index
+
 tags_create:
   path: /tags/create
   controller: App\Controller\Admin\TagsController::create
+
 tags_edit:
   path: /tags/edit/{slug}
   controller: App\Controller\Admin\TagsController::edit
+
 tags_delete:
   path: /tags/delete/{slug}
   controller: App\Controller\Admin\TagsController::delete
+
 categories_index:
   path: /categories
   controller: App\Controller\Admin\CategoriesController::index
+
 categories_create:
   path: /categories/create
   controller: App\Controller\Admin\CategoriesController::create
+
 categories_edit:
   path: /categories/edit/{slug}
   controller: App\Controller\Admin\CategoriesController::edit
+
 categories_delete:
   path: /categories/delete/{slug}
   controller: App\Controller\Admin\CategoriesController::delete
+
 articles_index:
   path: /articles
   controller: App\Controller\Admin\ArticlesController::index
+
 articles_create:
   path: /articles/create
   controller: App\Controller\Admin\ArticlesController::create
+
 articles_edit:
   path: /articles/edit/{slug}
   controller: App\Controller\Admin\ArticlesController::edit
+
 articles_delete:
   path: /articles/delete/{slug}
   controller: App\Controller\Admin\ArticlesController::delete

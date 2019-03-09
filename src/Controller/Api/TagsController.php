@@ -59,6 +59,28 @@ class TagsController extends AbstractController
         ]);
     }
 
+
+    /**
+     * @param TagRepository $tagRepository
+     * @return Response
+     */
+    public function active(TagRepository $tagRepository): Response
+    {
+        $tags = $tagRepository->getEnabled();
+
+        $jsonTags = $this->serializer->serialize([
+            'data' => [
+                'tags' => $tags,
+            ],
+        ], 'json', [
+            'groups' => ['forArticle'],
+        ]);
+
+        return new Response($jsonTags, Response::HTTP_OK, [
+            'Content-Type' => 'application/json',
+        ]);
+    }
+
     /**
      * @param Request $request
      * @param EntityManagerInterface $entityManager
