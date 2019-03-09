@@ -1,0 +1,34 @@
+tags_list:
+  path: /tags
+  methods: [GET]
+  controller: App\Controller\Api\TagsController::index
+
+tags_list_active:
+  path: /tags/active
+  methods: [GET]
+  controller: App\Controller\Api\TagsController::active
+
+tags_store:
+  path: /tags
+  methods: [POST]
+  controller: App\Controller\Api\TagsController::store
+
+tags_show:
+  path: /tags/{slug}
+  methods: [GET]
+  controller: App\Controller\Api\TagsController::show
+
+tags_delete:
+  path: /tags/{slug}
+  methods: [DELETE]
+  controller: App\Controller\Api\TagsController::delete
+
+tags_update:
+  path: /tags/{slug}
+  methods: [PUT]
+  controller: App\Controller\Api\TagsController::update
+
+categories_list_active:
+  path: /categories/active
+  methods: [GET]
+  controller: App\Controller\Api\CategoriesController::active

@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -19,6 +20,7 @@ class Tag
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"list","forArticle"})
      */
     private $id;
 
@@ -28,6 +30,7 @@ class Tag
      *     type="string"
      * )
      * @ORM\Column(type="string", length=255)
+     * @Groups({"list","forArticle"})
      */
     private $title;
 
@@ -36,6 +39,7 @@ class Tag
      *     type="bool"
      * )
      * @ORM\Column(type="boolean", name="is_enabled")
+     * @Groups({"list"})
      */
     private $isEnabled;
 
@@ -46,6 +50,7 @@ class Tag
      * @Gedmo\Slug(fields={"title"}, unique=true)
      * @Gedmo\Blameable(field="title", on="update")
      * @ORM\Column(type="string", length=255, unique=true)
+     * @Groups({"list"})
      */
     private $slug;
 

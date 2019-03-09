@@ -34,13 +34,56 @@ class TagRepository extends ServiceEntityRepository
     /**
      * @return mixed
      */
-    public function getEnabled(): array
+    public function getEnabled(): iterable
     {
         return $this->createQueryBuilder('t')
             ->where('t.isEnabled = :isEnabled')
             ->setParameter('isEnabled', true)
             ->getQuery()
             ->getResult()
+        ;
+    }
+
+    /**
+     * @param int $offset
+     * @param int $limit
+     * @return iterable
+     */
+    public function paginateByLimitAndOffset(int $offset = 0, int $limit = 5): iterable
+    {
+        return $this->createQueryBuilder('t')
+            ->setMaxResults($limit)
+            ->setFirstResult($offset)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @return int
+     */
+    public function getCount(): int
+    {
+        return $this->createQueryBuilder('t')
+            ->select('COUNT(t.id)')
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+    }
+
+    /**
+     * @param string $slug
+     * @return bool
+     */
+    public function removeBySlug(string $slug): bool
+    {
+        return $this->createQueryBuilder('t')
+            ->delete()
+            ->where('t.slug = :slug')
+            ->setParameter('slug', $slug)
+            ->getQuery()
+            ->execute()
         ;
     }
 }

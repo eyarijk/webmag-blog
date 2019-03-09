@@ -1,0 +1,30 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block stylesheets %}
+    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:700%7CNunito:300,600" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/vue-multiselect@2.1.0/dist/vue-multiselect.min.css">
+    <link rel="stylesheet" href="{{ asset('/css/bootstrap.min.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('/css/public.css') }}"/>
+{% endblock %}
+
+{% block body %}
+    <header id="header">
+        {% include 'includes/nav.html.twig' %}
+        {% block header %}{% endblock %}
+    </header>
+    <div id="app">
+        {% block content %}{% endblock %}
+    </div>
+{% endblock %}
+
+{% block footer %}
+    {{ render(controller('App\\Controller\\LayoutController::footerBlock')) }}
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('/js/main.js') }}"></script>
+    <script src="{{ asset('/build/app.js') }}"></script>
+{% endblock %}

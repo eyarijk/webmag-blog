@@ -1,19 +1,156 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
-admin:
-  prefix: /old-admin
-  resource: './routes/admin_routes.yaml'
+admin_dashboard:
+  path: /
+  controller: App\Controller\Admin\DashboardController::index
 
-api:
-  prefix: /api
-  resource: './routes/api_routes.yaml'
+tags_index:
+  path: /tags
+  controller: App\Controller\Admin\TagsController::index
 
-with_locale_prefix:
-  prefix: /{_locale}
-  resource: './routes/with_locale_prefix.yaml'
-  requirements:
-    _locale:  en|ua
+tags_create:
+  path: /tags/create
+  controller: App\Controller\Admin\TagsController::create
+
+tags_edit:
+  path: /tags/edit/{slug}
+  controller: App\Controller\Admin\TagsController::edit
+
+tags_delete:
+  path: /tags/delete/{slug}
+  controller: App\Controller\Admin\TagsController::delete
+
+categories_index:
+  path: /categories
+  controller: App\Controller\Admin\CategoriesController::index
+
+categories_create:
+  path: /categories/create
+  controller: App\Controller\Admin\CategoriesController::create
+
+categories_edit:
+  path: /categories/edit/{slug}
+  controller: App\Controller\Admin\CategoriesController::edit
+
+categories_delete:
+  path: /categories/delete/{slug}
+  controller: App\Controller\Admin\CategoriesController::delete
+
+articles_index:
+  path: /articles
+  controller: App\Controller\Admin\ArticlesController::index
+
+articles_create:
+  path: /articles/create
+  controller: App\Controller\Admin\ArticlesController::create
+
+articles_edit:
+  path: /articles/edit/{slug}
+  controller: App\Controller\Admin\ArticlesController::edit
+
+articles_delete:
+  path: /articles/delete/{slug}
+  controller: App\Controller\Admin\ArticlesController::delete
+
+
+home_most_read:
+  path: /most_read
+  controller: App\Controller\HomeController::getMostRead
+
+category_more_read:
+  path: /more_read/{slug}
+  controller: App\Controller\CategoryController::getMoreRead
+
+new_more_read:
+  path: /new/most_read
+  controller: App\Controller\Article\NewController::getMoreRead
+
+popular_more_read:
+  path: /popular/most_read
+  controller: App\Controller\Article\PopularController::getMoreRead
+
+article_like:
+  path: /article/like/{slug}
+  controller: App\Controller\Article\ArticleController::like
+
+
+login:
+  path: /login
+  controller: App\Controller\SecurityController::login
+
+register:
+  path: /register
+  controller: App\Controller\SecurityController::register
+
+home:
+  path: /
+  controller: App\Controller\HomeController::index
+
+article_page:
+  path: /article/{slug}
+  controller: App\Controller\Article\ArticleController::index
+
+category_page:
+  path: /category/{slug}
+  controller: App\Controller\CategoryController::index
+
+new_page:
+  path: /new
+  controller: App\Controller\Article\NewController::index
+
+popular_page:
+  path: /popular
+  controller: App\Controller\Article\PopularController::index
+
+subscriber_form:
+  path: /subscriber/form
+  methods: [POST]
+  controller:  App\Controller\SubscriberController::subscribe
+
+search:
+  path: /search
+  controller: App\Controller\SearchController::index
+
+unsubscribe:
+  path: /unsubscribe/{token}
+  controller:  App\Controller\SubscriberController::unsubscribe
+
+user_articles_index:
+  path: /user/articles
+  controller:  App\Controller\User\ArticleController::index
 
 logout:
   path: /logout
+
+tags_list:
+  path: /tags
+  methods: [GET]
+  controller: App\Controller\Api\TagsController::index
+
+tags_list_active:
+  path: /tags/active
+  methods: [GET]
+  controller: App\Controller\Api\TagsController::active
+
+tags_store:
+  path: /tags
+  methods: [POST]
+  controller: App\Controller\Api\TagsController::store
+
+tags_show:
+  path: /tags/{slug}
+  methods: [GET]
+  controller: App\Controller\Api\TagsController::show
+
+tags_delete:
+  path: /tags/{slug}
+  methods: [DELETE]
+  controller: App\Controller\Api\TagsController::delete
+
+tags_update:
+  path: /tags/{slug}
+  methods: [PUT]
+  controller: App\Controller\Api\TagsController::update
+
+categories_list_active:
+  path: /categories/active
+  methods: [GET]
+  controller: App\Controller\Api\CategoriesController::active

@@ -1,0 +1,23 @@
+{
+  "name": "webmag-blog",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/eyarijk/webmag-blog.git",
+  "author": "Yarik <eyarij@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@symfony/webpack-encore": "^0.23.0",
+    "vue": "^2.6.2",
+    "vue-loader": "^15.0.11",
+    "vue-template-compiler": "^2.6.2"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "vue-html-editor": "^0.2.1",
+    "vue-mce": "^1.5.0",
+    "vue-multiselect": "^2.1.3",
+    "vue-resource": "^1.5.1",
+    "vue-wysiwyg": "^1.7.2",
+    "vueditor": "^0.3.1"
+  }
+}
