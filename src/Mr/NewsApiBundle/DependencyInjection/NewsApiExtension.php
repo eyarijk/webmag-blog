@@ -21,7 +21,7 @@ class NewsApiExtension extends Extension
 
         $container->setParameter('news_api.api_key', $config['api_key']);
 
-        $loader = new YamlFileLoader($container, new FileLocator(\dirname(__DIR__).'/Resources/config'));
+        $loader = new YamlFileLoader($container, new FileLocator(\dirname(__DIR__) . '/Resources/config'));
         $loader->load('services.yaml');
     }
 }

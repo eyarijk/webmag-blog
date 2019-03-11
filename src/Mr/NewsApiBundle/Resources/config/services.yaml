@@ -1,4 +1,9 @@
 services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
   news_api_client:
     class: App\Mr\NewsApiBundle\NewsClient
     arguments:
