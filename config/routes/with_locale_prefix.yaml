@@ -39,6 +39,14 @@ unsubscribe:
   path: /unsubscribe/{token}
   controller:  App\Controller\SubscriberController::unsubscribe
 
+tag_page:
+  path: /tag/{slug}
+  controller:  App\Controller\TagsController::index
+
+user_articles_create:
+  path: /user/articles/create
+  controller:  App\Controller\User\ArticleController::create
+
 user_articles_index:
   path: /user/articles
   controller:  App\Controller\User\ArticleController::index

@@ -6,7 +6,7 @@
             <div class="row">
                 <div class="col-md-10">
                     {{ wo_render_breadcrumbs({'listClass':'page-header-breadcrumb'}) }}
-                    <h1>{{ category.title }}</h1>
+                    <h1>{{ tag.title }}</h1>
                 </div>
             </div>
         </div>
@@ -22,13 +22,13 @@
 
                         {% for index,article in mainArticles %}
                             <div class="col-md-{{ index == 0 ? '12' : '6' }}">
-                               {% include 'articles/common/_article_item_grid.html.twig' with {'article':article} only %}
+                                {% include 'articles/common/_article_item_grid.html.twig' with {'article':article} only %}
                             </div>
                         {% endfor %}
 
                         <div class="clearfix visible-md visible-lg"></div>
 
-                        {% include 'articles/common/_more_read.html.twig' with {'articles':articles,'countArtilces':articles.getTotalItemCount,'action': path('category_more_read',{slug:category.slug})} only %}
+                        {% include 'articles/common/_more_read.html.twig' with {'articles':articles,'countArtilces':articles.getTotalItemCount,'action': path('tag_more_read',{ slug:tag.slug })} only %}
 
                     </div>
                 </div>

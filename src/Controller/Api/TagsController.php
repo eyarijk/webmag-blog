@@ -59,7 +59,6 @@ class TagsController extends AbstractController
         ]);
     }
 
-
     /**
      * @param TagRepository $tagRepository
      * @return Response

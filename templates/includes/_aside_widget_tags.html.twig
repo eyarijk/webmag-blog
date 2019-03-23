@@ -3,7 +3,7 @@
         <ul>
             {% for tag in tags %}
                 <li>
-                    <a href="#">{{ tag.title }}</a>
+                    <a href="{{ path('tag_page', { slug: tag.slug }) }}">{{ tag.title }}</a>
                 </li>
             {% endfor %}
         </ul>
