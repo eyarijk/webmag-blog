@@ -19,19 +19,19 @@ class ArticleImageRepository extends ServiceEntityRepository
         parent::__construct($registry, ArticleImage::class);
     }
 
-    public function removeOldImages(\DateTimeInterface $dateTime)
+    /**
+     * @param \DateTimeInterface $dateTime
+     * @return mixed
+     */
+    public function findUselessToDateIterate(\DateTimeInterface $dateTime)
     {
         return $this->createQueryBuilder('ai')
-            ->where('ai.createdAt < :createdAt')
-//            ->andWhere(function () {
-//                //: TODO Add where for null articleMain or articleHeader:
-//            })
-            ->setParameter('createdAt',$dateTime)
-            ->leftJoin('ai.articleMain','article_main')
-            ->leftJoin('ai.articleHeader','article_header')
+            ->where('ai.createdAt < :createdAt AND article_main IS NULL AND article_header IS NULL')
+            ->setParameter('createdAt', $dateTime)
+            ->leftJoin('ai.articleMain', 'article_main')
+            ->leftJoin('ai.articleHeader', 'article_header')
             ->getQuery()
-            ->getResult()
+            ->iterate()
         ;
     }
-
 }

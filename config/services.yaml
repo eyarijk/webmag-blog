@@ -37,6 +37,14 @@ services:
         arguments:
             $imagesDirectory: '%images_directory%'
 
+    App\Service\ImageRemove:
+        arguments:
+            $imagesDirectory: '%images_directory%'
+
+    App\Twig\UploadImagesExtension:
+        arguments:
+            $imagesPublicPath: '%images_public_path%'
+
     App\Service\Gravatar:
         arguments:
             $size: 160
