@@ -28,11 +28,10 @@ class ArticleImageRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('ai')
             ->where('ai.createdAt < :createdAt AND article_main IS NULL AND article_header IS NULL')
             ->setParameter('createdAt', $dateTime)
-            ->leftJoin('ai.articleMain','article_main')
-            ->leftJoin('ai.articleHeader','article_header')
+            ->leftJoin('ai.articleMain', 'article_main')
+            ->leftJoin('ai.articleHeader', 'article_header')
             ->getQuery()
             ->iterate()
         ;
     }
-
 }

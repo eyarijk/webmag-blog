@@ -5,12 +5,12 @@ namespace App\Controller\Api;
 use App\Entity\Tag;
 use App\Repository\TagRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use Swagger\Annotations as SWG;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\SerializerInterface;
 
 class TagsController extends AbstractController
@@ -30,7 +30,7 @@ class TagsController extends AbstractController
     }
 
     /**
-     * List Tags
+     * List Tags.
      *
      * This call takes offset, limit.
      *
@@ -56,9 +56,9 @@ class TagsController extends AbstractController
      *             @SWG\Property(property="tags", type="array", @SWG\Items(ref=@Model(type=Tag::class, groups={"list"}))),
      *         ),
      *         @SWG\Property(property="paging", type="object",
-     *              @SWG\Property(property="limit", type="integer"),
-     *              @SWG\Property(property="offset", type="integer"),
-     *              @SWG\Property(property="total", type="integer"),
+     *             @SWG\Property(property="limit", type="integer"),
+     *             @SWG\Property(property="offset", type="integer"),
+     *             @SWG\Property(property="total", type="integer"),
      *         )
      *     )
      * )
@@ -98,7 +98,7 @@ class TagsController extends AbstractController
     }
 
     /**
-     * List active tags
+     * List active tags.
      *
      * @SWG\Response(
      *     response=200,
@@ -133,7 +133,7 @@ class TagsController extends AbstractController
     }
 
     /**
-     * Create new Tag
+     * Create new Tag.
      *
      * @SWG\Parameter(
      *     name="Tag",
@@ -221,7 +221,7 @@ class TagsController extends AbstractController
     }
 
     /**
-     * Update Tag by Slug
+     * Update Tag by Slug.
      *
      * @SWG\Parameter(
      *     name="Tag",

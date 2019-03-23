@@ -7,15 +7,14 @@ use App\Form\ArticleType;
 use App\Repository\ArticleRepository;
 use App\Service\ImageUpload;
 use Knp\Component\Pager\PaginatorInterface;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Nelmio\ApiDocBundle\Annotation\Security;
+use Swagger\Annotations as SWG;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\SerializerInterface;
-use Nelmio\ApiDocBundle\Annotation\Model;
-use Nelmio\ApiDocBundle\Annotation\Security;
-use Swagger\Annotations as SWG;
-
 
 class ArticleController extends AbstractController
 {
@@ -133,7 +132,7 @@ class ArticleController extends AbstractController
         $jsonData = $this->serializer->serialize([
             'error' => [],
             'data' => [],
-        ],'json');
+        ], 'json');
 
         return new Response($jsonData, Response::HTTP_OK, [
             'Content-Type' => 'application/json',

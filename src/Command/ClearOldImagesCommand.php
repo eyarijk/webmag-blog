@@ -13,6 +13,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class ClearOldImagesCommand extends Command
 {
+    protected static $defaultName = 'clear-old-images';
     /**
      * @var ArticleImageRepository
      */
@@ -43,8 +44,6 @@ class ClearOldImagesCommand extends Command
         $this->articleImageRepository = $articleImageRepository;
     }
 
-    protected static $defaultName = 'clear-old-images';
-
     protected function configure(): void
     {
         $this->setDescription('This command remove useless images.');
@@ -53,7 +52,7 @@ class ClearOldImagesCommand extends Command
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
-     * @return int|null|void
+     * @return int|void|null
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -69,19 +68,17 @@ class ClearOldImagesCommand extends Command
         $index = 0;
 
         foreach ($useLessImages as $image) {
-
             try {
                 $this->imageRemove->remove($image[0]->getName());
 
                 $this->em->remove($image[0]);
 
                 $output->writeln(date('Y-m-d H:i:s') . ': Remove ' . $image[0]->getName());
-
             } catch (\Exception $exception) {
                 $output->writeln(sprintf('Image: %s (ID:%d). Error: %s', $image[0]->getName(), $image[0]->getId(), $exception->getMessage()));
             }
 
-            $index++;
+            ++$index;
 
             if (($index % 100) === 0) {
                 $this->em->flush();
