@@ -2,7 +2,6 @@
 
 namespace App\Twig;
 
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
@@ -15,11 +14,11 @@ class UploadImagesExtension extends AbstractExtension
 
     /**
      * UploadImagesExtension constructor.
-     * @param ParameterBagInterface $parameterBag
+     * @param string $imagesPublicPath
      */
-    public function __construct(ParameterBagInterface $parameterBag)
+    public function __construct(string $imagesPublicPath)
     {
-        $this->imagesPublicPath = rtrim($parameterBag->get('images_public_path'), '/') . '/';
+        $this->imagesPublicPath = rtrim($imagesPublicPath, '/') . '/';
     }
 
     /**
