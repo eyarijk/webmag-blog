@@ -107,11 +107,6 @@ class Article
     private $tags;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $mainImage;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\ArticleView", mappedBy="article")
      */
     private $articleViews;
@@ -130,7 +125,12 @@ class Article
     private $isMain;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\OneToOne(targetEntity="App\Entity\ArticleImage", cascade={"persist", "remove"})
+     */
+    private $mainImage;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\ArticleImage", cascade={"persist", "remove"})
      */
     private $headerImage;
 
@@ -327,9 +327,9 @@ class Article
     }
 
     /**
-     * @return Category
+     * @return Category|null
      */
-    public function getCategory(): Category
+    public function getCategory(): ?Category
     {
         return $this->category;
     }
@@ -375,25 +375,6 @@ class Article
         if ($this->tags->contains($tag)) {
             $this->tags->removeElement($tag);
         }
-
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getMainImage()
-    {
-        return $this->mainImage;
-    }
-
-    /**
-     * @param $mainImage
-     * @return Article
-     */
-    public function setMainImage($mainImage): self
-    {
-        $this->mainImage = $mainImage;
 
         return $this;
     }
@@ -466,7 +447,6 @@ class Article
     {
         if ($this->articleComments->contains($articleComment)) {
             $this->articleComments->removeElement($articleComment);
-            // set the owning side to null (unless already changed)
             if ($articleComment->getArticle() === $this) {
                 $articleComment->setArticle(null);
             }
@@ -494,19 +474,24 @@ class Article
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getHeaderImage(): ?string
+    public function getMainImage(): ?ArticleImage
+    {
+        return $this->mainImage;
+    }
+
+    public function setMainImage(?ArticleImage $mainImage): self
+    {
+        $this->mainImage = $mainImage;
+
+        return $this;
+    }
+
+    public function getHeaderImage(): ?ArticleImage
     {
         return $this->headerImage;
     }
 
-    /**
-     * @param string|null $headerImage
-     * @return Article
-     */
-    public function setHeaderImage(?string $headerImage): self
+    public function setHeaderImage(?ArticleImage $headerImage): self
     {
         $this->headerImage = $headerImage;
 

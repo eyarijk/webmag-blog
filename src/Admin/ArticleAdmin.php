@@ -3,6 +3,7 @@
 namespace App\Admin;
 
 use App\Entity\Article;
+use App\Entity\ArticleImage;
 use App\Entity\Category;
 use App\Entity\Tag;
 use App\Service\ImageUpload;
@@ -18,6 +19,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Validator\Constraints\Image;
@@ -104,7 +106,7 @@ final class ArticleAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper): void
     {
         /**
-         * @var Article|null
+         * @var Article|null $article
          */
         $article = $this->getSubject();
 
@@ -196,16 +198,16 @@ final class ArticleAdmin extends AbstractAdmin
     }
 
     /**
-     * @param string $imageFileName
+     * @param ArticleImage $articleImage
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      * @return string
      */
-    private function helpImage(string $imageFileName): string
+    private function helpImage(ArticleImage $articleImage): string
     {
         return $this->twig->render('sonata/partials/_help_image.html.twig', [
-            'imageFileName' => $imageFileName,
+            'articleImage' => $articleImage,
         ]);
     }
 
@@ -214,6 +216,9 @@ final class ArticleAdmin extends AbstractAdmin
      */
     private function setArticleImages(Article $article): void
     {
+        /**
+         * @var Form $form
+         */
         $form = $this->getForm();
 
         $mainImageFile = $form
@@ -229,13 +234,19 @@ final class ArticleAdmin extends AbstractAdmin
         if ($mainImageFile instanceof UploadedFile) {
             $mainImageFileName = $this->imageUpload->upload($mainImageFile);
 
-            $article->setMainImage($mainImageFileName);
+            $articleImage = new ArticleImage();
+            $articleImage->setName($mainImageFileName);
+
+            $article->setMainImage($articleImage);
         }
 
         if ($headerImageFile instanceof UploadedFile) {
             $headerImageFileName = $this->imageUpload->upload($headerImageFile);
 
-            $article->setHeaderImage($headerImageFileName);
+            $articleImageHeader = new ArticleImage();
+            $articleImageHeader->setName($headerImageFileName);
+
+            $article->setHeaderImage($articleImageHeader);
         }
     }
 }

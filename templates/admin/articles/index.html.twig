@@ -38,7 +38,7 @@
                     <td><a class="btn-link" href="{{ path('article_page',{'slug': article.slug }) }}" target="_blank">Open</a></td>
                     <td>
                         {% if article.mainImage %}
-                            <img src="{{ article.mainImage|uploadImagePath }}" class="row-image" alt="{{ article.title }}">
+                            <img src="{{ article.mainImage.name|uploadImagePath }}" class="row-image" alt="{{ article.title }}">
                         {% else %}
                             -
                         {% endif %}

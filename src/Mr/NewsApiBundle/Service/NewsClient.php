@@ -4,6 +4,9 @@ namespace App\Mr\NewsApiBundle\Service;
 
 class NewsClient
 {
+    public const BASE_URL = 'https://newsapi.org/';
+
+    public const VERSION = 2;
     /**
      * @var string
      */
@@ -13,10 +16,6 @@ class NewsClient
      * @var string
      */
     private $url;
-
-    public const BASE_URL = 'https://newsapi.org/';
-
-    public const VERSION = 2;
 
     /**
      * NewsClient constructor.
@@ -38,7 +37,7 @@ class NewsClient
         // :TODO
     }
 
-    private function makeRequest()
+    private function makeRequest(): void
     {
         // :TODO
     }

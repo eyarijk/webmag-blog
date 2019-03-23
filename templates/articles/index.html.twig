@@ -2,7 +2,9 @@
 
 {% block header %}
     <div id="post-header" class="page-header">
-        <div class="background-img" style="background-image: url('{{ article.headerImage|uploadImagePath }}');"></div>
+        {% if article.headerImage %}
+             <div class="background-img" style="background-image: url('{{ article.headerImage.name|uploadImagePath }}');"></div>
+        {% endif %}
         <div class="container">
             <div class="row">
                 <div class="col-md-10">

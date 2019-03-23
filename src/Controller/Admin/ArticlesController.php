@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Article;
+use App\Entity\ArticleImage;
 use App\Form\ArticleType;
 use App\Service\ImageUpload;
 use Knp\Component\Pager\PaginatorInterface;
@@ -146,13 +147,19 @@ class ArticlesController extends AbstractController
         if ($mainImageFile instanceof UploadedFile) {
             $mainImageFileName = $this->imageUpload->upload($mainImageFile);
 
-            $article->setMainImage($mainImageFileName);
+            $articleImageMain = new ArticleImage();
+            $articleImageMain->setName($mainImageFileName);
+
+            $article->setMainImage($articleImageMain);
         }
 
         if ($headerImageFile instanceof UploadedFile) {
             $headerImageFileName = $this->imageUpload->upload($headerImageFile);
 
-            $article->setHeaderImage($headerImageFileName);
+            $articleImageHeader = new ArticleImage();
+            $articleImageHeader->setName($headerImageFileName);
+
+            $article->setHeaderImage($articleImageHeader);
         }
 
         $article->setUser($this->getUser());

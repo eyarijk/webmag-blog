@@ -3,64 +3,65 @@
 namespace App\Controller;
 
 use App\Entity\Article;
-use App\Mr\NewsApiBundle\Service\NewsClient;
+use App\Entity\Tag;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use WhiteOctober\BreadcrumbsBundle\Model\Breadcrumbs;
 
-class HomeController extends AbstractController
+class TagsController extends AbstractController
 {
     /**
+     * @param Tag $tag
      * @param PaginatorInterface $paginator
-     * @throws \Doctrine\ORM\NoResultException
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @param Breadcrumbs $breadcrumbs
      * @return Response
      */
-    public function index(PaginatorInterface $paginator): Response
+    public function index(Tag $tag, PaginatorInterface $paginator, Breadcrumbs $breadcrumbs): Response
     {
         $articleRepository = $this
             ->getDoctrine()
             ->getRepository(Article::class)
         ;
 
-        $recentArticles = $articleRepository->getRecent();
-        $featuredArticles = $articleRepository->getFeatured();
-        $mostReadArticlesQuery = $articleRepository->getMostReadQuery();
-        $countEnabledArticles = $articleRepository->getEnabledCount();
-        $mainArticles = $articleRepository->getMain();
+        $mainArticles = $articleRepository->getMainByTag($tag, 3);
 
-        $mostReadArticles = $paginator->paginate(
-            $mostReadArticlesQuery,
+        $articles = $paginator->paginate(
+            $articleRepository->getByTagQuery($tag),
             1,
             4
         );
 
-        return $this->render('home.html.twig', [
-            'recentArticles' => $recentArticles,
-            'featuredArticles' => $featuredArticles,
-            'mostReadArticles' => $mostReadArticles,
-            'countEnabledArticles' => $countEnabledArticles,
+        $breadcrumbs
+            ->addRouteItem('breadcrumbs.home', 'home')
+            ->addItem($tag->getTitle())
+        ;
+
+        return $this->render('tags/index.html.twig', [
+            'tag' => $tag,
             'mainArticles' => $mainArticles,
+            'articles' => $articles,
         ]);
     }
 
     /**
-     * @param Request $request
+     * @param Tag $tag
      * @param PaginatorInterface $paginator
+     * @param Request $request
      * @return JsonResponse
      */
-    public function getMostRead(Request $request, PaginatorInterface $paginator): JsonResponse
+    public function getMoreRead(Tag $tag, PaginatorInterface $paginator, Request $request): JsonResponse
     {
-        $mostReadArticlesQuery = $this
+        $articlesQuery = $this
             ->getDoctrine()
             ->getRepository(Article::class)
-            ->getMostReadQuery()
+            ->getByTagQuery($tag)
         ;
 
         $articles = $paginator->paginate(
-            $mostReadArticlesQuery,
+            $articlesQuery,
             $request->query->getInt('page', 1),
             4
         );

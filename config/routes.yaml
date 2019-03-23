@@ -1,23 +1,20 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
-admin:
-  prefix: /old-admin
-  resource: './routes/admin_routes.yaml'
-
-api:
-  prefix: /api
-  resource: './routes/api_routes.yaml'
-
 with_locale_prefix:
-  prefix: /{_locale}
-  resource: './routes/with_locale_prefix.yaml'
-  requirements:
-    _locale:  en|ua
+  prefix:
+   en: /
+   ua: /ua
+  resource: ./routes/with_locale_prefix.yaml
+
+custom_admin:
+  prefix: /custom-admin
+  resource: ./routes/admin_routes.yaml
 
 logout:
   path: /logout
 
 api_v1:
   prefix: /api/v1
-  resource: './routes/api_v1.yaml'
+  resource: ./routes/api_v1.yaml
+
+api:
+  prefix: /ajax
+  resource: ./routes/api_routes.yaml

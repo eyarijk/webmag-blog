@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Article;
 use App\Entity\Category;
+use App\Entity\Tag;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
@@ -236,6 +237,43 @@ class ArticleRepository extends ServiceEntityRepository
             ->setMaxResults($limit)
             ->getQuery()
             ->getResult()
+        ;
+    }
+
+    /**
+     * @param Tag $tag
+     * @param int $limit
+     * @return array
+     */
+    public function getMainByTag(Tag $tag, int $limit = 2): array
+    {
+        return $this->createQueryBuilder('a')
+            ->innerJoin('a.tags', 't', Expr\Join::WITH, 't.id = :tag')
+            ->where('a.isEnabled = :isEnabled')
+            ->andWhere('a.isMain = :isMain')
+            ->setParameter('isEnabled', true)
+            ->setParameter('isMain', true)
+            ->setParameter('tag', $tag)
+            ->orderBy('a.publishedAt', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
+     * @param Tag $tag
+     * @return Query
+     */
+    public function getByTagQuery(Tag $tag): Query
+    {
+        return $this->createQueryBuilder('a')
+            ->innerJoin('a.tags', 't', Expr\Join::WITH, 't.id = :tag')
+            ->where('a.isEnabled = :isEnabled')
+            ->setParameter('isEnabled', true)
+            ->setParameter('tag', $tag)
+            ->orderBy('a.publishedAt', 'DESC')
+            ->getQuery()
         ;
     }
 }

@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Article;
+use App\Entity\ArticleImage;
 use App\Entity\Category;
 use App\Entity\Tag;
 use App\Entity\User;
@@ -42,10 +43,13 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface, Cont
             shuffle($categories);
             shuffle($tags);
 
-            $mainImageName = md5(time()) . $i . '.jpeg';
+            $image = md5(time()) . $i . '.jpeg';
 
             $imageFile = file_get_contents($faker->imageUrl());
-            file_put_contents($dir . $mainImageName, $imageFile);
+            file_put_contents($dir . $image, $imageFile);
+
+            $articleImage = new ArticleImage();
+            $articleImage->setName($image);
 
             $article = new Article();
             $article->setIsEnabled($faker->boolean);
@@ -58,8 +62,8 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface, Cont
             $article->setUpdatedAt($article->getCreatedAt());
             $article->setPublishedAt($article->getIsEnabled() ? new \DateTime() : null);
             $article->setIsMain($article->getIsEnabled() ? $faker->boolean : false);
-            $article->setMainImage($mainImageName);
-            $article->setHeaderImage($mainImageName);
+            $article->setMainImage($articleImage);
+            $article->setHeaderImage($articleImage);
             $article->setCategory($categories[0]);
 
             for ($j = 0; $j < 5; ++$j) {
