@@ -1,44 +1,58 @@
 tags_list:
   path: /tags
-  methods: [GET]
+  methods: GET
   controller: App\Controller\Api\TagsController::index
-
-tags_list_active:
-  path: /tags/active
-  methods: [GET]
-  controller: App\Controller\Api\TagsController::active
 
 tags_store:
   path: /tags
-  methods: [POST]
+  methods: POST
   controller: App\Controller\Api\TagsController::store
+
+tags_list_active:
+  path: /tags/active
+  methods: GET
+  controller: App\Controller\Api\TagsController::active
 
 tags_show:
   path: /tags/{slug}
-  methods: [GET]
+  methods: GET
   controller: App\Controller\Api\TagsController::show
 
 tags_delete:
   path: /tags/{slug}
-  methods: [DELETE]
+  methods: DELETE
   controller: App\Controller\Api\TagsController::delete
 
 tags_update:
   path: /tags/{slug}
-  methods: [PUT]
+  methods: PUT
   controller: App\Controller\Api\TagsController::update
 
 categories_list_active:
   path: /categories/active
-  methods: [GET]
+  methods: GET
   controller: App\Controller\Api\CategoriesController::active
 
 articles_upload_image:
   path: /articles/image-upload
-  methods: [POST]
+  methods: POST
   controller: App\Controller\Api\ArticleController::uploadImage
 
 articles_create_update:
   path: /articles/persist-update
-  methods: [POST]
+  methods: POST
   controller: App\Controller\Api\ArticleController::persistUpdate
+
+auth_login_check:
+  path: /auth/login_check
+  methods: POST
+
+swagger_ui:
+  path: /doc
+  methods: GET
+  controller: nelmio_api_doc.controller.swagger_ui
+
+swagger_json:
+  path: /doc.json
+  methods: GET
+  controller: nelmio_api_doc.controller.swagger

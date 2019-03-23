@@ -12,7 +12,7 @@ logout:
   path: /logout
 
 api_v1:
-  prefix: /api/v1
+  prefix: /api
   resource: ./routes/api_v1.yaml
 
 api:

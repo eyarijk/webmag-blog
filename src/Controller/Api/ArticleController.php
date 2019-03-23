@@ -12,6 +12,10 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\SerializerInterface;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Nelmio\ApiDocBundle\Annotation\Security;
+use Swagger\Annotations as SWG;
+
 
 class ArticleController extends AbstractController
 {
@@ -30,6 +34,40 @@ class ArticleController extends AbstractController
     }
 
     /**
+     * Upload Image file to server and get entity object.
+     *
+     * @SWG\Parameter(
+     *     name="image",
+     *     type="file",
+     *     in="formData",
+     *     description="Image file (binary)"
+     * )
+     *
+     * @SWG\Response(
+     *     response=201,
+     *     description="Return image object with prefix",
+     *     @SWG\Schema(type="object",
+     *         @SWG\Property(property="data", type="object",
+     *             @SWG\Property(property="article_image", type="object", ref=@Model(type=ArticleImage::class, groups={"forCreate"})),
+     *             @SWG\Property(property="prefix_url", type="string", description="Prefix url for image path."),
+     *         ),
+     *     )
+     * )
+     * or
+     *
+     * @SWG\Response(
+     *     response=400,
+     *     description="In the request you need to pass the image.",
+     *     @SWG\Schema(type="object",
+     *         @SWG\Property(property="error", type="object",
+     *             @SWG\Property(property="status", type="integer", description="Status code"),
+     *             @SWG\Property(property="message", type="string", description="Error Message"),
+     *         )
+     *     )
+     * )
+     * @SWG\Tag(name="articles")
+     * @Security(name="Bearer")
+     *
      * @param Request $request
      * @param ImageUpload $imageUpload
      * @return Response
@@ -61,7 +99,6 @@ class ArticleController extends AbstractController
         $em->flush();
 
         $jsonData = $this->serializer->serialize([
-            'error' => [],
             'data' => [
                 'article_image' => $articleImage,
                 'prefix_url' => $this->getParameter('images_public_path'),
@@ -70,11 +107,12 @@ class ArticleController extends AbstractController
             'groups' => ['forCreate'],
         ]);
 
-        return new Response($jsonData, Response::HTTP_OK, [
+        return new Response($jsonData, Response::HTTP_CREATED, [
             'Content-Type' => 'application/json',
         ]);
     }
 
+    //: TODO Ці два метода трішки пізніше дороблю
     public function persistUpdate(Request $request, ArticleRepository $articleRepository): Response
     {
         $form = $this->createForm(ArticleType::class);

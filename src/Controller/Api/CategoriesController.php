@@ -2,10 +2,14 @@
 
 namespace App\Controller\Api;
 
+use App\Entity\Category;
 use App\Repository\CategoryRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\SerializerInterface;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Nelmio\ApiDocBundle\Annotation\Security;
+use Swagger\Annotations as SWG;
 
 class CategoriesController extends AbstractController
 {
@@ -24,6 +28,20 @@ class CategoriesController extends AbstractController
     }
 
     /**
+     * List active Categories
+     *
+     * @SWG\Response(
+     *     response=200,
+     *     description="Return list of categories",
+     *     @SWG\Schema(type="object",
+     *         @SWG\Property(property="data", type="object",
+     *             @SWG\Property(property="categories", type="array", @SWG\Items(ref=@Model(type=Category::class, groups={"forArticle"}))),
+     *         )
+     *     )
+     * )
+     * @SWG\Tag(name="categories")
+     * @Security(name="Bearer")
+     *
      * @param CategoryRepository $categoryRepository
      * @return Response
      */

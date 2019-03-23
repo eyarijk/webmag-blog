@@ -8,6 +8,9 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Nelmio\ApiDocBundle\Annotation\Security;
+use Swagger\Annotations as SWG;
 use Symfony\Component\Serializer\SerializerInterface;
 
 class TagsController extends AbstractController
@@ -27,6 +30,41 @@ class TagsController extends AbstractController
     }
 
     /**
+     * List Tags
+     *
+     * This call takes offset, limit.
+     *
+     * @SWG\Parameter(
+     *     name="offset",
+     *     in="query",
+     *     type="integer",
+     *     description="Offset for tags"
+     * )
+     *
+     * @SWG\Parameter(
+     *     name="limit",
+     *     in="query",
+     *     type="integer",
+     *     description="Limit for tags"
+     * )
+     *
+     * @SWG\Response(
+     *     response=200,
+     *     description="Return list of tags",
+     *     @SWG\Schema(type="object",
+     *         @SWG\Property(property="data", type="object",
+     *             @SWG\Property(property="tags", type="array", @SWG\Items(ref=@Model(type=Tag::class, groups={"list"}))),
+     *         ),
+     *         @SWG\Property(property="paging", type="object",
+     *              @SWG\Property(property="limit", type="integer"),
+     *              @SWG\Property(property="offset", type="integer"),
+     *              @SWG\Property(property="total", type="integer"),
+     *         )
+     *     )
+     * )
+     * @SWG\Tag(name="tags")
+     * @Security(name="Bearer")
+     *
      * @param TagRepository $tagRepository
      * @param Request $request
      * @throws \Doctrine\ORM\NonUniqueResultException
@@ -60,6 +98,20 @@ class TagsController extends AbstractController
     }
 
     /**
+     * List active tags
+     *
+     * @SWG\Response(
+     *     response=200,
+     *     description="Return list of tags",
+     *     @SWG\Schema(type="object",
+     *         @SWG\Property(property="data", type="object",
+     *             @SWG\Property(property="tags", type="array", @SWG\Items(ref=@Model(type=Tag::class, groups={"forArticle"}))),
+     *         )
+     *     )
+     * )
+     * @SWG\Tag(name="tags")
+     * @Security(name="Bearer")
+     *
      * @param TagRepository $tagRepository
      * @return Response
      */
@@ -81,6 +133,23 @@ class TagsController extends AbstractController
     }
 
     /**
+     * Create new Tag
+     *
+     * @SWG\Parameter(
+     *     name="Tag",
+     *     in="body",
+     *     description="Create new Tag",
+     *     type="object",
+     *     @Model(type=Tag::class, groups={"create"})
+     * ),
+     * @SWG\Response(
+     *     response=201,
+     *     description="New Tag",
+     *     @Model(type=Tag::class, groups={"list"})
+     * )
+     * @SWG\Tag(name="tags")
+     * @Security(name="Bearer")
+     *
      * @param Request $request
      * @param EntityManagerInterface $entityManager
      * @return Response
@@ -104,6 +173,16 @@ class TagsController extends AbstractController
     }
 
     /**
+     * Return Tag by Slug.
+     *
+     * @SWG\Response(
+     *     response=200,
+     *     description="Return Tag by Slug",
+     *     @Model(type=Tag::class, groups={"list"})
+     * )
+     * @SWG\Tag(name="tags")
+     * @Security(name="Bearer")
+     *
      * @param Tag $tag
      * @return Response
      */
@@ -119,6 +198,15 @@ class TagsController extends AbstractController
     }
 
     /**
+     * Delete tag by Slug.
+     *
+     * @SWG\Response(
+     *     response=204,
+     *     description="Delete Tag by Slug"
+     * )
+     * @SWG\Tag(name="tags")
+     * @Security(name="Bearer")
+     *
      * @param string $slug
      * @param TagRepository $tagRepository
      * @return Response
@@ -133,6 +221,24 @@ class TagsController extends AbstractController
     }
 
     /**
+     * Update Tag by Slug
+     *
+     * @SWG\Parameter(
+     *     name="Tag",
+     *     in="body",
+     *     description="Existing tag",
+     *     type="object",
+     *     @Model(type=Tag::class, groups={"create"})
+     * ),
+     * @SWG\Response(
+     *     response=200,
+     *     description="Updated Tag",
+     *     @Model(type=Tag::class, groups={"list"})
+     * )
+     *
+     * @SWG\Tag(name="tags")
+     * @Security(name="Bearer")
+     *
      * @param Tag $tag
      * @param Request $request
      * @param EntityManagerInterface $entityManager

@@ -30,7 +30,7 @@ class Tag
      *     type="string"
      * )
      * @ORM\Column(type="string", length=255)
-     * @Groups({"list", "forArticle"})
+     * @Groups({"list", "forArticle", "create"})
      */
     private $title;
 
@@ -39,7 +39,7 @@ class Tag
      *     type="bool"
      * )
      * @ORM\Column(type="boolean", name="is_enabled")
-     * @Groups({"list"})
+     * @Groups({"list", "create"})
      */
     private $isEnabled;
 
@@ -50,7 +50,7 @@ class Tag
      * @Gedmo\Slug(fields={"title"}, unique=true)
      * @Gedmo\Blameable(field="title", on="update")
      * @ORM\Column(type="string", length=255, unique=true)
-     * @Groups({"list"})
+     * @Groups({"list", "create"})
      */
     private $slug;
 
