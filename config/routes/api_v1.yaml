@@ -38,10 +38,20 @@ articles_upload_image:
   methods: POST
   controller: App\Controller\Api\ArticleController::uploadImage
 
-articles_create_update:
-  path: /articles/persist-update
+articles_index:
+  path: /articles
   methods: POST
-  controller: App\Controller\Api\ArticleController::persistUpdate
+  controller: App\Controller\Api\ArticleController::index
+
+articles_store:
+  path: /articles/store
+  methods: POST
+  controller: App\Controller\Api\ArticleController::store
+
+articles_show:
+  path: /articles/{slug}
+  methods: GET
+  controller: App\Controller\Api\ArticleController::show
 
 auth_login_check:
   path: /auth/login_check

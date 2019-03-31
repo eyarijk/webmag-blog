@@ -20,7 +20,7 @@ class Category
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"forArticle"})
+     * @Groups({"forArticle","userArticleEdit"})
      */
     private $id;
     /**
@@ -29,7 +29,7 @@ class Category
      *     type="string"
      * )
      * @ORM\Column(type="string", length=255)
-     * @Groups({"forArticle"})
+     * @Groups({"forArticle","userArticle","userArticleEdit"})
      */
     private $title;
 
@@ -68,6 +68,7 @@ class Category
      * @Assert\NotBlank()
      * @Assert\Regex("/#([a-f0-9]{3}){1,2}\b/i")
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"userArticle"})
      */
     private $color;
 

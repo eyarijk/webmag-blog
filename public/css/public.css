@@ -1644,3 +1644,7 @@ RESPONSIVE
     display: flex;
     justify-content: center;
 }
+.user-articles-nav {
+    display: flex;
+    justify-content: space-between;
+}

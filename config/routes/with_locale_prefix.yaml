@@ -47,6 +47,10 @@ user_articles_create:
   path: /user/articles/create
   controller:  App\Controller\User\ArticleController::create
 
+user_articles_edit:
+  path: /user/articles/edit/{slug}
+  controller:  App\Controller\User\ArticleController::edit
+
 user_articles_index:
   path: /user/articles
   controller:  App\Controller\User\ArticleController::index

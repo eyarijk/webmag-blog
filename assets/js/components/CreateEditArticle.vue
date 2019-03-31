@@ -72,7 +72,8 @@
 <script>
 
     export default {
-        name: "CreateEditArticle",
+        name: 'CreateEditArticle',
+        props: ['slug'],
         data () {
             return {
                 categories: [],
@@ -80,7 +81,7 @@
                 article: {
                     title: null,
                     category: null,
-                    tags:[],
+                    tags: [],
                     isEnabled: false,
                     isMain: false,
                     description: null,
@@ -90,20 +91,31 @@
                 },
                 uploadImagePath: '',
                 preloader: false,
+                // In future use LOCAL STORAGE for JWT
+                headersForResource: {
+                    'Authorization': `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE1NTQwNTMzOTQsImV4cCI6MTU1NDA2MDU5NCwicm9sZXMiOlsiUk9MRV9TVVBFUl9BRE1JTiIsIlJPTEVfVVNFUiJdLCJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSJ9.eZWFOYqnwzyV08nFozL_SB6KksPY8uzg9cAQcm2YPCeuDmhfzSZw5dzDPpD8ao8D1H1axYz-OKtJEuvr7GEKsE9s43bNiAjgEn_ohV-aFDDMgf0GEj-QXbJaZBcvCrxKMIyn0ZbivAP9hTkq0mJFNAUEA6_8cla538OuKNiRayRN9kuHQMbOVUmJuoyWo1g7HNf4o4dfWrYeUUGqNGTLdRNFE6073wltSH06zevj5QfdlngXbr9uTgkLzdSpKPxF-C2EFihEjzRrHDA9DEHF7okmhybMUWorgtzWsot7KfeyEwQybx2U-WtbPruTOO7zMDHAQJ062NQd563BqOu40g3Jx1BXibeV-4qFQhgn4azj0pgQrKt7b_W85YEjmh1ClWnTotyttzEoytTIzL9udfY71WZmfpUY2tGS8J4MZaj3xtEqKA6G5T0J6Iz6yd04aJL1-gcxNzrGHoOS7ULkxGUE3NVk1apEZL0XKh-aTdUt6FbOcSCqP3PZl5ZdL5eOOvHUamzx8YEYCrI0eGtLOis8vaSM63hJXX3Isq6A4QL3EVUvy9RHH1IMDFmIsMEfGvc09HGv5sSAKIwu5TJQh0JXf8uPD7AAOyvUiBFm_pbfuM-u8QUDjmAT2nfXqqaTiy8i4OyBeES-kjjLSZOyyqdAbdo_ApiRjr0FSQ2Ky4c`
+                },
             }
         },
         mounted () {
-            this.$http.get('/api/v1/tags/active').then(response => {
+            this.$http.get('/api/tags/active', { headers:this.headersForResource }).then(response => {
                 this.tags = response.body.data.tags;
             });
 
-            this.$http.get('/api/v1/categories/active').then(response => {
+            this.$http.get('/api/categories/active', { headers:this.headersForResource }).then(response => {
                 this.categories = response.body.data.categories;
             });
+
+            if (this.slug !== null) {
+                this.$http.get(`/api/articles/${this.slug}`, { headers:this.headersForResource }).then(response => {
+                    this.article = response.body.data.article;
+                    this.uploadImagePath = response.body.data.publicPath;
+                });
+            }
         },
         methods: {
             persistUpdate () {
-                this.$http.post('/api/v1/articles/persist-update',{ article:this.article }).then(response => {
+                this.$http.post('/api/articles/persist-update', { article:this.article }).then(response => {
                     console.log(response);
                 });
             },
@@ -112,7 +124,7 @@
 
                 formData.append('image', $event.target.files[0]);
 
-                this.$http.post('/api/v1/articles/image-upload', formData).then(response => {
+                this.$http.post('/api/articles/image-upload', formData, { headers:this.headersForResource }).then(response => {
                     this.article[key] = response.body.data.article_image;
                     this.uploadImagePath = response.body.data.prefix_url;
                 });

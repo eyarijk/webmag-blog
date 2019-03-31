@@ -43,12 +43,23 @@ class ArticleRepository extends ServiceEntityRepository
      * @param User $user
      * @return Query
      */
-    public function getSortByIdDescByUserQuery(User $user): Query
+    public function getSortByIdDescByUserWithCountCommentAndCountViewsQuery(User $user): Query
     {
-        return $this->createQueryBuilder('t')
-            ->where('t.user = :user')
+        return $this->createQueryBuilder('a')
+            ->select('a as article')
+            ->addSelect('c as category')
+            ->addSelect('hi as headerImage')
+            ->addSelect('mi as mainImage')
+            ->addSelect('COUNT(ac.id) as countComments')
+            ->addSelect('COUNT(av.id) as countView')
+            ->leftJoin('a.articleComments','ac')
+            ->leftJoin('a.articleViews','av')
+            ->leftJoin('a.category','c')
+            ->leftJoin('a.headerImage','hi')
+            ->leftJoin('a.mainImage','mi')
+            ->where('a.user = :user')
             ->setParameter('user', $user)
-            ->orderBy('t.id', 'DESC')
+            ->groupBy('a.id')
             ->getQuery()
         ;
     }

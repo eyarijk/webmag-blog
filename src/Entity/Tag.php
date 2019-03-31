@@ -20,7 +20,7 @@ class Tag
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"list", "forArticle"})
+     * @Groups({"list", "forArticle","userArticleEdit"})
      */
     private $id;
 
@@ -30,7 +30,7 @@ class Tag
      *     type="string"
      * )
      * @ORM\Column(type="string", length=255)
-     * @Groups({"list", "forArticle", "create"})
+     * @Groups({"list", "forArticle", "create","userArticleEdit"})
      */
     private $title;
 
