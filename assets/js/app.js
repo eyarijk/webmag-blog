@@ -9,11 +9,13 @@ Vue.use(wysiwyg, {});
 Vue.component('multiselect', Multiselect);
 Vue.component('Spinner', Spinner);
 
+import Articles from './components/Articles'
 import CreateEditArticle from './components/CreateEditArticle'
 
 new Vue({
     el: '#app',
     components: {
+        Articles,
         CreateEditArticle,
     }
 });

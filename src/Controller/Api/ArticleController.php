@@ -2,19 +2,20 @@
 
 namespace App\Controller\Api;
 
+use App\Entity\Article;
 use App\Entity\ArticleImage;
-use App\Form\ArticleType;
 use App\Repository\ArticleRepository;
 use App\Service\ImageUpload;
+use App\Service\UserArticleDTOGenerator;
 use Knp\Component\Pager\PaginatorInterface;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use Swagger\Annotations as SWG;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\SerializerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class ArticleController extends AbstractController
 {
@@ -111,28 +112,58 @@ class ArticleController extends AbstractController
         ]);
     }
 
-    //: TODO Ці два метода трішки пізніше дороблю
-    public function persistUpdate(Request $request, ArticleRepository $articleRepository): Response
+    /**
+     * @param Request $request
+     * @param ArticleRepository $articleRepository
+     * @param PaginatorInterface $paginator
+     * @param UserArticleDTOGenerator $generator
+     * @return Response
+     */
+    public function index(Request $request, ArticleRepository $articleRepository, PaginatorInterface $paginator, UserArticleDTOGenerator $generator): Response
     {
-        $form = $this->createForm(ArticleType::class);
-        $form->handleRequest($request);
-
-        return new JsonResponse($request);
-    }
-
-    public function index(Request $request, ArticleRepository $articleRepository, PaginatorInterface $paginator): Response
-    {
-        $articlesQuery = $articleRepository->getSortByIdDescByUserQuery($this->getUser());
+        $articlesQuery = $articleRepository->getSortByIdDescByUserWithCountCommentAndCountViewsQuery($this->getUser());
 
         $articles = $paginator->paginate(
             $articlesQuery,
             $request->query->getInt('page', 1),
             10
         );
+
+        $userArticles = [];
+
+        foreach ($articles as $article) {
+            $userArticles[] = $generator->generate($article);
+        }
+
         $jsonData = $this->serializer->serialize([
-            'error' => [],
-            'data' => [],
-        ], 'json');
+            'data' => [
+                'articles' => $userArticles,
+                'paging' =>  $articles->getPaginationData(),
+            ],
+        ], 'json', [
+            'groups' => ['userArticle'],
+        ]);
+
+        return new Response($jsonData, Response::HTTP_OK, [
+            'Content-Type' => 'application/json',
+        ]);
+    }
+
+    /**
+     * @param Article $article
+     * @return Response
+     * @IsGranted("view", subject="article")
+     */
+    public function show(Article $article): Response
+    {
+        $jsonData = $this->serializer->serialize([
+            'data' => [
+                'article' => $article,
+                'publicPath' => rtrim($this->getParameter('images_public_path'), '/') . '/'
+            ],
+        ], 'json', [
+            'groups' => ['userArticleEdit'],
+        ]);
 
         return new Response($jsonData, Response::HTTP_OK, [
             'Content-Type' => 'application/json',
