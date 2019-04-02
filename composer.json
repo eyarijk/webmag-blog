@@ -7,6 +7,8 @@
     "ext-json": "*",
     "ext-curl": "*",
     "ext-iconv": "*",
+    "ext-gd": "*",
+    "ext-fileinfo": "*",
     "friendsofsymfony/elastica-bundle": "^5.0",
     "gedmo/doctrine-extensions": "^2.4",
     "knplabs/knp-paginator-bundle": "^2.8",
@@ -45,6 +47,7 @@
     "fzaninotto/faker": "^1.8",
     "symfony/debug-pack": "*",
     "symfony/maker-bundle": "^1.0",
+    "symfony/phpunit-bridge": "4.2.*",
     "symfony/profiler-pack": "*",
     "symfony/test-pack": "*",
     "symfony/web-server-bundle": "4.2.*"
