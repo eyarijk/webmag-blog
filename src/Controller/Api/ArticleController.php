@@ -169,4 +169,26 @@ class ArticleController extends AbstractController
             'Content-Type' => 'application/json',
         ]);
     }
+
+    public function store(Request $request): Response
+    {
+        $json = $request->getContent();
+
+        $article = $this->serializer->deserialize($json, Article::class, 'json');
+
+        dd($article);
+
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $entityManager->persist($article);
+        $entityManager->flush();
+
+        $tagJson = $this->serializer->serialize($article, 'json', [
+            'groups' => ['userArticleEdit'],
+        ]);
+
+        return new Response($tagJson, Response::HTTP_CREATED, [
+            'Content-Type' => 'application/json',
+        ]);
+    }
 }

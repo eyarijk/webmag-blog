@@ -107,13 +107,13 @@ class Article
 
     /**
      * @Assert\NotBlank()
-     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="articles")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="articles", cascade={"persist"})
      * @Groups({"userArticle","userArticleEdit"})
      */
     private $category;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Tag", inversedBy="articles")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Tag", inversedBy="articles", cascade={"persist"})
      * @Groups({"userArticleEdit"})
      */
     private $tags;
