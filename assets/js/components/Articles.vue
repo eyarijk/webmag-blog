@@ -59,7 +59,7 @@
                 page: 1,
                 moreCount: 0,
                 // In future use LOCAL STORAGE for JWT
-                JWT: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE1NTQwNTMzOTQsImV4cCI6MTU1NDA2MDU5NCwicm9sZXMiOlsiUk9MRV9TVVBFUl9BRE1JTiIsIlJPTEVfVVNFUiJdLCJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSJ9.eZWFOYqnwzyV08nFozL_SB6KksPY8uzg9cAQcm2YPCeuDmhfzSZw5dzDPpD8ao8D1H1axYz-OKtJEuvr7GEKsE9s43bNiAjgEn_ohV-aFDDMgf0GEj-QXbJaZBcvCrxKMIyn0ZbivAP9hTkq0mJFNAUEA6_8cla538OuKNiRayRN9kuHQMbOVUmJuoyWo1g7HNf4o4dfWrYeUUGqNGTLdRNFE6073wltSH06zevj5QfdlngXbr9uTgkLzdSpKPxF-C2EFihEjzRrHDA9DEHF7okmhybMUWorgtzWsot7KfeyEwQybx2U-WtbPruTOO7zMDHAQJ062NQd563BqOu40g3Jx1BXibeV-4qFQhgn4azj0pgQrKt7b_W85YEjmh1ClWnTotyttzEoytTIzL9udfY71WZmfpUY2tGS8J4MZaj3xtEqKA6G5T0J6Iz6yd04aJL1-gcxNzrGHoOS7ULkxGUE3NVk1apEZL0XKh-aTdUt6FbOcSCqP3PZl5ZdL5eOOvHUamzx8YEYCrI0eGtLOis8vaSM63hJXX3Isq6A4QL3EVUvy9RHH1IMDFmIsMEfGvc09HGv5sSAKIwu5TJQh0JXf8uPD7AAOyvUiBFm_pbfuM-u8QUDjmAT2nfXqqaTiy8i4OyBeES-kjjLSZOyyqdAbdo_ApiRjr0FSQ2Ky4c',
+                JWT: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE1NTQyMzczNzYsImV4cCI6MTU1NDI0NDU3Niwicm9sZXMiOlsiUk9MRV9TVVBFUl9BRE1JTiIsIlJPTEVfVVNFUiJdLCJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSJ9.ZM3PDPFgMdW0zAaglIaHGSFmw97P5kX3RuLzfzkxMCvkES4XFDkUOSqzdkJYt5PFJDvxmAAHXLdxU7OHh8z8WldVK1n_J3x4pWAJRN81W2Zh7WdHqytzGhdO3YXLpdJ-LLa7NnBZoicPsWWhmlZVRvlB9I79vLkZN3l6gG1dsMFE-7_fSjduxAi5PWOoL59UcEZQ9cW_0kzkXyytLKN_o7Bx1JnuQmfz7g7AyixegWBul7coTAxymdnkX0A5JAvUYlqR8dN7bQKJKpYLMCJXj2iKIE5bfDerw1HKIDnZsLuWxf3Dr2b8_HjslfUB8v_kr05UKZLK1F9rCkOnMNSfG0lHQMDJhT_iVQGjTrLhK0H1YDvO1kspwsAGbzehnT4pOtYex0HK9-sAfZLwL35c3NwwO4R1xpF5ycsAuQ_UjcAjpmj4Q2xcqi52TqGbbgehlnK1HO9H-LUcx2FxY9gluHz3FHsHrdGFValtEu2gyV6idxT6RnKTl1zU_jTRyQ9BGOQWdWYt5XP4tgq4RyRjqxcTYIsaiq7l0WFcpPIgwOyLc46-C8rxUiJBTuequNXMen_V4OVwsQolfYUyVu6QMeaQTDF3JmcvkZypGyInE_RDcXSZjwcGNVtYckTXwYFezXCGbfLRrHc6pdCKbZsIor4hyKb9LGF8bVSne-maMjw',
             }
         },
         mounted () {
@@ -67,7 +67,7 @@
         },
         methods: {
             getArticles () {
-                this.$http.post('/api/articles?page='+this.page, {}, {
+                this.$http.get(`/api/articles?page=${this.page}`, {
                     headers: {
                         Authorization: `Bearer ${this.JWT}`
                     }
