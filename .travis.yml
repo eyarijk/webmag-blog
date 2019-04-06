@@ -35,7 +35,7 @@ script:
   - ./bin/console lint:twig templates
   - ./bin/console lint:xliff translations
   - ./bin/console doctrine:schema:validate --skip-sync -vvv --no-interaction
-  - ./bin/console d:f:l  --append
+  - ./bin/console d:f:l --append  --env=test
   - ./bin/phpunit
 
 services:
