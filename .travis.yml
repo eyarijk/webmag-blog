@@ -31,11 +31,12 @@ install:
   - php bin/console doctrine:schema:create --env=test
 
 script:
-  - ./bin/phpunit
   - ./bin/console lint:yaml config
   - ./bin/console lint:twig templates
   - ./bin/console lint:xliff translations
   - ./bin/console doctrine:schema:validate --skip-sync -vvv --no-interaction
+  - ./bin/console d:f:l  --append
+  - ./bin/phpunit
 
 services:
   - mysql
