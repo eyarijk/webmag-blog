@@ -32,7 +32,7 @@ class TagRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return mixed
+     * @return iterable
      */
     public function getEnabled(): iterable
     {

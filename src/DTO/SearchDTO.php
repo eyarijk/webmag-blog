@@ -12,7 +12,7 @@ class SearchDTO
     /**
      * @return string
      */
-    public function getQuery(): ?string
+    public function getQuery(): string
     {
         return $this->query;
     }
@@ -20,7 +20,7 @@ class SearchDTO
     /**
      * @param string $query
      */
-    public function setQuery(?string $query): void
+    public function setQuery(string $query): void
     {
         $this->query = trim($query);
     }

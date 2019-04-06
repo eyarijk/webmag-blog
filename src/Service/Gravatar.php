@@ -17,7 +17,7 @@ class Gravatar
     private const CONFIG_DEFAULT_IMAGE = 'd';
 
     /**
-     * @var
+     * @var string
      */
     private $paramsQueryString;
 
