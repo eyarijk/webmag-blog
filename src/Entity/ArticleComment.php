@@ -90,11 +90,6 @@ class ArticleComment
     private $website;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\ArticleImage", inversedBy="articleMain", cascade={"persist", "remove"})
-     */
-    private $image;
-
-    /**
      * ArticleComment constructor.
      */
     public function __construct()
@@ -276,17 +271,5 @@ class ArticleComment
     public function getChildren(): Collection
     {
         return $this->children;
-    }
-
-    public function getImage(): ?ArticleImage
-    {
-        return $this->image;
-    }
-
-    public function setImage(?ArticleImage $image): self
-    {
-        $this->image = $image;
-
-        return $this;
     }
 }

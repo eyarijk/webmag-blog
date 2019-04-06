@@ -138,13 +138,13 @@ class Article
     private $isMain;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\ArticleImage", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\ArticleImage", inversedBy="articleMain", cascade={"persist", "remove"})
      * @Groups({"userArticle", "userArticleEdit"})
      */
     private $mainImage;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\ArticleImage", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\ArticleImage", inversedBy="articleHeader", cascade={"persist", "remove"})
      * @Groups({"userArticle", "userArticleEdit"})
      */
     private $headerImage;
