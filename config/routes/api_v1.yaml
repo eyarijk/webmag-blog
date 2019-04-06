@@ -40,11 +40,11 @@ articles_upload_image:
 
 articles_index:
   path: /articles
-  methods: POST
+  methods: GET
   controller: App\Controller\Api\ArticleController::index
 
 articles_store:
-  path: /articles/store
+  path: /articles
   methods: POST
   controller: App\Controller\Api\ArticleController::store
 
