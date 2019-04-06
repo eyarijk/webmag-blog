@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Util;
+namespace App\Tests\Unit;
 
 use App\Service\ImageUpload;
 use PHPUnit\Framework\TestCase;
