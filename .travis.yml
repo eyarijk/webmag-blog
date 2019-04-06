@@ -37,7 +37,7 @@ script:
   - ./bin/console lint:xliff translations
   - ./bin/console doctrine:schema:validate --skip-sync -vvv --no-interaction
   - ./bin/console d:f:l --append  --env=test
-  - ./bin/phpunit
+  - ./bin/phpunit  ./tests/Unit/
 
 services:
   - mysql
