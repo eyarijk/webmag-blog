@@ -5,20 +5,12 @@ cache:
   directories:
     - $HOME/.composer/cache/files
     - ./bin/.phpunit
-
-env:
-  global:
-    - SYMFONY_PHPUNIT_DIR=./bin/.phpunit
-    - SYMFONY_DEPRECATIONS_HELPER=29
-
 matrix:
   fast_finish: true
   include:
     - php: 7.2
     - php: 7.3
-    - php: nightly
-  allow_failures:
-    - php: nightly
+
 
 before_install:
   - composer self-update
@@ -26,12 +18,15 @@ before_install:
 install:
   - composer install
   - ./bin/phpunit install
+  - php bin/console doctrine:database:create --env=test
+  - php bin/console doctrine:schema:create --env=test
 
 script:
   - ./bin/phpunit
-  # this checks that the YAML config files contain no syntax errors
   - ./bin/console lint:yaml config
-  # this checks that the Twig template files contain no syntax errors
   - ./bin/console lint:twig templates
-  # this checks that the XLIFF translations contain no syntax errors
   - ./bin/console lint:xliff translations
+  - ./bin/console doctrine:schema:validate --skip-sync -vvv --no-interaction
+
+services:
+  - mysql
