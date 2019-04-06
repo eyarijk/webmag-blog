@@ -50,7 +50,7 @@ class UserArticleListDTO
     private $shortDescription;
 
     /**
-     * @var null|\DateTimeInterface
+     * @var \DateTimeInterface|null
      * @Groups({"userArticle"})
      */
     private $publishedAt;
@@ -116,7 +116,7 @@ class UserArticleListDTO
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getHeaderImageUrl(): ?string
     {
@@ -124,7 +124,7 @@ class UserArticleListDTO
     }
 
     /**
-     * @param null|string $headerImageUrl
+     * @param string|null $headerImageUrl
      */
     public function setHeaderImageUrl(?string $headerImageUrl): void
     {
@@ -132,7 +132,7 @@ class UserArticleListDTO
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getMainImageUrl(): ?string
     {
@@ -140,7 +140,7 @@ class UserArticleListDTO
     }
 
     /**
-     * @param null|string $mainImageUrl
+     * @param string|null $mainImageUrl
      */
     public function setMainImageUrl(?string $mainImageUrl): void
     {

@@ -41,7 +41,7 @@ class UserArticleDTOGenerator
          */
         $article = $articleWithCounters['article'];
 
-        $link = $this->router->generate('user_articles_edit',[
+        $link = $this->router->generate('user_articles_edit', [
             'slug' => $article->getSlug(),
         ]);
 
@@ -67,7 +67,7 @@ class UserArticleDTOGenerator
 
     /**
      * @param ArticleImage|null $image
-     * @return null|string
+     * @return string|null
      */
     private function concatImageUrl(?ArticleImage $image): ?string
     {

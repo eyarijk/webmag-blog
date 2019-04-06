@@ -7,8 +7,8 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ArticleRepository")
@@ -20,7 +20,7 @@ class Article
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"userArticle","userArticleEdit"})
+     * @Groups({"userArticle", "userArticleEdit"})
      */
     private $id;
 
@@ -30,7 +30,7 @@ class Article
      *     type="string"
      * )
      * @ORM\Column(type="string", length=255)
-     * @Groups({"userArticle","userArticleEdit"})
+     * @Groups({"userArticle", "userArticleEdit"})
      */
     private $title;
 
@@ -41,7 +41,7 @@ class Article
      * @Gedmo\Slug(fields={"title"}, unique=true)
      * @Gedmo\Blameable(field="title", on="update")
      * @ORM\Column(type="string", length=255, unique=true)
-     * @Groups({"userArticle","userArticleEdit"})
+     * @Groups({"userArticle", "userArticleEdit"})
      */
     private $slug;
 
@@ -50,7 +50,7 @@ class Article
      *     type="bool"
      * )
      * @ORM\Column(type="boolean")
-     * @Groups({"userArticle","userArticleEdit"})
+     * @Groups({"userArticle", "userArticleEdit"})
      */
     private $isEnabled;
 
@@ -60,7 +60,7 @@ class Article
      *     type="string"
      * )
      * @ORM\Column(type="string", length=5000)
-     * @Groups({"userArticle","userArticleEdit"})
+     * @Groups({"userArticle", "userArticleEdit"})
      */
     private $description;
 
@@ -70,7 +70,7 @@ class Article
      *     type="string"
      * )
      * @ORM\Column(type="string", length=1500, nullable=true)
-     * @Groups({"userArticle","userArticleEdit"})
+     * @Groups({"userArticle", "userArticleEdit"})
      */
     private $shortDescription;
 
@@ -95,7 +95,7 @@ class Article
      *     type="datetime"
      * )
      * @ORM\Column(type="datetime", nullable=true)
-     * @Groups({"userArticle","userArticleEdit"})
+     * @Groups({"userArticle", "userArticleEdit"})
      */
     private $publishedAt;
 
@@ -108,7 +108,7 @@ class Article
     /**
      * @Assert\NotBlank()
      * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="articles", cascade={"persist"})
-     * @Groups({"userArticle","userArticleEdit"})
+     * @Groups({"userArticle", "userArticleEdit"})
      */
     private $category;
 
@@ -133,19 +133,19 @@ class Article
      *     type="bool"
      * )
      * @ORM\Column(type="boolean")
-     * @Groups({"userArticle","userArticleEdit"})
+     * @Groups({"userArticle", "userArticleEdit"})
      */
     private $isMain;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\ArticleImage", cascade={"persist", "remove"})
-     * @Groups({"userArticle","userArticleEdit"})
+     * @Groups({"userArticle", "userArticleEdit"})
      */
     private $mainImage;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\ArticleImage", cascade={"persist", "remove"})
-     * @Groups({"userArticle","userArticleEdit"})
+     * @Groups({"userArticle", "userArticleEdit"})
      */
     private $headerImage;
 

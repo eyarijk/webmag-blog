@@ -20,7 +20,7 @@ class Category
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"forArticle","userArticleEdit"})
+     * @Groups({"forArticle", "userArticleEdit"})
      */
     private $id;
     /**
@@ -29,7 +29,7 @@ class Category
      *     type="string"
      * )
      * @ORM\Column(type="string", length=255)
-     * @Groups({"forArticle","userArticle","userArticleEdit"})
+     * @Groups({"forArticle", "userArticle", "userArticleEdit"})
      */
     private $title;
 

@@ -10,12 +10,12 @@ use App\Service\UserArticleDTOGenerator;
 use Knp\Component\Pager\PaginatorInterface;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Nelmio\ApiDocBundle\Annotation\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Swagger\Annotations as SWG;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\SerializerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class ArticleController extends AbstractController
 {
@@ -138,7 +138,7 @@ class ArticleController extends AbstractController
         $jsonData = $this->serializer->serialize([
             'data' => [
                 'articles' => $userArticles,
-                'paging' =>  $articles->getPaginationData(),
+                'paging' => $articles->getPaginationData(),
             ],
         ], 'json', [
             'groups' => ['userArticle'],
@@ -159,7 +159,7 @@ class ArticleController extends AbstractController
         $jsonData = $this->serializer->serialize([
             'data' => [
                 'article' => $article,
-                'publicPath' => rtrim($this->getParameter('images_public_path'), '/') . '/'
+                'publicPath' => rtrim($this->getParameter('images_public_path'), '/') . '/',
             ],
         ], 'json', [
             'groups' => ['userArticleEdit'],
