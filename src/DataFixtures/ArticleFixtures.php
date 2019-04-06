@@ -39,7 +39,7 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface, Cont
 
         $dir = rtrim($this->container->getParameter('images_directory'), '/') . '/';
 
-        for ($i = 0; $i < 200; ++$i) {
+        for ($i = 0; $i < 100; ++$i) {
             shuffle($categories);
             shuffle($tags);
 

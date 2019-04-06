@@ -22,6 +22,7 @@ addons:
 
 
 before_install:
+  - sleep 10
   - composer self-update
 
 install:
@@ -40,3 +41,4 @@ script:
 
 services:
   - mysql
+  - elasticsearch
