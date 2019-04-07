@@ -2,82 +2,58 @@
 
 namespace App\Controller;
 
-use App\Entity\Category;
-use App\Entity\Tag;
 use App\Form\SearchType;
 use App\Form\SubscriberType;
+use App\Repository\CategoryRepository;
+use App\Repository\TagRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
 class LayoutController extends AbstractController
 {
     /**
+     * @param CategoryRepository $categoryRepository
      * @return Response
      */
-    public function widgetCategories(): Response
+    public function widgetCategories(CategoryRepository $categoryRepository): Response
     {
-        $enabledCategoriesWithCountArticles = $this
-            ->getDoctrine()
-            ->getRepository(Category::class)
-            ->getEnabledWithCountArticles()
-        ;
-
         return $this->render('includes/_aside_widget_categories.html.twig', [
-            'enabledCategoriesWithCountArticles' => $enabledCategoriesWithCountArticles,
+            'enabledCategoriesWithCountArticles' => $categoryRepository->getEnabledWithCountArticles(),
         ]);
     }
 
     /**
+     * @param TagRepository $tagRepository
      * @return Response
      */
-    public function widgetTags(): Response
+    public function widgetTags(TagRepository $tagRepository): Response
     {
-        $tags = $this
-            ->getDoctrine()
-            ->getRepository(Tag::class)
-            ->getEnabled()
-        ;
-
         return $this->render('includes/_aside_widget_tags.html.twig', [
-            'tags' => $tags,
+            'tags' => $tagRepository->getEnabled(),
         ]);
     }
 
     /**
+     * @param CategoryRepository $categoryRepository
      * @return Response
      */
-    public function navMenu(): Response
+    public function navMenu(CategoryRepository $categoryRepository): Response
     {
-        $categories = $this
-            ->getDoctrine()
-            ->getRepository(Category::class)
-            ->getForMenu()
-        ;
-
-        $searchForm = $this->createForm(SearchType::class);
-
         return $this->render('includes/_nav_menu.html.twig', [
-            'categories' => $categories,
-            'searchForm' => $searchForm->createView(),
+            'categories' => $categoryRepository->getForMenu(),
+            'searchForm' => $this->createForm(SearchType::class)->createView(),
         ]);
     }
 
     /**
+     * @param CategoryRepository $categoryRepository
      * @return Response
      */
-    public function footerBlock(): Response
+    public function footerBlock(CategoryRepository $categoryRepository): Response
     {
-        $categories = $this
-            ->getDoctrine()
-            ->getRepository(Category::class)
-            ->getForMenu()
-        ;
-
-        $subscriberForm = $this->createForm(SubscriberType::class);
-
         return $this->render('includes/_footer.html.twig', [
-            'categories' => $categories,
-            'subscriberForm' => $subscriberForm->createView(),
+            'categories' => $categoryRepository->getForMenu(),
+            'subscriberForm' => $this->createForm(SubscriberType::class)->createView(),
         ]);
     }
 }

@@ -38,13 +38,13 @@ class UserArticleListDTO
     private $mainImageUrl;
 
     /**
-     * @var string
+     * @var string|null
      * @Groups({"userArticle"})
      */
     private $title;
 
     /**
-     * @var string
+     * @var string|null
      * @Groups({"userArticle"})
      */
     private $shortDescription;
@@ -56,7 +56,7 @@ class UserArticleListDTO
     private $publishedAt;
 
     /**
-     * @var Category
+     * @var Category|null
      * @Groups({"userArticle"})
      */
     private $category;
@@ -148,33 +148,33 @@ class UserArticleListDTO
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
 
     /**
-     * @param string $title
+     * @param string|null $title
      */
-    public function setTitle(string $title): void
+    public function setTitle(?string $title): void
     {
         $this->title = $title;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getShortDescription(): string
+    public function getShortDescription(): ?string
     {
         return $this->shortDescription;
     }
 
     /**
-     * @param string $shortDescription
+     * @param string|null $shortDescription
      */
-    public function setShortDescription(string $shortDescription): void
+    public function setShortDescription(?string $shortDescription): void
     {
         $this->shortDescription = $shortDescription;
     }
@@ -196,17 +196,17 @@ class UserArticleListDTO
     }
 
     /**
-     * @return Category
+     * @return Category|null
      */
-    public function getCategory(): Category
+    public function getCategory(): ?Category
     {
         return $this->category;
     }
 
     /**
-     * @param Category $category
+     * @param Category|null $category
      */
-    public function setCategory(Category $category): void
+    public function setCategory(?Category $category): void
     {
         $this->category = $category;
     }

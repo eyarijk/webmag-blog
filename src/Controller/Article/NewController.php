@@ -2,7 +2,8 @@
 
 namespace App\Controller\Article;
 
-use App\Entity\Article;
+use App\Repository\ArticleRepository;
+use Knp\Component\Pager\Pagination\SlidingPagination;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -15,15 +16,11 @@ class NewController extends AbstractController
     /**
      * @param PaginatorInterface $paginator
      * @param Breadcrumbs $breadcrumbs
+     * @param ArticleRepository $articleRepository
      * @return Response
      */
-    public function index(PaginatorInterface $paginator, Breadcrumbs $breadcrumbs): Response
+    public function index(PaginatorInterface $paginator, Breadcrumbs $breadcrumbs, ArticleRepository $articleRepository): Response
     {
-        $articleRepository = $this
-            ->getDoctrine()
-            ->getRepository(Article::class)
-        ;
-
         $mainArticles = $articleRepository->getMain(3);
         $newArticlesQuery = $articleRepository->getNewQuery();
 
@@ -47,16 +44,16 @@ class NewController extends AbstractController
     /**
      * @param Request $request
      * @param PaginatorInterface $paginator
+     * @param ArticleRepository $articleRepository
      * @return JsonResponse
      */
-    public function getMoreRead(Request $request, PaginatorInterface $paginator): JsonResponse
+    public function getMoreRead(Request $request, PaginatorInterface $paginator, ArticleRepository $articleRepository): JsonResponse
     {
-        $moreReadArticlesQuery = $this
-            ->getDoctrine()
-            ->getRepository(Article::class)
-            ->getNewQuery()
-        ;
+        $moreReadArticlesQuery = $articleRepository->getNewQuery();
 
+        /**
+         * @var SlidingPagination $articles
+         */
         $articles = $paginator->paginate(
             $moreReadArticlesQuery,
             $request->query->getInt('page', 1),

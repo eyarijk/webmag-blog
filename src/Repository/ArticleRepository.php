@@ -229,9 +229,9 @@ class ArticleRepository extends ServiceEntityRepository
     /**
      * @param \DateTimeInterface $date
      * @param int $limit
-     * @return iterable
+     * @return array
      */
-    public function getPopularByDate(\DateTimeInterface $date, int $limit = 6): iterable
+    public function getPopularByDate(\DateTimeInterface $date, int $limit = 6): array
     {
         $to = new \DateTime($date->format('Y-m-d') . ' 23:59:59');
         $from = new \DateTime($date->format('Y-m-d') . ' 00:00:00');

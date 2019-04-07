@@ -16,10 +16,10 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 final class ArticleCommentAdmin extends AbstractAdmin
 {
     /**
-     * @param ArticleComment $object
-     * @return string
+     * @param ArticleComment|null $object
+     * @return string|null
      */
-    public function toString($object): string
+    public function toString($object): ?string
     {
         return $object instanceof ArticleComment ? $object->getEmail() : 'Comment';
     }

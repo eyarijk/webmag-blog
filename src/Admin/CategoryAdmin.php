@@ -14,10 +14,10 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 final class CategoryAdmin extends AbstractAdmin
 {
     /**
-     * @param Category $object
-     * @return string
+     * @param Category|null $object
+     * @return string|null
      */
-    public function toString($object): string
+    public function toString($object): ?string
     {
         return $object instanceof Category ? $object->getTitle() : 'Category';
     }

@@ -7,6 +7,8 @@ use App\Entity\ArticleComment;
 use App\Entity\ArticleLike;
 use App\Entity\ArticleView;
 use App\Form\ArticleCommentType;
+use App\Repository\ArticleCommentRepository;
+use App\Repository\ArticleLikeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -23,7 +25,7 @@ class ArticleController extends AbstractController
      * @throws \Doctrine\ORM\NonUniqueResultException
      * @return Response
      */
-    public function index(Article $article, Request $request, Breadcrumbs $breadcrumbs): Response
+    public function index(Article $article, Request $request, Breadcrumbs $breadcrumbs, ArticleLikeRepository $articleLikeRepository, ArticleCommentRepository $articleCommentRepository): Response
     {
         $commentForm = $this->createForm(ArticleCommentType::class);
         $commentForm->handleRequest($request);
@@ -36,38 +38,30 @@ class ArticleController extends AbstractController
             ]);
         }
 
-        $this->incrementView($article, $request->getClientIp(), $request->headers->get('user-agent'));
+        /**
+         * @var string|null $userAgent
+         */
+        $userAgent = $request->headers->get('user-agent');
 
-        $countLikes = $this
-            ->getDoctrine()
-            ->getRepository(ArticleLike::class)
-            ->getLikesCountByArticle($article, ArticleLike::TYPE_LIKE)
-        ;
+        $this->incrementView($article, $request->getClientIp(), $userAgent);
 
-        $countDislikes = $this
-            ->getDoctrine()
-            ->getRepository(ArticleLike::class)
-            ->getLikesCountByArticle($article, ArticleLike::TYPE_DISLIKE)
-        ;
+        $countLikes = $articleLikeRepository->getLikesCountByArticle($article, ArticleLike::TYPE_LIKE);
 
-        $comments = $this->getDoctrine()
-            ->getRepository(ArticleComment::class)
-            ->findRootByArticleOrderByCreatedDesc($article)
-        ;
+        $countDislikes = $articleLikeRepository->getLikesCountByArticle($article, ArticleLike::TYPE_DISLIKE);
 
-        $countComments = $this
-            ->getDoctrine()
-            ->getRepository(ArticleComment::class)
-            ->getCountCommentsByArticle($article)
-        ;
+        $comments = $articleCommentRepository->findRootByArticleOrderByCreatedDesc($article);
+
+        $countComments = $articleCommentRepository->getCountCommentsByArticle($article);
 
         $category = $article->getCategory();
 
-        $breadcrumbs
-            ->addRouteItem('breadcrumbs.home', 'home')
-            ->addRouteItem($category->getTitle(), 'category_page', ['slug' => $category->getSlug()])
-            ->addItem($article->getTitle())
-        ;
+        if ($category !== null) {
+            $breadcrumbs
+                ->addRouteItem('breadcrumbs.home', 'home')
+                ->addRouteItem($category->getTitle(), 'category_page', ['slug' => $category->getSlug()])
+                ->addItem($article->getTitle())
+            ;
+        }
 
         return $this->render('articles/index.html.twig', [
             'article' => $article,
@@ -82,10 +76,11 @@ class ArticleController extends AbstractController
     /**
      * @param Article $article
      * @param Request $request
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @param ArticleLikeRepository $articleLikeRepository
      * @return JsonResponse
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function like(Article $article, Request $request): JsonResponse
+    public function like(Article $article, Request $request, ArticleLikeRepository $articleLikeRepository): JsonResponse
     {
         $this->addLikeIfNotAlreadyLiked(
             $article,
@@ -94,17 +89,9 @@ class ArticleController extends AbstractController
             $request->headers->get('user-agent')
         );
 
-        $articleLikes = $this
-            ->getDoctrine()
-            ->getRepository(ArticleLike::class)
-            ->getLikesCountByArticle($article, ArticleLike::TYPE_LIKE)
-        ;
+        $articleLikes = $articleLikeRepository->getLikesCountByArticle($article, ArticleLike::TYPE_LIKE);
 
-        $articleDislikes = $this
-            ->getDoctrine()
-            ->getRepository(ArticleLike::class)
-            ->getLikesCountByArticle($article, ArticleLike::TYPE_DISLIKE)
-        ;
+        $articleDislikes = $articleLikeRepository->getLikesCountByArticle($article, ArticleLike::TYPE_DISLIKE);
 
         return new JsonResponse([
             'dislikes' => $articleDislikes,
@@ -114,11 +101,11 @@ class ArticleController extends AbstractController
 
     /**
      * @param Article $article
-     * @param string $ip
-     * @param string $userAgent
+     * @param null|string $ip
+     * @param null|string $userAgent
      * @return ArticleView
      */
-    private function incrementView(Article $article, string $ip, string $userAgent): ArticleView
+    private function incrementView(Article $article, ?string $ip, ?string $userAgent): ArticleView
     {
         $articleView = $this
             ->getDoctrine()

@@ -133,18 +133,17 @@ class User implements UserInterface
     /**
      * @see UserInterface
      */
-    public function getSalt(): void
+    public function getSalt(): ?string
     {
-        // not needed when using the "bcrypt" algorithm in security.yaml
+        return null;
     }
 
     /**
      * @see UserInterface
      */
-    public function eraseCredentials(): void
+    public function eraseCredentials(): ?string
     {
-        // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
+        return null;
     }
 
     /**

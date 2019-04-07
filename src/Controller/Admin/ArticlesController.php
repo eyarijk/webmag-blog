@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Article;
 use App\Entity\ArticleImage;
 use App\Form\ArticleType;
+use App\Repository\ArticleRepository;
 use App\Service\ImageUpload;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -15,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @IsGranted("ROLE_USER")
+ * @IsGranted("ROLE_SUPER_ADMIN")
  */
 class ArticlesController extends AbstractController
 {
@@ -36,22 +37,15 @@ class ArticlesController extends AbstractController
     /**
      * @param PaginatorInterface $paginator
      * @param Request $request
+     * @param ArticleRepository $articleRepository
      * @return Response
      */
-    public function index(PaginatorInterface $paginator, Request $request): Response
+    public function index(PaginatorInterface $paginator, Request $request, ArticleRepository $articleRepository): Response
     {
-        $articlesRepository = $this
-            ->getDoctrine()
-            ->getRepository(Article::class)
-        ;
-
-        $articles = $this->isGranted('ROLE_SUPER_ADMIN')
-            ? $articlesRepository->getSortByIdDescQuery()
-            : $articlesRepository->getSortByIdDescByUserQuery($this->getUser())
-        ;
+        $articlesQuery = $articleRepository->getSortByIdDescQuery();
 
         $articles = $paginator->paginate(
-            $articles,
+            $articlesQuery,
             $request->query->getInt('page', 1),
             10
         );

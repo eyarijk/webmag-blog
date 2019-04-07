@@ -152,36 +152,6 @@ class Category
     }
 
     /**
-     * @param Article $article
-     * @return Category
-     */
-    public function addArticle(Article $article): self
-    {
-        if (!$this->articles->contains($article)) {
-            $this->articles[] = $article;
-            $article->setCategory($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param Article $article
-     * @return Category
-     */
-    public function removeArticle(Article $article): self
-    {
-        if ($this->articles->contains($article)) {
-            $this->articles->removeElement($article);
-            if ($article->getCategory() === $this) {
-                $article->setCategory(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return bool|null
      */
     public function getIsShowMenu(): ?bool

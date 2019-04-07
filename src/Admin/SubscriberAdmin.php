@@ -26,10 +26,10 @@ final class SubscriberAdmin extends AbstractAdmin
     ];
 
     /**
-     * @param Subscriber $object
-     * @return string
+     * @param Subscriber|null $object
+     * @return string|null
      */
-    public function toString($object): string
+    public function toString($object): ?string
     {
         return $object instanceof Subscriber ? $object->getEmail() : 'Subscriber';
     }

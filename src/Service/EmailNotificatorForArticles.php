@@ -36,7 +36,7 @@ class EmailNotificatorForArticles
      * @param Swift_Mailer $swiftMailer
      * @param string $fromEmail
      * @param EngineInterface $templating
-     * @param TranslatorInterface|Translator $translator
+     * @param Translator|TranslatorInterface $translator
      */
     public function __construct(Swift_Mailer $swiftMailer, string $fromEmail, EngineInterface $templating, TranslatorInterface $translator)
     {
