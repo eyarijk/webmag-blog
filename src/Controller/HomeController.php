@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Article;
 use App\Repository\ArticleRepository;
 use Knp\Component\Pager\Pagination\SlidingPagination;
 use Knp\Component\Pager\PaginatorInterface;
@@ -16,9 +15,9 @@ class HomeController extends AbstractController
     /**
      * @param PaginatorInterface $paginator
      * @param ArticleRepository $articleRepository
-     * @return Response
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
+     * @return Response
      */
     public function index(PaginatorInterface $paginator, ArticleRepository $articleRepository): Response
     {

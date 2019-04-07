@@ -2,7 +2,6 @@
 
 namespace App\Controller\Article;
 
-use App\Entity\Article;
 use App\Repository\ArticleRepository;
 use Knp\Component\Pager\Pagination\SlidingPagination;
 use Knp\Component\Pager\PaginatorInterface;

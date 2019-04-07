@@ -74,7 +74,6 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
             );
         }
 
-
         return $credentials;
     }
 

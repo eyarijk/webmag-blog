@@ -4,10 +4,6 @@ namespace App\DataFixtures;
 
 use App\Entity\Article;
 use App\Entity\ArticleImage;
-use App\Entity\Category;
-use App\Entity\Tag;
-use App\Entity\User;
-use App\Repository\ArticleRepository;
 use App\Repository\CategoryRepository;
 use App\Repository\TagRepository;
 use App\Repository\UserRepository;
@@ -16,8 +12,6 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Factory;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class ArticleFixtures extends Fixture implements DependentFixtureInterface
 {
@@ -53,8 +47,7 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface
         CategoryRepository $categoryRepository,
         TagRepository $tagRepository,
         UserRepository $userRepository
-    )
-    {
+    ) {
         $this->imageUpload = $imageUpload;
         $this->tagRepository = $tagRepository;
         $this->userRepository = $userRepository;
@@ -76,7 +69,7 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface
             shuffle($categories);
             shuffle($tags);
 
-            $imageFile = $this->imageUpload->uploadFromUrl($faker->imageUrl(), uniqid('image_fixture',true) . $i . '.jpeg');
+            $imageFile = $this->imageUpload->uploadFromUrl($faker->imageUrl(), uniqid('image_fixture', true) . $i . '.jpeg');
 
             $articleImage = new ArticleImage();
             $articleImage->setName($imageFile);

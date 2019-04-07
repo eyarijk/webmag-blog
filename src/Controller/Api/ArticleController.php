@@ -19,6 +19,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\SerializerInterface;
 
+/**
+ * Class ArticleController.
+ * @IsGranted("ROLE_USER")
+ */
 class ArticleController extends AbstractController
 {
     /**
@@ -128,33 +132,31 @@ class ArticleController extends AbstractController
      *     description="Get articles",
      *     @SWG\Schema(type="object",
      *         @SWG\Property(property="data", type="object",
-     *              @SWG\Property(property="articles", type="array", @SWG\Items(ref=@Model(type=UserArticleListDTO::class, groups={"userArticle"}))),
-     *              @SWG\Property(property="paging", type="object",
-     *                  @SWG\Property(property="current", type="integer"),
-     *                  @SWG\Property(property="currentItemCount", type="integer"),
-     *                  @SWG\Property(property="endPage", type="integer"),
-     *                  @SWG\Property(property="first", type="integer"),
-     *                  @SWG\Property(property="firstItemNumber", type="integer"),
-     *                  @SWG\Property(property="firstPageInRange", type="integer"),
-     *                  @SWG\Property(property="last", type="integer"),
-     *                  @SWG\Property(property="lastItemNumber", type="integer"),
-     *                  @SWG\Property(property="lastPageInRange", type="integer"),
-     *                  @SWG\Property(property="next", type="integer"),
-     *                  @SWG\Property(property="numItemsPerPage", type="integer"),
-     *                  @SWG\Property(property="pageCount", type="integer"),
-     *                  @SWG\Property(property="pageRange", type="integer"),
-     *                  @SWG\Property(property="pagesInRange", type="array", @SWG\Items(type="integer")),
-     *                  @SWG\Property(property="startPage", type="integer"),
-     *                  @SWG\Property(property="totalCount", type="integer"),
-     *              )
+     *             @SWG\Property(property="articles", type="array", @SWG\Items(ref=@Model(type=UserArticleListDTO::class, groups={"userArticle"}))),
+     *             @SWG\Property(property="paging", type="object",
+     *                 @SWG\Property(property="current", type="integer"),
+     *                 @SWG\Property(property="currentItemCount", type="integer"),
+     *                 @SWG\Property(property="endPage", type="integer"),
+     *                 @SWG\Property(property="first", type="integer"),
+     *                 @SWG\Property(property="firstItemNumber", type="integer"),
+     *                 @SWG\Property(property="firstPageInRange", type="integer"),
+     *                 @SWG\Property(property="last", type="integer"),
+     *                 @SWG\Property(property="lastItemNumber", type="integer"),
+     *                 @SWG\Property(property="lastPageInRange", type="integer"),
+     *                 @SWG\Property(property="next", type="integer"),
+     *                 @SWG\Property(property="numItemsPerPage", type="integer"),
+     *                 @SWG\Property(property="pageCount", type="integer"),
+     *                 @SWG\Property(property="pageRange", type="integer"),
+     *                 @SWG\Property(property="pagesInRange", type="array", @SWG\Items(type="integer")),
+     *                 @SWG\Property(property="startPage", type="integer"),
+     *                 @SWG\Property(property="totalCount", type="integer"),
+     *             )
      *         ),
      *     )
      * )
      *
      * @SWG\Tag(name="articles")
      * @Security(name="Bearer")
-     *
-     * @IsGranted("ROLE_USER")
      *
      * @param Request $request
      * @param ArticleRepository $articleRepository
@@ -209,8 +211,8 @@ class ArticleController extends AbstractController
      *     description="Get articles by slug",
      *     @SWG\Schema(type="object",
      *         @SWG\Property(property="data", type="object",
-     *              @SWG\Property(property="article", ref=@Model(type=Article::class, groups={"userArticleEdit"})),
-     *              @SWG\Property(property="publicPath", type="string")
+     *             @SWG\Property(property="article", ref=@Model(type=Article::class, groups={"userArticleEdit"})),
+     *             @SWG\Property(property="publicPath", type="string")
      *         ),
      *     )
      * )

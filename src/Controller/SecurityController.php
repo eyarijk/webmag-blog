@@ -37,8 +37,7 @@ class SecurityController extends AbstractController
         UserPasswordEncoderInterface $passwordEncoder,
         GuardAuthenticatorHandler $guardHandler,
         LoginFormAuthenticator $authenticator
-    ): ?Response
-    {
+    ): ?Response {
         $form = $this->createForm(RegistrationFormType::class);
         $form->handleRequest($request);
 

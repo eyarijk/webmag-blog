@@ -22,6 +22,8 @@ class ArticleController extends AbstractController
      * @param Article $article
      * @param Request $request
      * @param Breadcrumbs $breadcrumbs
+     * @param ArticleLikeRepository $articleLikeRepository
+     * @param ArticleCommentRepository $articleCommentRepository
      * @throws \Doctrine\ORM\NonUniqueResultException
      * @return Response
      */
@@ -77,8 +79,8 @@ class ArticleController extends AbstractController
      * @param Article $article
      * @param Request $request
      * @param ArticleLikeRepository $articleLikeRepository
-     * @return JsonResponse
      * @throws \Doctrine\ORM\NonUniqueResultException
+     * @return JsonResponse
      */
     public function like(Article $article, Request $request, ArticleLikeRepository $articleLikeRepository): JsonResponse
     {
@@ -101,8 +103,8 @@ class ArticleController extends AbstractController
 
     /**
      * @param Article $article
-     * @param null|string $ip
-     * @param null|string $userAgent
+     * @param string|null $ip
+     * @param string|null $userAgent
      * @return ArticleView
      */
     private function incrementView(Article $article, ?string $ip, ?string $userAgent): ArticleView
