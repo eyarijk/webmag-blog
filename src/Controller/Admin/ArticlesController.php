@@ -72,7 +72,7 @@ class ArticlesController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->persistUpdateArticle($form);
 
-            return $this->redirectToRoute('articles_index');
+            return $this->redirectToRoute('custom_admin_articles_index');
         }
 
         return $this->render('admin/articles/create.html.twig', [

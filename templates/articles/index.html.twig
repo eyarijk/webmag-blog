@@ -16,9 +16,9 @@
                     </div>
                     <h1>{{ article.title }}</h1>
                     <div class="likes-block" data-action="{{ path('article_like',{'slug':article.slug}) }}">
-                        <span class="action-btn" data-type="1">+</span>
+                        <span class="action-btn like-button" data-type="1">+</span>
                         (<span class="like-count">{{ countLikes }}</span>/<span class="dislike-count">{{ countDislikes }}</span>)
-                        <span class="action-btn" data-type="0">-</span>
+                        <span class="action-btn dislike-button" data-type="0">-</span>
                     </div>
                 </div>
             </div>

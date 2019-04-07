@@ -34,7 +34,7 @@ categories_delete:
   path: /categories/delete/{slug}
   controller: App\Controller\Admin\CategoriesController::delete
 
-articles_index:
+custom_admin_articles_index:
   path: /articles
   controller: App\Controller\Admin\ArticlesController::index
 

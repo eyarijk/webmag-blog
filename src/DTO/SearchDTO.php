@@ -5,14 +5,14 @@ namespace App\DTO;
 class SearchDTO
 {
     /**
-     * @var string
+     * @var string|null
      */
     private $query;
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getQuery(): string
+    public function getQuery(): ?string
     {
         return $this->query;
     }

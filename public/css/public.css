@@ -1648,3 +1648,31 @@ RESPONSIVE
     display: flex;
     justify-content: space-between;
 }
+
+.likes-block {
+    display: inline-block;
+    background: #fff;
+    padding: 3px 9px;
+}
+
+.likes-block .action-btn {
+    font-weight: 800;
+    cursor: pointer;
+    transition: 0.2s width;
+}
+
+.likes-block .like-button:hover {
+  color: #79246b;
+}
+
+.likes-block .dislike-button:hover {
+    color: #000;
+}
+
+.likes-block .dislike-button, .likes-block .like-count{
+    color: #d86355;
+}
+
+.likes-block .dislike-button, .likes-block .dislike-count {
+    color: #0f85b4;
+}
