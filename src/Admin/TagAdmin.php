@@ -14,10 +14,10 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 final class TagAdmin extends AbstractAdmin
 {
     /**
-     * @param Tag $object
-     * @return string
+     * @param Tag|null $object
+     * @return string|null
      */
-    public function toString($object): string
+    public function toString($object): ?string
     {
         return $object instanceof Tag ? $object->getTitle() : 'Tag';
     }

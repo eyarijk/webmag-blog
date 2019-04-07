@@ -2,8 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\Article;
 use App\Entity\Tag;
+use App\Repository\ArticleRepository;
+use Knp\Component\Pager\Pagination\SlidingPagination;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -17,15 +18,11 @@ class TagsController extends AbstractController
      * @param Tag $tag
      * @param PaginatorInterface $paginator
      * @param Breadcrumbs $breadcrumbs
+     * @param ArticleRepository $articleRepository
      * @return Response
      */
-    public function index(Tag $tag, PaginatorInterface $paginator, Breadcrumbs $breadcrumbs): Response
+    public function index(Tag $tag, PaginatorInterface $paginator, Breadcrumbs $breadcrumbs, ArticleRepository $articleRepository): Response
     {
-        $articleRepository = $this
-            ->getDoctrine()
-            ->getRepository(Article::class)
-        ;
-
         $mainArticles = $articleRepository->getMainByTag($tag, 3);
 
         $articles = $paginator->paginate(
@@ -50,16 +47,16 @@ class TagsController extends AbstractController
      * @param Tag $tag
      * @param PaginatorInterface $paginator
      * @param Request $request
+     * @param ArticleRepository $articleRepository
      * @return JsonResponse
      */
-    public function getMoreRead(Tag $tag, PaginatorInterface $paginator, Request $request): JsonResponse
+    public function getMoreRead(Tag $tag, PaginatorInterface $paginator, Request $request, ArticleRepository $articleRepository): JsonResponse
     {
-        $articlesQuery = $this
-            ->getDoctrine()
-            ->getRepository(Article::class)
-            ->getByTagQuery($tag)
-        ;
+        $articlesQuery = $articleRepository->getByTagQuery($tag);
 
+        /**
+         * @var SlidingPagination $articles
+         */
         $articles = $paginator->paginate(
             $articlesQuery,
             $request->query->getInt('page', 1),

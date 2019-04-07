@@ -6,6 +6,7 @@ use App\Entity\Article;
 use App\Entity\ArticleImage;
 use App\Entity\Category;
 use App\Entity\Tag;
+use App\Entity\User;
 use App\Service\ImageUpload;
 use Doctrine\ORM\EntityRepository;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
@@ -14,7 +15,6 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\DoctrineORMAdminBundle\Filter\BooleanFilter;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Bundle\TwigBundle\DependencyInjection\TwigExtension;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -23,6 +23,7 @@ use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Validator\Constraints\Image;
+use Twig_Environment;
 
 final class ArticleAdmin extends AbstractAdmin
 {
@@ -37,7 +38,7 @@ final class ArticleAdmin extends AbstractAdmin
     private $tokenStorage;
 
     /**
-     * @var TwigExtension
+     * @var Twig_Environment
      */
     private $twig;
 
@@ -48,7 +49,7 @@ final class ArticleAdmin extends AbstractAdmin
      * @param string $baseControllerName
      * @param ImageUpload $imageUpload
      * @param TokenStorageInterface $tokenStorage
-     * @param \Twig_Environment $twig
+     * @param Twig_Environment $twig
      */
     public function __construct(
         string $code,
@@ -56,7 +57,7 @@ final class ArticleAdmin extends AbstractAdmin
         string $baseControllerName,
         ImageUpload $imageUpload,
         TokenStorageInterface $tokenStorage,
-        \Twig_Environment $twig
+        Twig_Environment $twig
     ) {
         parent::__construct($code, $class, $baseControllerName);
 
@@ -66,10 +67,10 @@ final class ArticleAdmin extends AbstractAdmin
     }
 
     /**
-     * @param Article $object
-     * @return string
+     * @param Article|null $object
+     * @return string|null
      */
-    public function toString($object): string
+    public function toString($object): ?string
     {
         return $object instanceof Article ? $object->getTitle() : 'Article';
     }
@@ -79,14 +80,17 @@ final class ArticleAdmin extends AbstractAdmin
      */
     public function prePersist($article): void
     {
-        $user = $this
-            ->tokenStorage
-            ->getToken()
-            ->getUser()
-        ;
+        $token = $this->tokenStorage->getToken();
+
+        if ($token !== null) {
+            /**
+             * @var User $user
+             */
+            $user = $token->getUser();
+            $article->setUser($user);
+        }
 
         $this->setArticleImages($article);
-        $article->setUser($user);
     }
 
     /**
@@ -106,7 +110,7 @@ final class ArticleAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper): void
     {
         /**
-         * @var Article|null $article
+         * @var Article $article
          */
         $article = $this->getSubject();
 
@@ -120,12 +124,16 @@ final class ArticleAdmin extends AbstractAdmin
             ],
         ];
 
-        if ($article->getHeaderImage() !== null) {
-            $headerImageFieldOptions['help'] = $this->helpImage($article->getHeaderImage());
+        $headerImage = $article->getHeaderImage();
+
+        if ($headerImage !== null) {
+            $headerImageFieldOptions['help'] = $this->helpImage($headerImage);
         }
 
-        if ($article->getMainImage() !== null) {
-            $mainImageFileFieldOptions['help'] = $this->helpImage($article->getMainImage());
+        $mainImage = $article->getMainImage();
+
+        if ($mainImage !== null) {
+            $mainImageFileFieldOptions['help'] = $this->helpImage($mainImage);
         }
 
         $formMapper

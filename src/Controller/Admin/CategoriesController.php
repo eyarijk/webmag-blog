@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Category;
 use App\Form\CategoryType;
+use App\Repository\CategoryRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,18 +19,15 @@ class CategoriesController extends AbstractController
     /**
      * @param PaginatorInterface $paginator
      * @param Request $request
+     * @param CategoryRepository $categoryRepository
      * @return Response
      */
-    public function index(PaginatorInterface $paginator, Request $request): Response
+    public function index(PaginatorInterface $paginator, Request $request, CategoryRepository $categoryRepository): Response
     {
-        $categories = $this
-            ->getDoctrine()
-            ->getRepository(Category::class)
-            ->getSortByIdDescQuery()
-        ;
+        $categoriesQuery = $categoryRepository->getSortByIdDescQuery();
 
         $categories = $paginator->paginate(
-            $categories,
+            $categoriesQuery,
             $request->query->getInt('page', 1),
             10
         );

@@ -5,12 +5,12 @@ namespace App\DTO;
 class SearchDTO
 {
     /**
-     * @var string
+     * @var string|null
      */
     private $query;
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getQuery(): ?string
     {
@@ -20,7 +20,7 @@ class SearchDTO
     /**
      * @param string $query
      */
-    public function setQuery(?string $query): void
+    public function setQuery(string $query): void
     {
         $this->query = trim($query);
     }

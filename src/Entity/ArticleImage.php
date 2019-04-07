@@ -99,42 +99,10 @@ class ArticleImage
     }
 
     /**
-     * @param ArticleComment|null $articleMain
-     * @return ArticleImage
-     */
-    public function setArticleMain(?ArticleComment $articleMain): self
-    {
-        $this->articleMain = $articleMain;
-
-        $newImage = $articleMain === null ? null : $this;
-        if ($newImage !== $articleMain->getImage()) {
-            $articleMain->setImage($newImage);
-        }
-
-        return $this;
-    }
-
-    /**
      * @return ArticleComment|null
      */
     public function getArticleHeader(): ?ArticleComment
     {
         return $this->articleHeader;
-    }
-
-    /**
-     * @param ArticleComment|null $articleHeader
-     * @return ArticleImage
-     */
-    public function setArticleHeader(?ArticleComment $articleHeader): self
-    {
-        $this->articleHeader = $articleHeader;
-
-        $newImage = $articleHeader === null ? null : $this;
-        if ($newImage !== $articleHeader->getImage()) {
-            $articleHeader->setImage($newImage);
-        }
-
-        return $this;
     }
 }

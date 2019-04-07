@@ -42,10 +42,10 @@ final class UserAdmin extends AbstractAdmin
     }
 
     /**
-     * @param $object
-     * @return string
+     * @param User|null $object
+     * @return string|null
      */
-    public function toString($object): string
+    public function toString($object): ?string
     {
         return $object instanceof User ? $object->getEmail() : 'User';
     }

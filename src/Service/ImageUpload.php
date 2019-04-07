@@ -17,7 +17,7 @@ class ImageUpload
      */
     public function __construct(string $imagesDirectory)
     {
-        $this->imagesDirectory = $imagesDirectory;
+        $this->imagesDirectory = rtrim($imagesDirectory, '/') . '/';
     }
 
     /**
@@ -32,6 +32,19 @@ class ImageUpload
             $this->imagesDirectory,
             $fileName
         );
+
+        return $fileName;
+    }
+
+    /**
+     * @param string $url
+     * @param string $fileName
+     * @return string
+     */
+    public function uploadFromUrl(string $url, string $fileName): string
+    {
+        $imageFile = file_get_contents($url);
+        file_put_contents($this->imagesDirectory . $fileName, $imageFile);
 
         return $fileName;
     }

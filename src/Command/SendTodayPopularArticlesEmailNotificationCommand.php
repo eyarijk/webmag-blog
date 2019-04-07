@@ -2,8 +2,9 @@
 
 namespace App\Command;
 
-use App\Entity\Article;
 use App\Entity\Subscriber;
+use App\Repository\ArticleRepository;
+use App\Repository\SubscriberRepository;
 use App\Service\EmailNotificatorForArticles;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
@@ -18,25 +19,43 @@ class SendTodayPopularArticlesEmailNotificationCommand extends Command
     protected static $defaultName = 'send:today:popular:article:notification';
 
     /**
-     * @var EntityManagerInterface
-     */
-    private $em;
-
-    /**
      * @var EmailNotificatorForArticles
      */
     private $emailNotificatorForArticles;
 
     /**
-     * SendTodayPopularArticlesEmailNotification constructor.
-     * @param EntityManagerInterface $em
-     * @param EmailNotificatorForArticles $emailNotificatorForArticles
+     * @var ArticleRepository
      */
-    public function __construct(EntityManagerInterface $em, EmailNotificatorForArticles $emailNotificatorForArticles)
-    {
+    private $articleRepository;
+
+    /**
+     * @var SubscriberRepository
+     */
+    private $subscriberRepository;
+
+    /**
+     * @var EntityManagerInterface
+     */
+    private $em;
+
+    /**
+     * SendTodayPopularArticlesEmailNotificationCommand constructor.
+     * @param EmailNotificatorForArticles $emailNotificatorForArticles
+     * @param ArticleRepository $articleRepository
+     * @param SubscriberRepository $subscriberRepository
+     * @param EntityManagerInterface $entityManager
+     */
+    public function __construct(
+        EmailNotificatorForArticles $emailNotificatorForArticles,
+        ArticleRepository $articleRepository,
+        SubscriberRepository $subscriberRepository,
+        EntityManagerInterface $entityManager
+    ) {
         parent::__construct();
 
-        $this->em = $em;
+        $this->em = $entityManager;
+        $this->subscriberRepository = $subscriberRepository;
+        $this->articleRepository = $articleRepository;
         $this->emailNotificatorForArticles = $emailNotificatorForArticles;
     }
 
@@ -56,8 +75,7 @@ class SendTodayPopularArticlesEmailNotificationCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $popularArticlesForToday = $this
-            ->em
-            ->getRepository(Article::class)
+            ->articleRepository
             ->getPopularByDate(new \DateTime())
         ;
 
@@ -71,8 +89,7 @@ class SendTodayPopularArticlesEmailNotificationCommand extends Command
          * @var Subscriber[][] $iterableActiveSubscribers
          */
         $iterableActiveSubscribers = $this
-            ->em
-            ->getRepository(Subscriber::class)
+            ->subscriberRepository
             ->getActiveSubscribersQuery()
             ->iterate()
         ;

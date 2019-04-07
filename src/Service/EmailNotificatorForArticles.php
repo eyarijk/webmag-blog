@@ -12,7 +12,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class EmailNotificatorForArticles
 {
     /**
-     * @var
+     * @var Swift_Mailer
      */
     private $swiftMailer;
 
@@ -36,7 +36,7 @@ class EmailNotificatorForArticles
      * @param Swift_Mailer $swiftMailer
      * @param string $fromEmail
      * @param EngineInterface $templating
-     * @param TranslatorInterface $translator
+     * @param Translator|TranslatorInterface $translator
      */
     public function __construct(Swift_Mailer $swiftMailer, string $fromEmail, EngineInterface $templating, TranslatorInterface $translator)
     {

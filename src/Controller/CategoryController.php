@@ -2,8 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\Article;
 use App\Entity\Category;
+use App\Repository\ArticleRepository;
+use Knp\Component\Pager\Pagination\SlidingPagination;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -17,15 +18,11 @@ class CategoryController extends AbstractController
      * @param Category $category
      * @param PaginatorInterface $paginator
      * @param Breadcrumbs $breadcrumbs
+     * @param ArticleRepository $articleRepository
      * @return Response
      */
-    public function index(Category $category, PaginatorInterface $paginator, Breadcrumbs $breadcrumbs): Response
+    public function index(Category $category, PaginatorInterface $paginator, Breadcrumbs $breadcrumbs, ArticleRepository $articleRepository): Response
     {
-        $articleRepository = $this
-            ->getDoctrine()
-            ->getRepository(Article::class)
-        ;
-
         $mainArticles = $articleRepository->getMainByCategory($category, 3);
 
         $articles = $paginator->paginate(
@@ -50,16 +47,16 @@ class CategoryController extends AbstractController
      * @param Category $category
      * @param PaginatorInterface $paginator
      * @param Request $request
+     * @param ArticleRepository $articleRepository
      * @return JsonResponse
      */
-    public function getMoreRead(Category $category, PaginatorInterface $paginator, Request $request): JsonResponse
+    public function getMoreRead(Category $category, PaginatorInterface $paginator, Request $request, ArticleRepository $articleRepository): JsonResponse
     {
-        $articlesQuery = $this
-            ->getDoctrine()
-            ->getRepository(Article::class)
-            ->getByCategoryQuery($category)
-        ;
+        $articlesQuery = $articleRepository->getByCategoryQuery($category);
 
+        /**
+         * @var SlidingPagination $articles
+         */
         $articles = $paginator->paginate(
             $articlesQuery,
             $request->query->getInt('page', 1),

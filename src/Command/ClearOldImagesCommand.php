@@ -69,7 +69,13 @@ class ClearOldImagesCommand extends Command
 
         foreach ($useLessImages as $image) {
             try {
-                $this->imageRemove->remove($image[0]->getName());
+                $fileName = $image[0]->getName();
+
+                if ($fileName === null) {
+                    throw new \RuntimeException('Filename is empty!');
+                }
+
+                $this->imageRemove->remove($fileName);
 
                 $this->em->remove($image[0]);
 

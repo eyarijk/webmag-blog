@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Tag;
 use App\Form\TagType;
+use App\Repository\TagRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,18 +19,15 @@ class TagsController extends AbstractController
     /**
      * @param PaginatorInterface $paginator
      * @param Request $request
+     * @param TagRepository $tagRepository
      * @return Response
      */
-    public function index(PaginatorInterface $paginator, Request $request): Response
+    public function index(PaginatorInterface $paginator, Request $request, TagRepository $tagRepository): Response
     {
-        $tags = $this
-            ->getDoctrine()
-            ->getRepository(Tag::class)
-            ->getSortByIdDescQuery()
-        ;
+        $tagsQuery = $tagRepository->getSortByIdDescQuery();
 
         $tags = $paginator->paginate(
-            $tags,
+            $tagsQuery,
             $request->query->getInt('page', 1),
             10
         );

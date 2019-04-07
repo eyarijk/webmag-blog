@@ -2,7 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Article;
+use App\Repository\ArticleRepository;
+use Knp\Component\Pager\Pagination\SlidingPagination;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -13,17 +14,13 @@ class HomeController extends AbstractController
 {
     /**
      * @param PaginatorInterface $paginator
+     * @param ArticleRepository $articleRepository
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      * @return Response
      */
-    public function index(PaginatorInterface $paginator): Response
+    public function index(PaginatorInterface $paginator, ArticleRepository $articleRepository): Response
     {
-        $articleRepository = $this
-            ->getDoctrine()
-            ->getRepository(Article::class)
-        ;
-
         $recentArticles = $articleRepository->getRecent();
         $featuredArticles = $articleRepository->getFeatured();
         $mostReadArticlesQuery = $articleRepository->getMostReadQuery();
@@ -48,16 +45,16 @@ class HomeController extends AbstractController
     /**
      * @param Request $request
      * @param PaginatorInterface $paginator
+     * @param ArticleRepository $articleRepository
      * @return JsonResponse
      */
-    public function getMostRead(Request $request, PaginatorInterface $paginator): JsonResponse
+    public function getMostRead(Request $request, PaginatorInterface $paginator, ArticleRepository $articleRepository): JsonResponse
     {
-        $mostReadArticlesQuery = $this
-            ->getDoctrine()
-            ->getRepository(Article::class)
-            ->getMostReadQuery()
-        ;
+        $mostReadArticlesQuery = $articleRepository->getMostReadQuery();
 
+        /**
+         * @var SlidingPagination $articles
+         */
         $articles = $paginator->paginate(
             $mostReadArticlesQuery,
             $request->query->getInt('page', 1),
