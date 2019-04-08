@@ -14,10 +14,12 @@ class ArticleDenormalizer implements DenormalizerInterface
      * @var ObjectNormalizer
      */
     private $objectNormalizer;
+
     /**
      * @var CategoryRepository
      */
     private $categoryRepository;
+
     /**
      * @var TagRepository
      */
@@ -37,7 +39,7 @@ class ArticleDenormalizer implements DenormalizerInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function denormalize($data, $class, $format = null, array $context = []): Article
     {
@@ -67,7 +69,6 @@ class ArticleDenormalizer implements DenormalizerInterface
         }
 
         if (\count($tagsData) > 0) {
-
             $tagsId = array_map(function ($tagData) {
                 return $tagData['id'];
             }, $tagsData);
@@ -85,11 +86,10 @@ class ArticleDenormalizer implements DenormalizerInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function supportsDenormalization($data, $type, $format = null): bool
     {
         return $type === Article::class;
     }
-
 }

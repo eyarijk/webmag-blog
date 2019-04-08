@@ -17,6 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Tag
 {
     /**
+     * @var int
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
@@ -25,6 +26,7 @@ class Tag
     private $id;
 
     /**
+     * @var string
      * @Assert\NotBlank()
      * @Assert\Type(
      *     type="string"
@@ -35,6 +37,7 @@ class Tag
     private $title;
 
     /**
+     * @var bool
      * @Assert\Type(
      *     type="bool"
      * )
@@ -44,6 +47,7 @@ class Tag
     private $isEnabled;
 
     /**
+     * @var string
      * @Assert\Type(
      *     type="string"
      * )
@@ -55,6 +59,7 @@ class Tag
     private $slug;
 
     /**
+     * @var ArrayCollection|Article[]
      * @ORM\ManyToMany(targetEntity="App\Entity\Article", mappedBy="tags")
      */
     private $articles;

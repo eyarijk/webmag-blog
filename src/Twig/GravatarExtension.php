@@ -19,7 +19,7 @@ class GravatarExtension extends AbstractExtension
     }
 
     /**
-     * @return array
+     * @return TwigFilter[]
      */
     public function getFilters(): array
     {

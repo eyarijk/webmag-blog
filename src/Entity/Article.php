@@ -17,6 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Article
 {
     /**
+     * @var int
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
@@ -25,6 +26,7 @@ class Article
     private $id;
 
     /**
+     * @var string
      * @Assert\NotBlank()
      * @Assert\Type(
      *     type="string"
@@ -35,6 +37,7 @@ class Article
     private $title;
 
     /**
+     * @var string
      * @Assert\Type(
      *     type="string"
      * )
@@ -46,6 +49,7 @@ class Article
     private $slug;
 
     /**
+     * @var bool
      * @Assert\Type(
      *     type="bool"
      * )
@@ -55,6 +59,7 @@ class Article
     private $isEnabled;
 
     /**
+     * @var string
      * @Assert\NotBlank()
      * @Assert\Type(
      *     type="string"
@@ -65,6 +70,7 @@ class Article
     private $description;
 
     /**
+     * @var string
      * @Assert\NotBlank()
      * @Assert\Type(
      *     type="string"
@@ -75,6 +81,7 @@ class Article
     private $shortDescription;
 
     /**
+     * @var \DateTimeInterface
      * @Assert\Type(
      *     type="datetime"
      * )
@@ -84,6 +91,7 @@ class Article
     private $createdAt;
 
     /**
+     * @var \DateTimeInterface
      * @Gedmo\Timestampable()
      * @ORM\Column(type="datetime")
      * @Groups({"userArticle"})
@@ -91,6 +99,7 @@ class Article
     private $updatedAt;
 
     /**
+     * @var \DateTimeInterface
      * @Assert\Type(
      *     type="datetime"
      * )
@@ -100,12 +109,14 @@ class Article
     private $publishedAt;
 
     /**
+     * @var User
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="articles")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
 
     /**
+     * @var Category
      * @Assert\NotBlank()
      * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="articles", cascade={"persist"})
      * @Groups({"userArticle", "userArticleEdit"})
@@ -113,22 +124,26 @@ class Article
     private $category;
 
     /**
+     * @var ArrayCollection|Tag[]
      * @ORM\ManyToMany(targetEntity="App\Entity\Tag", inversedBy="articles", cascade={"persist"})
      * @Groups({"userArticleEdit"})
      */
     private $tags;
 
     /**
+     * @var ArrayCollection|ArticleView[]
      * @ORM\OneToMany(targetEntity="App\Entity\ArticleView", mappedBy="article")
      */
     private $articleViews;
 
     /**
+     * @var ArrayCollection|ArticleComment[]
      * @ORM\OneToMany(targetEntity="App\Entity\ArticleComment", mappedBy="article", orphanRemoval=true)
      */
     private $articleComments;
 
     /**
+     * @var bool
      * @Assert\Type(
      *     type="bool"
      * )
@@ -138,12 +153,14 @@ class Article
     private $isMain;
 
     /**
+     * @var ArticleImage|null
      * @ORM\OneToOne(targetEntity="App\Entity\ArticleImage", inversedBy="articleMain", cascade={"persist", "remove"})
      * @Groups({"userArticle", "userArticleEdit"})
      */
     private $mainImage;
 
     /**
+     * @var ArticleImage|null
      * @ORM\OneToOne(targetEntity="App\Entity\ArticleImage", inversedBy="articleHeader", cascade={"persist", "remove"})
      * @Groups({"userArticle", "userArticleEdit"})
      */

@@ -65,10 +65,10 @@ class SearchType extends AbstractType
     }
 
     /**
-     * @return string|null
+     * @return string
      */
-    public function getBlockPrefix(): ?string
+    public function getBlockPrefix(): string
     {
-        return null;
+        return '';
     }
 }

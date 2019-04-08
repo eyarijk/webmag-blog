@@ -15,6 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Subscriber
 {
     /**
+     * @var int
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
@@ -22,28 +23,33 @@ class Subscriber
     private $id;
 
     /**
+     * @var string
      * @Assert\NotBlank()
      * @ORM\Column(type="string", length=255, unique=true)
      */
     private $email;
 
     /**
+     * @var bool
      * @ORM\Column(type="boolean")
      */
     private $isActive;
 
     /**
+     * @var \DateTimeInterface
      * @Gedmo\Timestampable()
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
 
     /**
+     * @var string
      * @ORM\Column(type="string", length=255)
      */
     private $token;
 
     /**
+     * @var string
      * @var string
      * @ORM\Column(type="string", length=255)
      */

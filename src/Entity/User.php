@@ -16,6 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class User implements UserInterface
 {
     /**
+     * @var int
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
@@ -23,6 +24,7 @@ class User implements UserInterface
     private $id;
 
     /**
+     * @var string
      * @Assert\NotBlank()
      * @Assert\Type(
      *     type="string"
@@ -32,6 +34,7 @@ class User implements UserInterface
     private $email;
 
     /**
+     * @var array
      * @ORM\Column(type="json")
      */
     private $roles = [];
@@ -86,7 +89,7 @@ class User implements UserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->email;
+        return $this->email;
     }
 
     /**
