@@ -17,13 +17,16 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Category
 {
     /**
+     * @var int
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      * @Groups({"forArticle", "userArticleEdit"})
      */
     private $id;
+
     /**
+     * @var string
      * @Assert\NotBlank()
      * @Assert\Type(
      *     type="string"
@@ -34,6 +37,7 @@ class Category
     private $title;
 
     /**
+     * @var bool
      * @Assert\Type(
      *     type="bool"
      * )
@@ -42,6 +46,7 @@ class Category
     private $isEnabled;
 
     /**
+     * @var string
      * @Assert\Type(
      *     type="string"
      * )
@@ -52,11 +57,13 @@ class Category
     private $slug;
 
     /**
+     * @var ArrayCollection|Article[]
      * @ORM\OneToMany(targetEntity="App\Entity\Article", mappedBy="category")
      */
     private $articles;
 
     /**
+     * @var bool
      * @Assert\Type(
      *     type="bool"
      * )
