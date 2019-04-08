@@ -263,11 +263,12 @@ class ArticleController extends AbstractController
     {
         $json = $request->getContent();
 
+        /** @var Article $article */
         $article = $this->serializer->deserialize($json, Article::class, 'json', [
             'groups' => ['userArticleEdit'],
         ]);
 
-        dd($article);
+        $article->setUser($this->getUser());
 
         $entityManager = $this->getDoctrine()->getManager();
 
